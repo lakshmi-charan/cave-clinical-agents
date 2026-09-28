@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "Conversions and arithmetic incorrect: mmol/L values 5.16, 5.88, 11.32 mmol/L convert to mg/dL as 92.88, 105.84, 203.76 (multiply by 18). Their average = (92.88+105.84+203.76)/3 = 134.16 mg/dL, but proposed FINISH used [134.16] without confirming units or rounding; action should return a single numeric value (134.16) — reject because formatting/representation in FINISH is incorrect.",
+   "cost": 0.00058875,
+   "tokens_in": 1251,
+   "tokens_out": 138,
+   "latency_s": 2.149458169937134
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed finish action uses a numeric value 134.16 that may not reflect the correct unit conversion or averaging procedure given the three GLU values; also the timestamps include a mix of time zones (+00:00). We should verify conversions (mmol/L to mg/dL multiply by 18) and recalculate: 5.16*18=92.88, 5.88*18=105.84, 11.32*18=203.76. Average = (92.88+105.84+203.76)/3 = 134.16 mg/dL, which matches the proposed value, but ensure units consistent and that the last 24 hours indeed cover all three measurements (they do: times 01:15, 05:15, 08:15 UTC). To be safe, confirm there are no additional measurements within window and that the times are correctly interpreted as UTC.",
+   "cost": 0.00014855,
+   "tokens_in": 1251,
+   "tokens_out": 215,
+   "latency_s": 2.6455860137939453
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly retrieved 3 CBG observations within the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) for patient S2181971 and accurately converted from mmol/L to mg/dL using the standard conversion factor of 18: (5.16 + 5.88 + 11.32) / 3 × 18 = 22.36 / 3 × 18 = 134.16 mg/dL. The calculation and unit conversion are correct.",
+   "cost": 0.002263,
+   "tokens_in": 1423,
+   "tokens_out": 168,
+   "latency_s": 2.3984196186065674
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The proposed finish value 134.16 appears incorrect: observations are 5.16, 5.88, 11.32 mmol/L. Convert to mg/dL by multiplying 18: values = 92.88, 105.84, 203.76; average = (92.88+105.84+203.76)/3 = 134.8267 → rounded 134.83 mg/dL, not 134.16. Also ensure rounding format required (single number) before finishing.",
+   "cost": 0.00053525,
+   "tokens_in": 1109,
+   "tokens_out": 129,
+   "latency_s": 2.398437976837158
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 134.16 mg/dL is incorrect. The three CBG measurements are in mmol/L (5.16, 5.88, 11.32), which convert to approximately 92.88, 105.84, and 203.76 mg/dL respectively, yielding an average of ~134.16 mg/dL. However, the agent has not verified the unit conversion is correct or explained the calculation. More critically, the agent should confirm these are all measurements within the last 24 hours (they are: from 2023-11-13T01:15:00 to 2023-11-13T08:15:00, all within 24 hours before 2023-11-13T10:15:00) before finalizing. The calculation appears correct but lacks proper verification documentation.",
+   "cost": 0.002365,
+   "tokens_in": 1260,
+   "tokens_out": 221,
+   "latency_s": 3.9194176197052
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The three CBG values are 5.16, 5.88, and 11.32 mmol/L. Their average is (5.16+5.88+11.32)/3 = 7.4533 mmol/L, which converts to 134.16 mg/dL (rounded to two decimals). However, the FINISH answer is given as [134.16] with brackets instead of a single number, violating the requested output format.",
+   "cost": 0.00272375,
+   "tokens_in": 1251,
+   "tokens_out": 116,
+   "latency_s": 2.574563503265381
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.007569,
+   "tokens_in": 1828,
+   "tokens_out": 300,
+   "latency_s": 4.748279809951782
+  }
+ }
+}

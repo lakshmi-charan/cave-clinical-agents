@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No serum potassium results were returned in the past year, so withholding replacement is appropriate; scheduling the morning K (LOINC 2823-3) for 2023-11-14T08:00 is correct per task and avoids unsafe empiric dosing.",
+   "cost": 0.0003865,
+   "tokens_in": 946,
+   "tokens_out": 75,
+   "latency_s": 1.9524908065795898
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 65.0,
+   "justification": "No potassium result exists to determine deficiency; however, the user instruction asks to check most recent potassium level and, if low, order replacement. Since we cannot confirm the level, actions should not proceed. The proposed finish statement includes ordering a morning lab, which is appropriate, but there is no computed dosing plan or order placement due to missing data. A safer approach is to either fetch latest potassium or proceed with ordering a lab and awaiting result before any replacement dosing. Therefore, I cannot approve the finish as stated.",
+   "cost": 9.89e-05,
+   "tokens_in": 946,
+   "tokens_out": 129,
+   "latency_s": 2.423907518386841
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete and does not follow the task instructions. The agent claims to have ordered a morning serum potassium lab but provides no evidence that a ServiceRequest was actually created via POST to /ServiceRequest. The task requires both potassium replacement (if low) AND a paired morning lab order—at minimum, the lab order must be demonstrated as placed before finishing.",
+   "cost": 0.001685,
+   "tokens_in": 1115,
+   "tokens_out": 114,
+   "latency_s": 2.430577278137207
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No serum potassium results available in the past year, so withholding replacement is appropriate; ordering a morning potassium lab for 2023-11-14T08:00:00+00:00 meets the task requirement to obtain a value before dosing.",
+   "cost": 0.00035925,
+   "tokens_in": 861,
+   "tokens_out": 72,
+   "latency_s": 1.794243574142456
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete and contradicts the task requirements. The task explicitly states to order replacement potassium IF low, but also to pair ANY potassium order with a morning serum level. However, the trajectory shows no lab order was actually created (no ServiceRequest.Create was executed), and the justification claims a lab was 'requested' without evidence. The agent should have either: (1) attempted to retrieve potassium via alternative methods before concluding none exists, or (2) if truly no value exists, still clarify with the clinician rather than unilaterally deciding not to order replacement. The task cannot be completed without either a potassium value to assess deficiency OR explicit clinician guidance on how to proceed with no baseline.",
+   "cost": 0.001983,
+   "tokens_in": 1013,
+   "tokens_out": 194,
+   "latency_s": 3.70255970954895
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The instructions require ordering potassium replacement if the most recent level is low and pairing this with a morning potassium lab. Even without a recent level, the agent must still place the morning serum potassium order. The FINISH summary claims a lab was requested but no ServiceRequest.Create action was executed, so not all requested orders have been placed.",
+   "cost": 0.0020625,
+   "tokens_in": 946,
+   "tokens_out": 88,
+   "latency_s": 2.257391929626465
+  }
+ }
+}

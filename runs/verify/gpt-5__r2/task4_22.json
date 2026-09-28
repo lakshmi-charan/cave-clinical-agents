@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The query correctly searched for magnesium (code MG) for patient S6200102 within the last 24 hours. The only result was outside the window, so returning -1 matches the instructions.",
+   "cost": 0.00157375,
+   "tokens_in": 771,
+   "tokens_out": 61,
+   "latency_s": 1.947291374206543
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The only retrieved MG observation is dated 2023-07-30, which is outside the specified 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); returning -1 is correct.",
+   "cost": 0.00035675,
+   "tokens_in": 771,
+   "tokens_out": 82,
+   "latency_s": 2.0616066455841064
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's reasoning is incorrect. The observation dated 2023-07-30T22:50:00Z is from July 30, 2023, which is over 3 months before the current time of 2023-11-13T10:15:00Z, so it is NOT within the last 24 hours. However, the query itself appears to have executed correctly with the proper date range filter (ge2023-11-12T10:15:00Z to le2023-11-13T10:15:00Z), and the result showing only an old observation from July suggests there is genuinely no magnesium measurement within the last 24 hours. The correct answer of -1 is appropriate, but the agent's justification is backwards—it should state that the search found no recent results, not that the retrieved result is old.",
+   "cost": 0.001999,
+   "tokens_in": 899,
+   "tokens_out": 220,
+   "latency_s": 3.085507869720459
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The retrieved MG observation is dated 2023-07-30, which is outside the last 24 hours from 2023-11-13T10:15:00Z. However, the search request filtered to the last 24 hours yet returned a result, suggesting a possible mismatch between filter and returned data. We should re-verify the date filters or ensure no other MG results exist within the last 24 hours before finalizing -1.",
+   "cost": 0.0020375,
+   "tokens_in": 718,
+   "tokens_out": 114,
+   "latency_s": 2.46087646484375
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query returned one magnesium observation (333188) with a value of 2.0 mg/dL, but this observation is dated 2023-07-30T22:50:00+00:00, which is over 3 months before the current time (2023-11-13T10:15:00+00:00) and therefore outside the 24-hour window. The correct answer should be -1, but the justification is that no measurement exists within the last 24 hours, not that one was found. However, the agent should verify the date filtering was correct in the query before returning -1.",
+   "cost": 0.002337,
+   "tokens_in": 837,
+   "tokens_out": 300,
+   "latency_s": 4.00870418548584
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The proposed action predicts -1 due to the only MG observation being from 2023-07-30, which is outside 24 hours; however, the trajectory shows a single observation within last 24 hours query result is not present in provided data. Approve but with caution that data tone is uncertain.",
+   "cost": 7.415e-05,
+   "tokens_in": 771,
+   "tokens_out": 89,
+   "latency_s": 1.7025928497314453
+  }
+ }
+}

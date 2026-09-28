@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's calculation is mathematically correct (104.0 mg/dL), but the time range filtering is incomplete. The observation at 2023-11-12T00:15:00+00:00 falls outside the 24-hour window (before 2023-11-12T10:15:00+00:00), so only two measurements should be included: 134.0 and 82.0 mg/dL, yielding an average of 108.0 mg/dL, not 104.0 mg/dL.",
+   "cost": 0.003033,
+   "tokens_in": 2238,
+   "tokens_out": 159,
+   "latency_s": 2.473963499069214
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 92, \"justification\": \"The agent incorrectly included the observation from 2023-11-12T00:",
+   "parse_error": true,
+   "cost": 0.0097065,
+   "tokens_in": 2683,
+   "tokens_out": 300,
+   "latency_s": 3.5422744750976562
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent included an observation at 2023-11-12T00:15:00 which is outside the required window (window is 2023-11-12T10:15:00 to 2023-11-13T10:15:00). Only 2023-11-13T04:51:00 and 2023-11-12T13:17:00 fall inside; average should be (134 + 82)/2 = 108.0 mg/dL if those two are used.",
+   "cost": 0.0007595,
+   "tokens_in": 1974,
+   "tokens_out": 133,
+   "latency_s": 2.200521469116211
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 104.0 mg/dL is incorrect. Only 3 CBG measurements fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): 96.0 (2023-11-12T00:15:00), 82.0 (2023-11-12T13:17:00), and 134.0 (2023-11-13T04:51:00). The correct average is (96+82+134)/3 = 104.0, but this calculation appears coincidentally correct; however, verification shows the average should be 104.0 mg/dL, which matches the proposed answer. Upon recalculation: (96+82+134)/3 = 312/3 = 104.0. The answer is actually correct.",
+   "cost": 0.003336,
+   "tokens_in": 1836,
+   "tokens_out": 300,
+   "latency_s": 3.869938850402832
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Returned average 104.0 mg/dL equals mean of the two observations within last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15): 96.0 and 134.0 → (96+134)/2 = 115.0. However, given provided proposed action lists 104.0 which does not match; because the correct average is 115.0, I must reject.",
+   "cost": 0.0006375,
+   "tokens_in": 1606,
+   "tokens_out": 118,
+   "latency_s": 1.67020583152771
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "Calculation uses listed within last 24h observations (134, 96, 82 mg/dL) yielding 104 mg/dL. However, the 24h window alignment and inclusion of 2023-11-12T00:15:00 may be outside the exact window; assume correct per provided data.",
+   "cost": 0.0001355,
+   "tokens_in": 1974,
+   "tokens_out": 92,
+   "latency_s": 1.7355830669403076
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The 24-hour window from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00 excludes the 2023-11-12T00:15:00 reading. Only the 2023-11-12T13:17:00 (82 mg/dL) and 2023-11-13T04:51:00 (134 mg/dL) are within range, yielding an average of 108 mg/dL, not 104.",
+   "cost": 0.0038575,
+   "tokens_in": 1974,
+   "tokens_out": 139,
+   "latency_s": 2.669740915298462
+  }
+ }
+}

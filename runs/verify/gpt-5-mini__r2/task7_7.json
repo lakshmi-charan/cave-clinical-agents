@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Single GLU observation returned (110 mg/dL at 2023-11-13T06:40:00+00:00); reporting that as the most recent CBG is correct and no additional orders or actions are required.",
+   "cost": 0.00033,
+   "tokens_in": 760,
+   "tokens_out": 70,
+   "latency_s": 2.1227786540985107
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action asserts an issued time and specific formatting not present in the data: only the observation value and timestamp are shown (2023-11-13T06:40:00+00:00). No evidence of an issued time 07:20:00+00:00 or a finalized report. The action also would duplicate/assume phrasing beyond the available data.",
+   "cost": 8.080000000000001e-05,
+   "tokens_in": 760,
+   "tokens_out": 107,
+   "latency_s": 2.1340389251708984
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried the Observation resource with the right patient ID (S3084624) and code (GLU) for capillary blood glucose. The result shows one observation with value 110.0 mg/dL at 2023-11-13T06:40:00+00:00, which is the most recent (and only) CBG in the bundle. The FINISH action accurately reports this data.",
+   "cost": 0.001508,
+   "tokens_in": 878,
+   "tokens_out": 126,
+   "latency_s": 2.0572681427001953
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation search returned a single GLU result for patient S3084624 with value 110 mg/dL at 2023-11-13T06:40:00+00:00; the FINISH statement accurately reports that as the most recent CBG (value and effective time).",
+   "cost": 0.00033975,
+   "tokens_in": 703,
+   "tokens_out": 82,
+   "latency_s": 1.3969404697418213
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved CBG (GLU code) for the specified patient S3084624. The result shows one observation with value 110.0 mg/dL at 2023-11-13T06:40:00+00:00, which is the most recent (and only) CBG in the results. The FINISH action accurately reports this data.",
+   "cost": 0.001378,
+   "tokens_in": 813,
+   "tokens_out": 113,
+   "latency_s": 2.154360294342041
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The Observation search result provided only includes an effective time and value; there is no evidence of an issued timestamp. The finish statement adds an issued time not shown in the data. Report only what is confirmed: value, units, and effective time.",
+   "cost": 0.00166,
+   "tokens_in": 760,
+   "tokens_out": 71,
+   "latency_s": 1.8261618614196777
+  }
+ }
+}

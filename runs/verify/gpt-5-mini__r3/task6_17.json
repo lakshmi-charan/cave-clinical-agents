@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The bundle includes three observations within the 24-hour window: 2023-11-12T12:59:00 (114 mg/dL), 2023-11-12T14:16:00 (96 mg/dL), and 2023-11-12T00:24:00 & 2023-11-12T01:15:00 are also within window? The query window was 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z, so only the 12:59 and 14:16 observations fall inside; the agent correctly selected two but averaged them incorrectly: mean of 114 and 96 is 105.0 mg/dL, not omitted—thus FINISH is premature because the reported numeric result (they intended 105) was not provided and must be returned as a single number.",
+   "cost": 0.0006815,
+   "tokens_in": 1030,
+   "tokens_out": 212,
+   "latency_s": 3.1032228469848633
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action relies on only two within-24h GLU observations (114 and 96 mg/dL). However, the initial data excerpt shows multiple observations within the last 24 hours, including 100.0, 114.0, 96.0, and 110.0 mg/dL. The agent’s calculation omits 100.0 and 110.0 values, leading to an inaccurate average. A complete average over all last 24h observations should be used.",
+   "cost": 0.0001035,
+   "tokens_in": 1030,
+   "tokens_out": 130,
+   "latency_s": 1.7426965236663818
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's calculation is incorrect. Within the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z), there are 4 valid observations: 100.0, 114.0, 96.0, and 110.0 mg/dL. The correct average is (100+114+96+110)/4 = 105.0 mg/dL. However, the agent only included 2 values (114 and 96) in their calculation, omitting the 100.0 and 110.0 measurements, which is a significant error in data completeness.",
+   "cost": 0.002113,
+   "tokens_in": 1188,
+   "tokens_out": 185,
+   "latency_s": 2.6073386669158936
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Bundle contains 7 observations; four are within the last 24 hours (timestamps 2023-11-12T12:59, 14:16, 00:24, 01:15 are within 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) and average calculation can proceed; no orders to place so finishing is appropriate.",
+   "cost": 0.000464,
+   "tokens_in": 968,
+   "tokens_out": 111,
+   "latency_s": 2.333847761154175
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 105 mg/dL is incorrect. Only 4 observations fall within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 100.0, 114.0, 96.0, and 110.0 mg/dL. The correct average is (100+114+96+110)/4 = 105.0 mg/dL, which rounds to 105. However, the verification reveals the calculation is actually correct at 105.0, so this should be approved—upon recalculation, the answer is mathematically sound.",
+   "cost": 0.002615,
+   "tokens_in": 1115,
+   "tokens_out": 300,
+   "latency_s": 3.8308377265930176
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The agent only averaged 114 and 96 mg/dL, but within the last 24 hours (2023-11-12T10:15Z to 2023-11-13T10:15Z) the query returned observations at 12:59 and 14:16 on 2023-11-12, which are correct; however, it ignored possible additional results within that window if any were omitted, and the computed mean of 114 and 96 is 105 which is correct for those two, but the FINISH is premature because we must ensure all observations in range are included. Also ensure none from outside the window (e.g., 00:24, 01:15) are included. Recalculate including all entries in the window before finishing.",
+   "cost": 0.0031075,
+   "tokens_in": 1030,
+   "tokens_out": 182,
+   "latency_s": 3.9330687522888184
+  }
+ }
+}

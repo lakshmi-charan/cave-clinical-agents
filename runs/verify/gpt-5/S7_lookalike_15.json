@@ -1,0 +1,150 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "Right patient and correct moderate deficiency dosing chosen, but the rate is improperly encoded as a time duration instead of an infusion rate; FHIR doseAndRate.rateQuantity should represent a rate (e.g., g/hour) or use timing for duration. Also consider including route coding and clearer instruction to avoid ambiguity.",
+   "cost": 0.002375,
+   "tokens_in": 1236,
+   "tokens_out": 83,
+   "latency_s": 2.1779093742370605
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient matched (Sean Villanueva, S6522310), recent Mg 1.2 mg/dL within 24h indicating moderate deficiency, and the MedicationRequest orders 2 g IV over 2 hours with correct NDC and timestamp per protocol.",
+   "cost": 0.000457,
+   "tokens_in": 1236,
+   "tokens_out": 74,
+   "latency_s": 1.5993704795837402
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The dosage instruction is incorrect. For moderate deficiency (serum magnesium 1.0 to <1.5 mg/dL), the protocol specifies '2 g over 2 hours,' but the proposed order has doseQuantity of 2 g with rateQuantity of 2 h, which represents an infusion rate of 1 g/hour—not the correct 2 g total dose over 2 hours. The dose should be 2 g total, infused at 1 g/hour for 2 hours.",
+   "cost": 0.002265,
+   "tokens_in": 1465,
+   "tokens_out": 160,
+   "latency_s": 3.3012664318084717
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient identified correctly, magnesium result within last 24 hours is 1.2 mg/dL (moderate deficiency). Order matches protocol: 2 g IV over 2 hours using correct NDC, with correct intent/status and patient reference.",
+   "cost": 0.002095,
+   "tokens_in": 1108,
+   "tokens_out": 71,
+   "latency_s": 3.704181432723999
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The serum magnesium level is 1.2 mg/dL, which falls in the moderate deficiency range (1.0 to <1.5 mg/dL) requiring 2g over 2 hours. However, the proposed dosageInstruction specifies a rate of 2 hours as a quantity value rather than the correct format for infusion rate. The doseAndRate should specify the dose as 2g and the rate as an infusion rate (e.g., per hour), not duration. Additionally, the clinical decision to order is correct, but the FHIR dosageInstruction structure appears malformed for proper medication administration.",
+   "cost": 0.002202,
+   "tokens_in": 1312,
+   "tokens_out": 178,
+   "latency_s": 3.4405879974365234
+  },
+  "p1|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Correct patient identified and magnesium result within last 24 hours is 1.2 mg/dL (moderate deficiency). The order matches protocol: IV magnesium sulfate 2 g over 2 hours with correct NDC and route.",
+   "cost": 0.002295,
+   "tokens_in": 1292,
+   "tokens_out": 68,
+   "latency_s": 1.9426066875457764
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "Dose and duration are correct for Mg 1.2 mg/dL, but the MedicationRequest is missing frequency/schedule and the duration is encoded as a rateQuantity with unit 'h' instead of an infusion rate or timing; also route is free-text without coding and status should typically be 'active' only after signing workflows. Please specify timing (eg, single dose over 2 hours) using dosageInstruction.timing and encode infusion appropriately.",
+   "cost": 0.00263375,
+   "tokens_in": 1219,
+   "tokens_out": 111,
+   "latency_s": 2.205620288848877
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "Action proposes ordering IV magnesium based on a single magnesium value 1.2 mg/dL interpreted as moderate deficiency. The protocol requires confirmation that the value is indeed within last 24 hours and that units mg/dL align with the dosing chart. The provided Observation shows 1.2 mg/dL and date 2023-11-13T07:15:00+00:00, which is within last 24 hours relative to 2023-11-13T10:15:00+00:00. However, the requested action must strictly ensure the patient is correctly identified (Sean Villanueva, DOB 1955-07-01) and that dosing is exact to protocol: for 1 to <1.5 mg/dL, 2 g over 2 hours is correct. Since the protocol matches, the order could be approved, but the system requires that the action be checked and executed only after verification. The last step shows duplication risk: the proposed action creates a MedicationRequest with an NDC code; ensure correct NDC and that no existing similar order exists to avoid duplication. Given the need for exact approval criteria, I recommend re-checking for existing active orders and proceed only if clear there is no duplicate. Therefore, reject with plan to re-verify.",
+   "cost": 0.0001778,
+   "tokens_in": 1236,
+   "tokens_out": 290,
+   "latency_s": 3.132432460784912
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "Magnesium level of 1.2 mg/dL falls in the moderate deficiency range (1 to <1.5 mg/dL), correctly triggering the 2 g IV over 2 hours order per protocol, for the correct patient.",
+   "cost": 0.005829,
+   "tokens_in": 1928,
+   "tokens_out": 101,
+   "latency_s": 2.8659207820892334
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "Correct patient identified and recent magnesium within 24 hours found (1.2 mg/dL). Order placed matches protocol for moderate deficiency: IV magnesium 2 g over 2 hours with correct NDC, and no extra or missing orders.",
+   "cost": 0.00242625,
+   "tokens_in": 1381,
+   "tokens_out": 70,
+   "latency_s": 1.7920267581939697
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient identified correctly (S6522310); a Mg 1.2 mg/dL result within last 24 hours supports moderate deficiency dosing of 2 g IV over 2 hours; MedicationRequest matches NDC, dose, route, timing, and was placed with correct patient and timestamp.",
+   "cost": 0.00050725,
+   "tokens_in": 1381,
+   "tokens_out": 81,
+   "latency_s": 2.051497220993042
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified patient Sean Villanueva (DOB 1955-07-01, ID S6522310), retrieved the most recent serum magnesium level from within the last 24 hours (1.2 mg/dL at 2023-11-13T07:15:00), correctly classified it as moderate deficiency, and placed an appropriate IV magnesium order (2 g over 2 hours) per protocol. The MedicationRequest was successfully created with correct dosing parameters.",
+   "cost": 0.002371,
+   "tokens_in": 1636,
+   "tokens_out": 147,
+   "latency_s": 2.5092337131500244
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Correct patient identified. Magnesium result within last 24 hours is 1.2 mg/dL, which matches moderate deficiency. Ordered IV magnesium sulfate with correct NDC, dose 2 g, and duration 2 hours per instructions; no extra or missing orders.",
+   "cost": 0.00227875,
+   "tokens_in": 1223,
+   "tokens_out": 75,
+   "latency_s": 2.327829599380493
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified patient Sean Villanueva (DOB 1955-07-01, ID S6522310), found a serum magnesium level of 1.2 mg/dL from 2023-11-13T07:15:00+00:00 (within the last 24 hours), correctly classified it as moderate deficiency (1.0 to <1.5 mg/dL), and ordered the appropriate dose of 2 g IV magnesium over 2 hours per protocol. The MedicationRequest was properly created with correct NDC code and dosing parameters.",
+   "cost": 0.002295,
+   "tokens_in": 1445,
+   "tokens_out": 170,
+   "latency_s": 2.843644857406616
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Magnesium 1.2 mg/dL within last 24h, moderate deficiency; order placed for 2 g IV over 2 hours using NDC 0338-1715-40 as specified.",
+   "cost": 9.705e-05,
+   "tokens_in": 1381,
+   "tokens_out": 70,
+   "latency_s": 1.7037723064422607
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Correct patient identified, magnesium level of 1.2 mg/dL within 24 hours correctly classified as moderate deficiency, and the order matches protocol dosing (2 g over 2 hours) with correct NDC; final summary accurately reflects actions taken.",
+   "cost": 0.006474,
+   "tokens_in": 2142,
+   "tokens_out": 112,
+   "latency_s": 2.4671618938446045
+  }
+ }
+}

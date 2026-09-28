@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "ServiceRequest targets Patient/S6545016, uses correct SNOMED code 306181000000106, authoredOn and occurrenceDateTime match current timestamp, intent/status/priority appropriate, and free-text note contains the exact requested Situation/Background/Assessment/Recommendation phrasing.",
+   "cost": 0.0003685,
+   "tokens_in": 850,
+   "tokens_out": 78,
+   "latency_s": 1.6664743423461914
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action attempts to create a ServiceRequest with stat priority and an inline note content. However, the request trajectory requires verification: ensure patient identifier S6545016 is correct, the code 306181000000106 matches the SNOMED for orthopedic referral, and the free text is entered exactly as specified within the 'note' field or appropriate 'note' in ServiceRequest. Also confirm that 2023-11-13T10:15:00Z is the correct authoredOn and occurrenceDateTime per current time. Without explicit confirmation of patient identity and data correctness, this action risks misfiling or mismatched patient data. If these details are verified, then proceed to create the ServiceRequest with the exact note content.",
+   "cost": 0.0001125,
+   "tokens_in": 850,
+   "tokens_out": 175,
+   "latency_s": 2.268190383911133
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The 'note' field structure is incorrect for FHIR ServiceRequest. The note should be an array of Annotation objects with 'text' and 'authoredOn' properties, not a simple object with just 'text'. The correct structure should be: \"note\": [{\"text\": \"...\"}] or include proper Annotation formatting.",
+   "cost": 0.001554,
+   "tokens_in": 994,
+   "tokens_out": 112,
+   "latency_s": 2.057485818862915
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest targets Patient/S6545016, uses the correct SNOMED code 306181000000106 with appropriate display, includes the requested authoredOn/occurrence timestamps, status/intent/priority match an active urgent referral, and the free-text note exactly matches the requested Situation/Background/Assessment/Recommendation content.",
+   "cost": 0.00037925,
+   "tokens_in": 813,
+   "tokens_out": 88,
+   "latency_s": 1.7813563346862793
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The 'note' field is improperly structured. According to FHIR ServiceRequest specifications, notes should be an array of Annotation objects with 'text' and 'authoredOn' properties, not a simple object with just 'text'. The correct structure should be: \"note\": [{\"text\": \"...\"}] or include proper Annotation formatting.",
+   "cost": 0.00153,
+   "tokens_in": 950,
+   "tokens_out": 116,
+   "latency_s": 2.1304376125335693
+  },
+  "p1|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest correctly targets Patient/S6545016, uses SNOMED code 306181000000106 with appropriate text, includes the exact requested free-text note, has authoredOn and occurrenceDateTime set to the current timestamp, intent/status/priority appropriate for an order; fields align with the task without omissions or duplications.",
+   "cost": 0.0003985,
+   "tokens_in": 882,
+   "tokens_out": 89,
+   "latency_s": 1.9984326362609863
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "ServiceRequest correctly uses the given SNOMED code, patient identifier, authoredOn/occurrence timestamps, intent/status/priority appropriate for an order, and includes the exact requested free-text referral; no patient mismatch or missing items found.",
+   "cost": 0.00034625,
+   "tokens_in": 833,
+   "tokens_out": 69,
+   "latency_s": 1.425985336303711
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The note field must be an array of Annotation objects in FHIR, not a single object. Also, priority “stat” may be acceptable but was not specified by the request. Everything else (patient, code, intent, authoredOn, occurrence, free-text content) matches the instructions.",
+   "cost": 0.0018625,
+   "tokens_in": 850,
+   "tokens_out": 80,
+   "latency_s": 2.7599446773529053
+  }
+ },
+ "1": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was created for Patient/S6545016 with SNOMED 306181000000106, authoredOn and occurrenceDateTime match 2023-11-13T10:15:00+00:00, status/intent/priority appropriate, and the free-text referral exactly matches the requested content.",
+   "cost": 0.0004115,
+   "tokens_in": 950,
+   "tokens_out": 87,
+   "latency_s": 3.6854424476623535
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "FINISH action would duplicate/incorrectly claim final confirmation without verifying whether the note content exactly matches requested wording and that the ServiceRequest has been properly linked to the patient and existing records. A safety check is still needed to confirm patient reference and that the final note text matches the exact phrasing required.",
+   "cost": 8.230000000000001e-05,
+   "tokens_in": 950,
+   "tokens_out": 87,
+   "latency_s": 1.6163852214813232
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was correctly created for the right patient (S6545016) with the correct SNOMED code (306181000000106), proper timestamp, and the exact free-text referral content as specified in the task. The FINISH action accurately reports what was accomplished.",
+   "cost": 0.001571,
+   "tokens_in": 1111,
+   "tokens_out": 92,
+   "latency_s": 1.9583384990692139
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest uses correct patient ID S6545016, SNOMED code 306181000000106, authoredOn and occurrenceDateTime match 2023-11-13T10:15:00+00:00, status/intent/priority appropriate, and the referral note exactly matches the requested free-text content.",
+   "cost": 0.0004015,
+   "tokens_in": 894,
+   "tokens_out": 89,
+   "latency_s": 1.8042612075805664
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was correctly created with the right patient (S6545016), correct SNOMED code (306181000000106), proper timestamp, and the exact free text note as specified in the task. The FINISH action accurately reports what was ordered and includes the complete referral note verbatim.",
+   "cost": 0.001531,
+   "tokens_in": 1046,
+   "tokens_out": 97,
+   "latency_s": 1.8939929008483887
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The ServiceRequest was correctly created for Patient/S6545016 with the specified SNOMED code, timing, status/intent, priority, and includes the exact requested free-text note. No additional or missing elements; final summary matches the order placed.",
+   "cost": 0.0019075,
+   "tokens_in": 950,
+   "tokens_out": 72,
+   "latency_s": 1.8583755493164062
+  }
+ }
+}

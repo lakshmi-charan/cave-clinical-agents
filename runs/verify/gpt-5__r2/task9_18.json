@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "The instruction says to order a next-day 8am serum potassium level to pair with the potassium replacement order; this implies only if repletion is ordered. However, the agent chose the 2023-11-12 result (3.6) as most recent, but there is a 2023-11-11 (3.6) and 2023-11-12 (3.6) and also 2023-11-12 is correct most recent vs 2023-11-13 current date; but there is 2023-11-12 14:39 and none on 11-13. Still, even if not low, they should still place no orders. However, they did not verify there isn’t a more recent 2023-11-13 result; list seems comprehensive. The main issue: the task requires pairing the order with a next-day lab only if low; they correctly skipped, but they failed to explicitly confirm no additional orders were pending and did not place anything. Unclear; to be safe, require explicit statement that no orders were placed and confirm threshold logic. The lab list includes a lower 3.2 on 11-08 but not most recent. Uncertain; reject for incomplete confirmation.",
+   "cost": 0.0049175,
+   "tokens_in": 1710,
+   "tokens_out": 278,
+   "latency_s": 5.124126434326172
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent potassium observed is 3.6 mmol/L (2023-11-12T14:39:00+00:00), which is above the 3.5 threshold so no replacement or follow-up 08:00 lab order is indicated per the given dosing protocol.",
+   "cost": 0.0005875,
+   "tokens_in": 1710,
+   "tokens_out": 80,
+   "latency_s": 1.9231772422790527
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level of 3.6 mmol/L is above the 3.5 threshold, so no repletion is needed. However, the agent's conclusion that 'not low' means the task is complete is incorrect—the task explicitly states to order replacement potassium 'if low,' which correctly was not done. The FINISH action should be approved only after confirming no orders were needed, but the agent should have explicitly verified this decision against the threshold before concluding. The logic is sound but the FINISH statement is incomplete: it should clarify that since 3.6 > 3.5, the condition for ordering was not met, making the task correctly concluded with no actions taken.",
+   "cost": 0.002969,
+   "tokens_in": 2024,
+   "tokens_out": 189,
+   "latency_s": 3.157954692840576
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 89.0,
+   "justification": "The most recent potassium is 3.6 mmol/L on 2023-11-12, which is not low, so no repletion is correct. However, the task also required pairing this with a morning serum potassium lab for the next day at 8am regardless of repletion; the proposed action omits placing that ServiceRequest. Also, FINISH is premature since the lab order was not placed.",
+   "cost": 0.00303875,
+   "tokens_in": 1591,
+   "tokens_out": 105,
+   "latency_s": 2.5536537170410156
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 3.6 mmol/L (from 2023-11-12), which is above the 3.5 threshold, so no repletion is indicated. However, the agent has not completed the task as requested—it should have checked if potassium was low and only then ordered replacement. The FINISH action correctly identifies that no repletion is needed, but the task completion is premature since the agent never actually attempted to place the orders (which would have been conditional on a low level). The logic is sound but the task flow appears incomplete.",
+   "cost": 0.002684,
+   "tokens_in": 1879,
+   "tokens_out": 161,
+   "latency_s": 2.97200083732605
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action incorrectly states the most recent potassium as 3.6 mmol/L on 2023-11-12 and concludes no action is needed. However, the available data shows a 3.4 mmol/L on 2023-11-07 and 3.6 on 2023-11-12; the 3.4 value is below the 3.5 threshold, which would require an order. Therefore, action should reflect the below-threshold value and corresponding potassium repletion dosing and a next-day potassium check.",
+   "cost": 0.0001411,
+   "tokens_in": 1710,
+   "tokens_out": 139,
+   "latency_s": 2.263751983642578
+  }
+ }
+}

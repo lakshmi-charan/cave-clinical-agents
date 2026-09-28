@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent magnesium level within the last 24 hours. Observation 344632 with timestamp 2023-11-12T09:48:00+00:00 (2.3 mg/dL) is the most recent measurement within the specified window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z), and the value is already in the requested unit of mg/dL.",
+   "cost": 0.001965,
+   "tokens_in": 1250,
+   "tokens_out": 143,
+   "latency_s": 2.4465646743774414
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "All returned observations (latest at 2023-11-12T09:48:00Z) fall before the 24-hour window start of 2023-11-12T10:15:00Z, so none are actually within the last 24 hours; the correct answer should be -1, not 2.3.",
+   "cost": 0.0064865,
+   "tokens_in": 1591,
+   "tokens_out": 251,
+   "latency_s": 3.4654464721679688
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The most recent observation in the returned bundle within the requested window (ge2023-11-12T10:15:00Z to le2023-11-13T10:15:00Z) must be on or after 2023-11-12T10:15:00Z; the listed 2023-11-12T09:48:00 is before that cutoff, so no qualifying result exists — the agent should return -1 not 2.3.",
+   "cost": 0.000517,
+   "tokens_in": 1084,
+   "tokens_out": 123,
+   "latency_s": 2.442605972290039
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved magnesium observations for patient S3032536 within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The most recent measurement is Observation 344632 from 2023-11-12T09:48:00+00:00 with a value of 2.3 mg/dL, which is already in the requested unit. The FINISH action correctly reports this value.",
+   "cost": 0.001771,
+   "tokens_in": 1026,
+   "tokens_out": 149,
+   "latency_s": 2.2544355392456055
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent Mg observation within last 24 hours (search window 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) is 2023-11-12T09:48:00Z with value 2.3 mg/dL; returning 2.3 matches the available data and units.",
+   "cost": 0.000424,
+   "tokens_in": 880,
+   "tokens_out": 102,
+   "latency_s": 1.8199453353881836
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "Most recent magnesium observation within last 24h is 2023-11-12T09:48:00Z with value 2.3 mg/dL; matches requested data and format.",
+   "cost": 8.1e-05,
+   "tokens_in": 1084,
+   "tokens_out": 67,
+   "latency_s": 1.6948761940002441
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The query date range was correct (2023-11-12T10:15Z to 2023-11-13T10:15Z), but the selected result at 2023-11-12T09:48Z falls outside this 24-hour window. There are no observations within the specified window, so the correct answer should be -1, not 2.3.",
+   "cost": 0.002385,
+   "tokens_in": 1084,
+   "tokens_out": 103,
+   "latency_s": 2.29850435256958
+  }
+ }
+}

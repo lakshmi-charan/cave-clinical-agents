@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly queried for LOINC 2823-3 and found no results, so it is appropriate not to place potassium replacement without a lab; it correctly recommends scheduling an 2023-11-14T08:00 potassium draw and provides correct dosing instructions and medication details for future ordering.",
+   "cost": 0.00042625,
+   "tokens_in": 1041,
+   "tokens_out": 83,
+   "latency_s": 1.539139747619629
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action asserts no potassium results exist and recommends waiting for a morning 8:00 lab, but the instruction requires acting only after verifying the most recent potassium level. Since no actual result exists in the provided data, a safe approach is to explicitly query for the latest potassium observation again or confirm absence before deciding not to treat. The FINISH content also includes a plan to place an order contingent on a low result, but no explicit execution steps or orders have been placed yet in this step, so the action as stated would not be verifiably correct.",
+   "cost": 0.00010845000000000002,
+   "tokens_in": 1041,
+   "tokens_out": 141,
+   "latency_s": 2.261169672012329
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action does not complete the task as stated. The task explicitly requires ordering a morning serum potassium level to be completed the next day at 8am if the potassium is low—but since no current level exists, the agent should proactively create the ServiceRequest for the morning lab draw rather than deferring it to clinician confirmation. Additionally, the agent has not attempted to place any orders; it should at minimum create the morning potassium observation order (ServiceRequest) as part of fulfilling the task.",
+   "cost": 0.001976,
+   "tokens_in": 1241,
+   "tokens_out": 147,
+   "latency_s": 2.7768049240112305
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No serum K result exists per provided Observation search; withholding empiric replacement is safe; scheduling a morning K draw for 2023-11-14T08:00 and providing correct dosing formula and NDC is appropriate and matches instructions.",
+   "cost": 0.00038275,
+   "tokens_in": 971,
+   "tokens_out": 70,
+   "latency_s": 1.561591386795044
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action violates the task requirements. The task explicitly states 'If low, then order replacement potassium' and 'pair this order with a morning serum potassium level'—both actions should be completed now if potassium is low. The agent found no potassium result (Bundle total=0), which is ambiguous: it could mean truly no prior result exists, or the search failed. The agent should have attempted to retrieve the most recent potassium by searching without date restrictions or with broader parameters before concluding inability to assess. Additionally, the FINISH action defers both the lab order and medication order to future conditional steps rather than executing them as requested, and it asks for clinician confirmation instead of completing the task. The agent should either find the recent potassium level or explicitly state why the search failed, then proceed with ordering as instructed.",
+   "cost": 0.00225,
+   "tokens_in": 1155,
+   "tokens_out": 219,
+   "latency_s": 3.712594985961914
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The task required: check latest K, if low then order potassium per protocol, and in all cases place a morning serum potassium for 2023-11-14 08:00. The agent found no K result but then did not place the required lab order and issued a FINISH without creating any orders. This omits the requested ServiceRequest and prematurely ends the workflow.",
+   "cost": 0.00228125,
+   "tokens_in": 1041,
+   "tokens_out": 98,
+   "latency_s": 2.622058629989624
+  }
+ }
+}

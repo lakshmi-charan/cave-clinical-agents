@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The Bundle contains multiple observations with timestamps; many are older than 24 hours relative to 2023-11-13T10:15:00+00:00, and the agent's claim of a single value in last 24 hours (resulting in 118) is not supported—the only observation within 24 hours before 2023-11-13T10:15:00 is none (latest is 2023-11-12T14:16:00, which is ~19h before? actually 2023-11-13T10:15 minus 2023-11-12T14:16 is 19h59m so 118 would be included) but agent did not show correct filtering or averaging steps; need explicit check of which observations fall between 2023-11-12T10:15:00 and 2023-11-13T10:15:00 and correct average. Approve only after correct calculation is shown.",
+   "cost": 0.0007295,
+   "tokens_in": 1118,
+   "tokens_out": 225,
+   "latency_s": 2.9452123641967773
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action relies on a single GLU value within the last 24 hours (118 mg/dL), but the data shows multiple GLU observations in the last 24 hours or around the timestamps; need to verify which observations fall within the exact last 24 hours from 2023-11-13T10:15:00+00:00 and compute the average accurately before finishing.",
+   "cost": 9.95e-05,
+   "tokens_in": 1118,
+   "tokens_out": 109,
+   "latency_s": 1.9417643547058105
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's calculation is incorrect. The current time is 2023-11-13T10:15:00+00:00, so the last 24 hours spans 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00. Only one observation (342493 at 2023-11-12T14:16:00+00:00 with value 118.0 mg/dL) falls within this window, making 118 the correct average. However, the agent should verify this is the only qualifying measurement and explicitly confirm the time window calculation before finishing.",
+   "cost": 0.002196,
+   "tokens_in": 1291,
+   "tokens_out": 181,
+   "latency_s": 2.9561281204223633
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH value [118] is incorrect: it must be the average of GLU observations within last 24 hours from 2023-11-13T10:15:00+00:00. The latest observations in bundle are up to 2023-11-12T14:16:00+00:00; none fall within the last 24 hours, so the correct return should be -1, not 118.",
+   "cost": 0.00049225,
+   "tokens_in": 1057,
+   "tokens_out": 114,
+   "latency_s": 2.6059987545013428
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 118 mg/dL is incorrect. The last 24 hours from 2023-11-13T10:15:00 spans 2023-11-12T10:15:00 to 2023-11-13T10:15:00. Only one measurement falls within this window: Observation 342493 (2023-11-12T14:16:00, 118.0 mg/dL). While 118 is that single value, the task asks for the average, and with only one data point, the average would be 118. However, the agent should verify this is the complete and correct set of measurements within the 24-hour window before finalizing.",
+   "cost": 0.002187,
+   "tokens_in": 1222,
+   "tokens_out": 193,
+   "latency_s": 3.273076057434082
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The last 24 hours from 2023-11-13T10:15:00+00:00 spans back to 2023-11-12T10:15:00+00:00. The only GLU observation within this window is at 2023-11-12T14:16:00+00:00 = 118 mg/dL, so the numeric result 118 is correct. However, the agent did not explicitly filter by the 24-hour window in the query; relying on a general search without a date filter risks missing or mis-scoping data. Please re-query with an appropriate date filter to ensure completeness before finishing.",
+   "cost": 0.0029775,
+   "tokens_in": 1118,
+   "tokens_out": 158,
+   "latency_s": 3.1269521713256836
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "Only the observation at 2023-11-12T14:16:00 falls within the last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15), and its value is 118 mg/dL, matching the reported average.",
+   "cost": 0.0062865,
+   "tokens_in": 1643,
+   "tokens_out": 218,
+   "latency_s": 4.148664951324463
+  }
+ }
+}

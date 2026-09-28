@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent CBG observation for patient S0674240. Among all 20 observations returned, Observation 309377 dated 2023-11-09T12:13:00+00:00 is indeed the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), with a value of 87.0 mg/dL. The FINISH action accurately reports this data.",
+   "cost": 0.00252,
+   "tokens_in": 1835,
+   "tokens_out": 137,
+   "latency_s": 2.1395246982574463
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 97.0,
+   "justification": "The most recent observation by date is 2023-11-09T12:13:00 vs 2023-11-05T19:09:00, but there is also an entry dated 2023-11-09T12:13:00... actually checking all dates, none exceed 2023-11-09 except none - wait the current time is 2023-11-13, and the latest date in the list is 2023-11-09T12:13:00, which is indeed correct; however the agent's answer is wrong because 2023-11-09T12:13:00 is not the max - checking list, dates like 2023-11-05T19:09:00 and 2023-11-04T12:42:00 are earlier, so 2023-11-09 is correct. Approve is more appropriate.",
+   "cost": 0.008269,
+   "tokens_in": 2252,
+   "tokens_out": 264,
+   "latency_s": 4.108225107192993
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The bundle contains observations dated 2023-11-05, 2023-11-04, and 2023-11-09; the most recent date/time in the list is 2023-11-09T12:13:00+00:00 but current context time is 2023-11-13 — however there are no entries after 2023-11-09, so proposed FINISH is correct about that observation; rejection because I must ensure there isn't any later observation (none shown) and the agent's rationale and FINISH must state that this is the most recent — the action should be approved only after confirming no observations >2023-11-09 exist.",
+   "cost": 0.000731,
+   "tokens_in": 1604,
+   "tokens_out": 165,
+   "latency_s": 1.974041223526001
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed action correctly identifies the most recent CBG for patient S0674240. Among all 20 observations returned, Observation 309377 dated 2023-11-09T12:13:00+00:00 with a value of 87.0 mg/dL is the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), and the FINISH action reports this data accurately with appropriate status.",
+   "cost": 0.002386,
+   "tokens_in": 1691,
+   "tokens_out": 139,
+   "latency_s": 2.733119487762451
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The most recent GLU observation in the bundle is 2023-11-09T12:13:00+00:00 (87 mg/dL) but there are later entries on 2023-11-05 and 2023-11-04 which are earlier; actually 11-09 is the latest chronologically among listed dates up to current time 2023-11-13 — however bundle includes 11-05 and 11-04 which are earlier than 11-09, so the FINISH action is unnecessary because it duplicates reporting rather than placing orders; also FINISH requires that all requested orders be placed — no orders were requested. Therefore reject.",
+   "cost": 0.0006895,
+   "tokens_in": 1470,
+   "tokens_out": 161,
+   "latency_s": 3.2886176109313965
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The most recent GLU observation for patient S0674240 is 2023-11-09T12:13:00+00:00 with 87.0 mg/dL, which matches the proposed FINISH data. Action relies on correct patient and data; no omissions or duplications.",
+   "cost": 0.0001154,
+   "tokens_in": 1604,
+   "tokens_out": 88,
+   "latency_s": 1.7321670055389404
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The most recent CBG is 2023-11-09 (87 mg/dL), but there is also a more recent CBG on 2023-11-05 (97 mg/dL) and 2023-11-04 (98 mg/dL). Wait, 11-09 is after 11-05 and 11-04, so 11-09 is indeed the latest. However, ensure no later date exists; list appears correct. Still, the FINISH payload omits the observation ID and may need to reflect the latest correctly; but primary issue: none. Approve... Correction: Approve.",
+   "cost": 0.003525,
+   "tokens_in": 1604,
+   "tokens_out": 152,
+   "latency_s": 3.698763847351074
+  }
+ }
+}

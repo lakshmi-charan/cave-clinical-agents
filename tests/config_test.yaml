@@ -1,0 +1,35 @@
+fhir_api_base: "http://127.0.0.1:18080/fhir/"
+now: "2023-11-13T10:15:00+00:00"
+output_dir: runs_test
+seed: 7
+max_round: 8
+compact_responses: true
+max_response_chars: 30000
+verifier_response_chars: 6000
+max_total_cost_usd: 1.0
+workers_agent: 8
+workers_verify: 8
+models:
+  - {name: dummy-a, provider: dummy}
+  - {name: dummy-b, provider: dummy}
+  - {name: dummy-c, provider: dummy}
+  - {name: dummy-d, provider: dummy}
+  - {name: dummy-e, provider: dummy}
+agents:
+  - {name: dummy-a, same_family: dummy-b, cross_family: dummy-d}
+  - {name: dummy-d, same_family: dummy-e, cross_family: dummy-a}
+panel: [dummy-a, dummy-b, dummy-c, dummy-d, dummy-e]
+blind_roles: [same_model, cross_family]
+perturb_roles: [same_model]
+embedding_model: dummy-embed
+prices_per_million:
+  dummy: {input: 0.0, output: 0.0}
+stress:
+  n_per_hazard: 15
+  control_fraction: 0.33
+  n_per_unfamiliar: 20
+  readonly_pool: 30
+n_splits: 12
+n_ablation_splits: 6
+alphas: [0.01, 0.02, 0.05]
+main_alpha: 0.02

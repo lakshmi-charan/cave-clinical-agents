@@ -1,0 +1,153 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The lab order timing and coding are fine, but the note element should be an array of Annotation objects, not a single object with text. Also, the instruction required checking the most recent potassium; if none exists, explicitly documenting that is fine, but ensure no potassium repletion is ordered. Please fix the ServiceRequest.note to be an array (e.g., note: [{text: \"Morning serum potassium level\"}]).",
+   "cost": 0.00222375,
+   "tokens_in": 923,
+   "tokens_out": 107,
+   "latency_s": 2.633091449737549
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned no potassium result (Bundle total=0), so ordering a morning serum potassium for 2023-11-14 at 08:00 is appropriate; the ServiceRequest correctly uses LOINC 2823-3, references the correct patient, sets authoredOn to current time, and schedules occurrenceDateTime as requested.",
+   "cost": 0.00040875,
+   "tokens_in": 923,
+   "tokens_out": 89,
+   "latency_s": 1.8637585639953613
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent cannot proceed with only a morning lab order because the task explicitly requires checking if potassium is low and ordering replacement potassium if needed. A Bundle total=0 result is ambiguous—it may indicate no prior results exist, but the agent should attempt to retrieve the most recent potassium level using a date-sorted query or confirm the patient has no baseline before skipping the repletion assessment entirely. The task logic cannot be completed without establishing the current potassium level.",
+   "cost": 0.001766,
+   "tokens_in": 1086,
+   "tokens_out": 136,
+   "latency_s": 2.566023826599121
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "You must first check the most recent potassium level using code K; the prior step queried LOINC 2823-3 and found none, but did not retrieve the latest potassium by code K. Also, the ServiceRequest note field must be an array of Annotation, not a single object. Do not place the lab order yet until the low level is confirmed and repletion dosing determined; when placing the lab, set appropriate routine priority for next-day 8:00 AM.",
+   "cost": 0.00225625,
+   "tokens_in": 861,
+   "tokens_out": 118,
+   "latency_s": 2.1588664054870605
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action attempts to order a follow-up potassium lab, but the initial search found NO recent potassium level (Bundle total=0). The task requires checking if the most recent level is LOW before proceeding with any orders. Without a baseline potassium value, the dosing calculation cannot be performed and the clinical decision to treat cannot be made.",
+   "cost": 0.001553,
+   "tokens_in": 1008,
+   "tokens_out": 109,
+   "latency_s": 2.1684463024139404
+  },
+  "p1|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The instruction was to check the most recent potassium and, if low, order repletion per protocol. The agent could not find a result but then concluded no repletion is indicated; absence of data does not establish a normal level. Additionally, the paired morning lab should be ordered, but the priority is set to stat (inconsistent with a scheduled tomorrow 8am test) and only the lab order was placed; any indicated repletion has not been addressed.",
+   "cost": 0.00233375,
+   "tokens_in": 955,
+   "tokens_out": 114,
+   "latency_s": 2.517256259918213
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The note field is incorrectly structured (should be an array of Annotation objects), and priority/stat for a scheduled next-day lab is inappropriate. Additionally, absence of a prior result doesn’t rule out current hypokalemia; the clinician requested replacement if low, which requires confirming the most recent result across possible codes or sources before deciding not to replete.",
+   "cost": 0.0020425,
+   "tokens_in": 906,
+   "tokens_out": 91,
+   "latency_s": 2.7739484310150146
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Action relies on the absence of a recent potassium result and schedules a morning potassium lab for tomorrow 8am; note content aligns with requested 'pair this order with a morning serum potassium level' but dependent on correct interpretation that no prior result found.",
+   "cost": 7.655000000000002e-05,
+   "tokens_in": 923,
+   "tokens_out": 76,
+   "latency_s": 1.7705714702606201
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.006604,
+   "tokens_in": 1442,
+   "tokens_out": 300,
+   "latency_s": 5.276188373565674
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The instruction says to order replacement potassium if the most recent level is low; absence of a result does not preclude the need if a low value existed. However, the agent failed to retrieve potassium using the provided code “K” and only searched by LOINC 2823-3, so it may have missed the most recent level. Additionally, the ServiceRequest note field is incorrectly structured (should be an array of Annotation), and priority “stat” conflicts with a scheduled occurrence tomorrow at 08:00. The FINISH claim that no replacement is indicated is unsupported because the correct search for the most recent potassium using code K was not performed.",
+   "cost": 0.00279875,
+   "tokens_in": 1015,
+   "tokens_out": 153,
+   "latency_s": 2.609276533126831
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no potassium result (Bundle total=0), so not ordering replacement is appropriate; a ServiceRequest for LOINC 2823-3 at 2023-11-14T08:00:00+00:00 was created as requested and uses correct code and timing.",
+   "cost": 0.00041775,
+   "tokens_in": 1015,
+   "tokens_out": 82,
+   "latency_s": 1.714151382446289
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires checking the most recent potassium level and ordering replacement IF low, paired with a follow-up lab. The agent found no prior result but failed to obtain a current potassium level before proceeding. The correct approach is to first order/obtain a stat potassium level now to determine if replacement is needed today, then pair it with the morning follow-up lab—not skip the immediate assessment entirely.",
+   "cost": 0.001807,
+   "tokens_in": 1197,
+   "tokens_out": 122,
+   "latency_s": 2.7510135173797607
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task specifies checking the most recent potassium level using code “K”; the agent only searched LOINC 2823-3 and did not search code K, so it may have missed a result. If low, it should have ordered potassium repletion per protocol; it did not attempt ordering. The morning lab order was placed with correct LOINC and timing, but the note field should be an array in FHIR and priority likely should be routine, not stat, for next-day 8am. The FINISH summary is therefore incomplete and potentially incorrect.",
+   "cost": 0.002505,
+   "tokens_in": 924,
+   "tokens_out": 135,
+   "latency_s": 2.2040021419525146
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires checking the most recent potassium level and ordering replacement potassium IF low. Step 1 found no potassium results (Bundle total=0), but this may not represent a complete search of historical data—the query should have included a date range or sorting to find the most recent value. The agent cannot definitively conclude potassium is normal without confirming this, and prematurely finishing without attempting to retrieve historical potassium data violates the conditional logic of the task. Additionally, ordering only the follow-up lab without first establishing whether replacement is needed does not fulfill the complete request.",
+   "cost": 0.001887,
+   "tokens_in": 1082,
+   "tokens_out": 161,
+   "latency_s": 3.1031532287597656
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 72, \"justification\": \"Action relies on correct patient data; Step 1 found no potassium result, but the task requires evaluating most recent potassium level and only ordering replacement if low. The proposed FINISH includes a claim of 'Most recent serum potassium:",
+   "parse_error": true,
+   "cost": 0.00012435000000000001,
+   "tokens_in": 1015,
+   "tokens_out": 184,
+   "latency_s": 2.32682204246521
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0069665,
+   "tokens_in": 1587,
+   "tokens_out": 300,
+   "latency_s": 4.929792404174805
+  }
+ }
+}

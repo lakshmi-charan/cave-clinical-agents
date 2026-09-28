@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Search of Observation (vital-signs) for patient S2091304 since 2023-11-12T10:15:00+00:00 returned zero results; therefore returning -1 per instructions is correct and safe.",
+   "cost": 0.0003245,
+   "tokens_in": 738,
+   "tokens_out": 70,
+   "latency_s": 1.5311253070831299
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action relies on an absence of magnesium observations within last 24 hours, but we only have data from a single prior query with date filter 'ge2023-11-12T10:15:00+00:00' and total=0. Without confirming the current date (2023-11-13T10:15:00+00:00) aligns to last 24 hours and whether the magnesium code 'MG' is correctly used in observations, we cannot definitively conclude no measurement exists. We should re-run or broaden the search to ensure no results exist in the last 24 hours for patient S2091304 before returning -1.",
+   "cost": 0.0001025,
+   "tokens_in": 738,
+   "tokens_out": 164,
+   "latency_s": 2.0379459857940674
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The search used category=vital-signs, but magnesium lab values are typically classified as laboratory results, not vital signs. The agent should retry using the $lab-trend service with code=MG and window_h=24, or search Observation with a different category parameter appropriate for lab results before concluding that no measurement exists.",
+   "cost": 0.00138,
+   "tokens_in": 860,
+   "tokens_out": 104,
+   "latency_s": 2.26393723487854
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search for vitals returned no results within the last 24 hours; returning -1 correctly indicates no magnesium (MG) measurement available in that window.",
+   "cost": 0.00027475,
+   "tokens_in": 675,
+   "tokens_out": 53,
+   "latency_s": 1.4048757553100586
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly queried for magnesium observations within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00) for patient S2091304 and received zero results. Per the task instructions, returning -1 when no measurement is available within the last 24 hours is the correct response.",
+   "cost": 0.001384,
+   "tokens_in": 784,
+   "tokens_out": 120,
+   "latency_s": 2.109978675842285
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "The search queried Observation category=vital-signs, but magnesium is a lab, not a vital sign. The appropriate lab endpoint (e.g., $lab-trend or Observation with lab category/code MG) wasn’t checked, so concluding -1 is premature.",
+   "cost": 0.0016625,
+   "tokens_in": 738,
+   "tokens_out": 74,
+   "latency_s": 2.484769582748413
+  }
+ }
+}

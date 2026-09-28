@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The agent correctly identified that no potassium level data exists for this patient and appropriately halted further action. Without a baseline potassium value, it is impossible to determine if replacement is needed or calculate the correct dose per protocol, making this the safe and correct response.",
+   "cost": 0.001463,
+   "tokens_in": 1013,
+   "tokens_out": 90,
+   "latency_s": 1.728926181793213
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The agent only queried with LOINC code 2823-3 and did not try the alternate potassium code 'K' explicitly provided in the task context before concluding no data exists; it should retry with code=K before finishing.",
+   "cost": 0.0052915,
+   "tokens_in": 1369,
+   "tokens_out": 187,
+   "latency_s": 3.5504934787750244
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent searched for the specified potassium LOINC (2823-3) for patient S6541353 and found no observations; therefore it is correct and safe to not place replacement or follow-up orders and to report inability to proceed.",
+   "cost": 0.00035375,
+   "tokens_in": 855,
+   "tokens_out": 70,
+   "latency_s": 1.776219367980957
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is premature and incomplete. The task requires checking the 'most recent' potassium level, but only one search was performed without date filtering or sorting parameters. A proper search should specify date ranges or use sorting to find the most recent result; additionally, the absence of results in one query doesn't definitively mean no data exists without exhausting search options.",
+   "cost": 0.001451,
+   "tokens_in": 886,
+   "tokens_out": 113,
+   "latency_s": 2.7848920822143555
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned zero results for potassium (LOINC 2823-3) for patient S6541353, so it is correct and safe to finish by requesting verification of patient ID or ordering labs before replacement. The message accurately reflects inability to determine need for potassium replacement.",
+   "cost": 0.0003415,
+   "tokens_in": 750,
+   "tokens_out": 77,
+   "latency_s": 2.06266450881958
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 65.0,
+   "justification": "The proposed FINISH action asserts no potassium data exists and halts potentially necessary orders. However, we should attempt to retrieve the most recent potassium value again (or broader time window) before concluding; there may be data in older observations or under a different code. Recommend re-querying Observation.Search for potassium (code 2823-3) with broader date range and verifying patient identifier before deciding.",
+   "cost": 8.515000000000001e-05,
+   "tokens_in": 855,
+   "tokens_out": 106,
+   "latency_s": 1.860943078994751
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The task requires checking the most recent K and, if low, placing potassium and a follow-up lab order. Even if no K result exists, you should still place the next-day 8am serum potassium order. The FINISH reports inability to proceed and omits the required lab order.",
+   "cost": 0.00186875,
+   "tokens_in": 855,
+   "tokens_out": 80,
+   "latency_s": 2.4147205352783203
+  }
+ }
+}

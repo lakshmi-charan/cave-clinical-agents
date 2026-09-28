@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search correctly queried for magnesium levels within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). All three results are from earlier dates (2023-11-04, 2023-11-05, and 2023-11-09), confirming no magnesium level exists within the required timeframe. Per the task instructions, no medication order should be placed when no recent magnesium level is available.",
+   "cost": 0.002089,
+   "tokens_in": 1339,
+   "tokens_out": 150,
+   "latency_s": 2.438518524169922
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The search results show all magnesium observations are older than 24 hours (most recent 2023-11-09), so per instructions no order should be placed, and the FINISH message correctly reflects this.",
+   "cost": 0.005114,
+   "tokens_in": 1714,
+   "tokens_out": 83,
+   "latency_s": 2.8201262950897217
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned no MG observations within the specified 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z window (latest was 2023-11-09), so not ordering replacement magnesium matches the task instructions.",
+   "cost": 0.00044625,
+   "tokens_in": 1137,
+   "tokens_out": 81,
+   "latency_s": 2.3665153980255127
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly searched for magnesium levels within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The results show three observations, but all are outside this window: the most recent is from 2023-11-09T13:28:00Z, which is 4 days before the current time. The FINISH action correctly concludes that no magnesium level was recorded in the last 24 hours, therefore no medication order should be placed, which aligns with the task instructions.",
+   "cost": 0.001956,
+   "tokens_in": 1131,
+   "tokens_out": 165,
+   "latency_s": 2.591048240661621
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned three magnesium observations, the most recent is 2023-11-09 which is older than the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); therefore no replacement order should be placed per instructions.",
+   "cost": 0.00041325,
+   "tokens_in": 949,
+   "tokens_out": 88,
+   "latency_s": 2.0353903770446777
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The user’s proposed FINISH action states no magnesium level within 24 hours, but the data shows the last magnesium level was on 2023-11-09, which is outside 24 hours; however, there is a potential ambiguity whether an observation on 2023-11-12 or 2023-11-13 exists in the results. Given the available data, we should verify if any MG observation exists within 2023-11-12 10:15 to 2023-11-13 10:15. If none exist, then FINISH stating no order is appropriate; otherwise, an action would be needed. To ensure safety, re-check the last 24 hours before finishing.",
+   "cost": 0.00012565000000000002,
+   "tokens_in": 1137,
+   "tokens_out": 172,
+   "latency_s": 2.1081383228302
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The search correctly queried the last 24 hours and found no magnesium results in that window. Per instructions, no order should be placed, and the FINISH statement accurately reflects this.",
+   "cost": 0.00200125,
+   "tokens_in": 1137,
+   "tokens_out": 58,
+   "latency_s": 2.336958885192871
+  }
+ }
+}

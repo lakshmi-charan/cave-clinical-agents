@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent MG observations are at 2023-11-12T09:48:00 and 2023-11-12T02:25:00, both older than 24 hours relative to 2023-11-13T10:15:00+00:00, so returning -1 is correct.",
+   "cost": 0.00040925,
+   "tokens_in": 917,
+   "tokens_out": 90,
+   "latency_s": 2.398481845855713
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "The most recent magnesium observations are 2023-11-12T09:48:00+00:00 and 2023-11-12T02:25:00+00:00, which are outside the last 24 hours relative to 2023-11-13T10:15:00+00:00. No measurement within the last 24 hours; returning -1 as specified.",
+   "cost": 9.065000000000001e-05,
+   "tokens_in": 917,
+   "tokens_out": 112,
+   "latency_s": 1.8610424995422363
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's conclusion is incorrect. Observation 344632 from 2023-11-12T09:48:00+00:00 falls within the last 24 hours from the current time of 2023-11-13T10:15:00+00:00 (27 minutes ago), and has a magnesium value of 2.3 mg/dL. The correct answer should be 2.3, not -1.",
+   "cost": 0.001751,
+   "tokens_in": 1076,
+   "tokens_out": 135,
+   "latency_s": 2.6961631774902344
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "There is a magnesium observation at 2023-11-12T09:48:00+00:00 which is within 24 hours of current time 2023-11-13T10:15:00+00:00? No — 2023-11-12T09:48 is 24h27m earlier, so no measurement within last 24 hours exists, so FINISH should return -1; however verify timing: current time makes last 24h start 2023-11-12T10:15:00+00:00. Because the most recent is before that, returning -1 is correct but the proposed action should be approved only after confirming the time calculation; current proposal is correct but I must reject because I cannot both approve and justify—however the proposed FINISH matches correct result, so the correct response would be approve. (Decision rejected here due to procedural mismatch in justification.)",
+   "cost": 0.000635,
+   "tokens_in": 844,
+   "tokens_out": 212,
+   "latency_s": 3.5713016986846924
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. Observation 344632 from 2023-11-12T09:48:00+00:00 is within the last 24 hours (current time is 2023-11-13T10:15:00+00:00, which is ~24.4 hours earlier), and shows a magnesium level of 2.3 mg/dL. The correct answer should be 2.3, not -1.",
+   "cost": 0.001696,
+   "tokens_in": 991,
+   "tokens_out": 141,
+   "latency_s": 2.863293170928955
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The 24-hour window from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00 includes an observation at 2023-11-12T09:48:00+00:00 which is outside the window, but also 2023-11-12T10:15 is the boundary; however, there is no observation at or after 10:15 on 11/12. Wait: There is an observation at 2023-11-12T02:25:00+00:00 which is within 24 hours prior to 10:15 on 11/12? The current time is 11/13 10:15; thus the last 24 hours start 11/12 10:15. Observations at 11/12 09:48 and 02:25 are before 10:15, so none are within the last 24 hours. However, the agent’s boundary reasoning was correct but cited the wrong reference time in text. The decision to return -1 is correct but justification must be accurate.",
+   "cost": 0.00376625,
+   "tokens_in": 917,
+   "tokens_out": 262,
+   "latency_s": 4.124131202697754
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The most recent MG observation is at 2023-11-12T09:48:00Z, which is before the 24-hour cutoff of 2023-11-12T10:15:00Z, so returning -1 is correct.",
+   "cost": 0.0043965,
+   "tokens_in": 1395,
+   "tokens_out": 91,
+   "latency_s": 2.103633403778076
+  }
+ }
+}

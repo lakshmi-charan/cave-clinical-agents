@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Correct patient identified by MRN S1777769. Observation records BP as vital-signs with code text BP, correct timestamp, final status, and value 118/77 mmHg. This matches the request with no omissions or duplicates.",
+   "cost": 0.0017125,
+   "tokens_in": 810,
+   "tokens_out": 70,
+   "latency_s": 2.212207078933716
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "The observation targets the correct patient (Patient/S1777769), uses vital-signs category, has the provided effectiveDateTime and valueString '118/77 mmHg', and status final; fields match the clinician's request and no conflicting data or duplicates are present.",
+   "cost": 0.0003545,
+   "tokens_in": 810,
+   "tokens_out": 76,
+   "latency_s": 1.5820322036743164
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses an incorrect subject reference format. The FHIR Patient resource reference should use the patient's internal FHIR ID (not the MRN). The search result shows the patient identifier is 'S1777769', but the reference should be 'Patient/[internal-id]' where internal-id is the system-generated FHIR ID, not the MRN. Additionally, the code should use a proper LOINC code for blood pressure (e.g., '85354-9') rather than just the text 'BP'.",
+   "cost": 0.001725,
+   "tokens_in": 935,
+   "tokens_out": 158,
+   "latency_s": 2.679042339324951
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 86.0,
+   "justification": "Correct patient MRN S1777769, appropriate vitals category, timestamp matches, and value recorded exactly as provided for BP flowsheet ID. Observation fields are valid and no duplication or omissions from the request.",
+   "cost": 0.00158625,
+   "tokens_in": 757,
+   "tokens_out": 64,
+   "latency_s": 2.6504461765289307
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses an incorrect code structure. The 'code' field should use a proper LOINC or SNOMED coding system (e.g., LOINC 85354-9 for blood pressure), not just the text 'BP'. Additionally, blood pressure should typically be recorded with systolic and diastolic components rather than a single valueString, following FHIR best practices for vital signs.",
+   "cost": 0.001494,
+   "tokens_in": 874,
+   "tokens_out": 124,
+   "latency_s": 2.3031156063079834
+  },
+  "p1|gpt-5": {
+   "decision": "reject",
+   "confidence": 84.0,
+   "justification": "Right patient and value, but the Observation is incomplete for blood pressure. BP should use LOINC code 85354-9 with components for systolic (8480-6) and diastolic (8462-4) and appropriate units, not a single valueString nor just code text 'BP'. Use component values with mmHg and the proper code.",
+   "cost": 0.0020125,
+   "tokens_in": 842,
+   "tokens_out": 96,
+   "latency_s": 3.9014627933502197
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "Blood pressure vitals should be recorded using component systolic/diastolic codes (e.g., LOINC 8480-6 and 8462-4) rather than a single valueString, and the code should reference a standard code rather than just text “BP”. Please structure the Observation with components for systolic and diastolic and appropriate coding.",
+   "cost": 0.00195125,
+   "tokens_in": 793,
+   "tokens_out": 96,
+   "latency_s": 3.2061431407928467
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The action uses the correct patient reference (Patient/S1777769) based on MRN, records BP as a vital-sign observation with effectiveDateTime matching the reported time, and uses valueString '118/77 mmHg' with code text 'BP'. Ensure no duplicate observation exists and that the timestamp aligns with local time if required by workflow.",
+   "cost": 7.930000000000002e-05,
+   "tokens_in": 810,
+   "tokens_out": 97,
+   "latency_s": 2.0344948768615723
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Correct patient identified by MRN S1777769 and Observation created with vital-signs category, BP code text, correct timestamp, final status, and value 118/77 mmHg. Task requested only recording BP; no omissions or duplicates evident.",
+   "cost": 0.001825,
+   "tokens_in": 884,
+   "tokens_out": 72,
+   "latency_s": 1.9278771877288818
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation was created for Patient/S1777769 with category vital-signs, effectiveDateTime matching provided time, status final, and valueString '118/77 mmHg' per request—this correctly records the BP for the right patient and timestamp.",
+   "cost": 0.000367,
+   "tokens_in": 884,
+   "tokens_out": 73,
+   "latency_s": 1.4733672142028809
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The blood pressure observation was created with valueString instead of the proper FHIR vital signs structure. Blood pressure should use a Quantity datatype with systolic/diastolic components, not a plain text string. Additionally, the code should reference a standard LOINC code (e.g., 85354-9) rather than just the text 'BP'.",
+   "cost": 0.001586,
+   "tokens_in": 1021,
+   "tokens_out": 113,
+   "latency_s": 2.3148486614227295
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Observation recorded for the correct patient (MRN S1777769), correct time, and correct value exactly as requested. Used vitals category and final status; no additional orders were needed.",
+   "cost": 0.001615,
+   "tokens_in": 812,
+   "tokens_out": 60,
+   "latency_s": 1.81241774559021
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The action correctly records the blood pressure measurement for the right patient (MRN S1777769, Anna Jones) with the correct value (118/77 mmHg), timestamp (2023-11-13T10:15:00+00:00), and proper FHIR Observation structure (vital-signs category, final status). The POST was accepted and the task is complete.",
+   "cost": 0.001528,
+   "tokens_in": 938,
+   "tokens_out": 118,
+   "latency_s": 2.1885616779327393
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The BP observation for patient S1777769 with value 118/77 mmHg was created as a finalized vitals Observation at the specified time, referencing the correct patient. The requested action matches the provided data and protocol; no omissions or duplications detected.",
+   "cost": 7.580000000000001e-05,
+   "tokens_in": 884,
+   "tokens_out": 79,
+   "latency_s": 1.768465280532837
+  }
+ }
+}

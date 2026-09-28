@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The lab trend for subject S3213957 with code GLU shows the last point value is 120, which is the most recent CBG. No additional actions are required.",
+   "cost": 0.00213,
+   "tokens_in": 1240,
+   "tokens_out": 58,
+   "latency_s": 2.1047446727752686
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend call returned 60 GLU points and the last point value is 120.0 (most recent), matching the FINISH response of \"120\"; patient ID and code align and timestamp window covers recent data.",
+   "cost": 0.000448,
+   "tokens_in": 1240,
+   "tokens_out": 69,
+   "latency_s": 2.2759952545166016
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved the CBG (glucose) lab trend for patient S3213957 using the $lab-trend function with code 'GLU'. The data points are sorted chronologically by unix timestamp, and the last point [1699852500, 120.0] represents the most recent CBG value of 120 mg/dL. The FINISH action correctly reports this value.",
+   "cost": 0.001933,
+   "tokens_in": 1343,
+   "tokens_out": 118,
+   "latency_s": 2.470338821411133
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 87.0,
+   "justification": "The lab trend for subject S3213957 with code GLU shows the most recent point is 1699852500 with value 120. The FINISH answer matches this latest value and addresses the correct patient and code.",
+   "cost": 0.00216,
+   "tokens_in": 1192,
+   "tokens_out": 67,
+   "latency_s": 1.8764002323150635
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent CBG (GLU code) value for patient S3213957 is correctly identified as 120. This corresponds to the last data point in the time series [1699852500, 120.0], which has the most recent Unix timestamp (1699852500 = 2023-11-15T02:15:00 UTC, which is after the current time of 2023-11-13T10:15:00 UTC in the dataset). The FINISH action correctly reports this value.",
+   "cost": 0.002022,
+   "tokens_in": 1292,
+   "tokens_out": 146,
+   "latency_s": 3.0567495822906494
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH relies on the assumption that the most recent value is the last point in the provided 'points' array; however, the current trajectory shows the last point timestamp 1699852500 with value 120, but we did not explicitly confirm that this is the most recent in real time or that it corresponds to CBG. A safe action would be to explicitly confirm the most recent data point or fetch the latest via lab trend with window_h and confirm order.",
+   "cost": 0.00011080000000000001,
+   "tokens_in": 1240,
+   "tokens_out": 122,
+   "latency_s": 2.07533597946167
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0072715,
+   "tokens_in": 1709,
+   "tokens_out": 300,
+   "latency_s": 4.851893424987793
+  }
+ }
+}

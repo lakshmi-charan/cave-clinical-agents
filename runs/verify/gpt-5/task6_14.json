@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The retrieved observations include values within the last 24 hours (e.g., 2023-11-12T09:48:00+00:00, 2023-11-12T02:25:00+00:00, 2023-11-12T00:54:00+00:00) relative to 2023-11-13T10:15:00+00:00, so returning -1 is incorrect. The agent should compute the average of those CBG values in mg/dL.",
+   "cost": 0.00266625,
+   "tokens_in": 1061,
+   "tokens_out": 134,
+   "latency_s": 1.8594756126403809
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "There are GLU observations within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 2023-11-12T09:48:00Z (163 mg/dL) is actually just before the window but 2023-11-12T00:54:00Z and 2023-11-12T02:25:00Z are within the 24-hour window starting 2023-11-12T10:15:00Z? — actually the correct window is 2023-11-12T10:15:00Z through 2023-11-13T10:15:00Z and none of the listed timestamps fall inside it, so the agent’s conclusion is plausible but timestamps include 2023-11-12T09:48:00Z which is outside by 27 minutes; however there is no measurement within the exact 24-hour window, so the proposed FINISH with -1 is acceptable only after confirming no observation timestamps between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z exist. Because the bundle shows one observation at 2023-11-12T00:54 and none between 10:15 on 11/12 and 10:15 on 11/13, I cannot safely approve without explicit confirmation of no observations in that interval.",
+   "cost": 0.00093925,
+   "tokens_in": 1061,
+   "tokens_out": 337,
+   "latency_s": 5.156307935714722
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's conclusion is incorrect. Multiple GLU observations fall within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): observations at 2023-11-12T00:54:00, 2023-11-12T02:25:00, and 2023-11-12T09:48:00 are all within this window. The average of these three values (118.0 + 151.0 + 163.0) / 3 = 144.0 mg/dL, not -1.",
+   "cost": 0.002112,
+   "tokens_in": 1222,
+   "tokens_out": 178,
+   "latency_s": 2.6540727615356445
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The search results include CBG observations within the last 24 hours (e.g., 2023-11-12T09:48:00Z, 02:25:00Z, 00:54:00Z), so returning -1 is incorrect. The correct step would be to compute the average of measurements between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z; the current FINISH answer does not do this.",
+   "cost": 0.00255125,
+   "tokens_in": 1009,
+   "tokens_out": 129,
+   "latency_s": 1.9431986808776855
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query correctly retrieved 8 CBG observations, and 5 of them fall within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 118.0, 151.0, 163.0, 102.0, and 88.0 mg/dL. The average is (118+151+163+102+88)/5 = 124.4 mg/dL, not -1.",
+   "cost": 0.001978,
+   "tokens_in": 1163,
+   "tokens_out": 163,
+   "latency_s": 2.32067608833313
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action claims no GLU observations in last 24 hours, but the data shows several observations within the timeframe (e.g., 2023-11-12T00:54, 2023-11-12T02:25, 2023-11-12T09:48). The final numeric answer should be calculated from those values, not -1.",
+   "cost": 9.585000000000001e-05,
+   "tokens_in": 1061,
+   "tokens_out": 107,
+   "latency_s": 1.5342991352081299
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0069065,
+   "tokens_in": 1563,
+   "tokens_out": 300,
+   "latency_s": 4.243767738342285
+  }
+ }
+}

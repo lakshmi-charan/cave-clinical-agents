@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation search for category=vital-signs and code=GLU returned zero results; reporting that no CBG observations were found is accurate and safe given the available data and timestamp.",
+   "cost": 0.000296,
+   "tokens_in": 712,
+   "tokens_out": 59,
+   "latency_s": 1.6080262660980225
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action asserts no GLU observations exist, but the available data shows an initial step with zero results; before finishing, we should verify there isn't an alternative data source (e.g., a non-vital-signs Observation or a later available data fetch) or re-run with a broader query. Also, ensure correct patient identifier and data domain before concluding.",
+   "cost": 7.6e-05,
+   "tokens_in": 712,
+   "tokens_out": 101,
+   "latency_s": 1.849571943283081
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent should attempt alternative search strategies before concluding no CBG data exists. The initial search filtered by category='vital-signs', but CBG observations might be categorized differently (e.g., 'laboratory') or the search parameters may need adjustment. The agent should try GET /Observation with different category parameters or use the lab-trend service before finishing with a negative result.",
+   "cost": 0.001383,
+   "tokens_in": 818,
+   "tokens_out": 113,
+   "latency_s": 2.8746776580810547
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search for Observation category=vital-signs with code=GLU returned zero results; reporting that no CBG observations were found for patient S1254345 accurately reflects the retrieved data and the task request.",
+   "cost": 0.0002905,
+   "tokens_in": 650,
+   "tokens_out": 64,
+   "latency_s": 2.2605483531951904
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The search was limited to vital-signs category, but CBG (capillary blood glucose) observations may be categorized differently (e.g., 'laboratory' or other categories). Before concluding no CBG exists, the agent should perform additional searches with different category parameters or use the lab-trend service to comprehensively check for GLU observations.",
+   "cost": 0.001289,
+   "tokens_in": 749,
+   "tokens_out": 108,
+   "latency_s": 2.8535056114196777
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The agent queried Observations for patient S1254345 with category vital-signs and code GLU and received no results. Reporting that no CBG observations were found directly answers the question given the data returned.",
+   "cost": 0.00153,
+   "tokens_in": 712,
+   "tokens_out": 64,
+   "latency_s": 1.944169282913208
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The agent only queried vital-signs Observations and did not try the $lab-trend service (or other observation categories) for code GLU before concluding no data exists, so the FINISH conclusion is premature and unverified.",
+   "cost": 0.0045915,
+   "tokens_in": 1129,
+   "tokens_out": 177,
+   "latency_s": 3.8443808555603027
+  }
+ }
+}

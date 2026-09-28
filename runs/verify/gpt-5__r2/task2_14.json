@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The agent correctly retrieved the patient by the given MRN, obtained birthdate 1947-12-03, and computed age on 2023-11-13 as 75 (birthday not yet reached).",
+   "cost": 0.0015025,
+   "tokens_in": 682,
+   "tokens_out": 65,
+   "latency_s": 3.108527898788452
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient S2450227 birthDate 1947-12-03; as of 2023-11-13 the patient is 75 years old (birthday not yet reached), so the reported integer age 75 is correct.",
+   "cost": 0.0003085,
+   "tokens_in": 682,
+   "tokens_out": 69,
+   "latency_s": 1.5815422534942627
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The patient MRN S2450227 (Gary Johnson) has birthDate 1947-12-03. Computing age as of 2023-11-13: from 1947-12-03 to 2023-11-13 is 75 years (the patient has not yet reached their December 3rd birthday in 2023), which matches the reported answer of 75 rounded down to an integer.",
+   "cost": 0.001428,
+   "tokens_in": 793,
+   "tokens_out": 127,
+   "latency_s": 2.164548873901367
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "On 2023-11-13, a birthdate of 1947-12-03 corresponds to age 75 until 2023-12-03, then 76. However, from 1947-12-03 to 2023-11-13 the patient is still 75, so the provided age 75 is correct. But FINISH should include the computed integer without quotes/array if the system expects a plain answer; more importantly, ensure rounding down explicitly stated—age 75 is correct. Rejecting only because FINISH format appears incorrect for the task output expectations.",
+   "cost": 0.00222,
+   "tokens_in": 624,
+   "tokens_out": 144,
+   "latency_s": 3.3047704696655273
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The patient's birthdate is 1947-12-03 and the current date is 2023-11-13. Calculating age: 2023 - 1947 = 76, but since the birthday (12-03) hasn't occurred yet in 2023 (current date is 11-13), the age rounds down to 75, which matches the proposed answer.",
+   "cost": 0.001322,
+   "tokens_in": 727,
+   "tokens_out": 119,
+   "latency_s": 3.8855161666870117
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The patient birthDate is 1947-12-03. As of 2023-11-13, age = 2023-1947 = 76, but since birthday is December 3, not yet reached by Nov 13, age is 75. The proposed FINISH states 75, which matches calculation. However I must verify the action steps: ensure the right patient, correct data, and completion condition. Since the user asked for age and the birthdate is provided, the computed age 75 is correct. The reason for rejection is to allow re-confirmation of final age; but the instruction requires to approve if correct and safe. I will approve.",
+   "cost": 0.0001001,
+   "tokens_in": 682,
+   "tokens_out": 165,
+   "latency_s": 2.5895347595214844
+  }
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 86.0,
+   "justification": "The query correctly scoped to last 24 hours, and only one CBG (GLU) value at 2023-11-12T13:35:00+00:00 was returned, yielding an average of 167 mg/dL. Output format is a single number in mg/dL as requested.",
+   "cost": 0.00282125,
+   "tokens_in": 1569,
+   "tokens_out": 86,
+   "latency_s": 2.2553274631500244
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query returned one GLU observation within the last 24 hours (2023-11-12T13:35:00+00:00 = 167 mg/dL); reporting that single value as the average is correct.",
+   "cost": 0.00052825,
+   "tokens_in": 1569,
+   "tokens_out": 68,
+   "latency_s": 1.5091817378997803
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent identified only one measurement (Observation 160859 at 2023-11-12T13:35:00) within the last 24 hours, but failed to recognize that Observation 160864 (2023-11-11T02:04:00, 153.0 mg/dL) also falls within the 24-hour window (between 2023-11-12T10:15:00 and 2023-11-13T10:15:00). The correct average should be (167 + 153) / 2 = 160 mg/dL, not 167.",
+   "cost": 0.00267,
+   "tokens_in": 1800,
+   "tokens_out": 174,
+   "latency_s": 2.3181729316711426
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The average over the last 24 hours should use all CBG values in that window, not a single reading. The query returned only one value within the last 24 hours (167 mg/dL at 2023-11-12T13:35Z), so the average equals 167, but the FINISH output must be a single number, not an array. Return 167, not [167].",
+   "cost": 0.00294375,
+   "tokens_in": 1507,
+   "tokens_out": 106,
+   "latency_s": 2.395205020904541
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of [167] is incorrect. Only 2 observations fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): Observation 160859 (167.0 mg/dL on 2023-11-12T13:35:00) and Observation 160864 (153.0 mg/dL on 2023-11-11T02:04:00 is outside the 24-hour window). The correct average should be (167.0 + 153.0) / 2 = 160.0 mg/dL, not 167.",
+   "cost": 0.002687,
+   "tokens_in": 1732,
+   "tokens_out": 191,
+   "latency_s": 2.295689105987549
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 70, \"justification\": \"The proposed FINISH action relies on a single data point within the last 24 hours, but the provided data list shows only one 2023-11-12T13:35:00Z observation which is within 24 hours of 2023-11-13T10:15:00Z? That is about 21 hours difference",
+   "parse_error": true,
+   "cost": 0.00030485,
+   "tokens_in": 1569,
+   "tokens_out": 566,
+   "latency_s": 4.716346740722656
+  }
+ }
+}

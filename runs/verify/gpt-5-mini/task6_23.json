@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query returned three GLU observations within the last 24 hours (63, 112, 94 mg/dL); their mean is 269/3 = 89.666... -> 89.67 mg/dL, matching the proposed result.",
+   "cost": 0.000364,
+   "tokens_in": 864,
+   "tokens_out": 74,
+   "latency_s": 1.8303263187408447
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action uses the mean of three GLU observations (63, 112, 94 mg/dL) but the timestamps show 12:36, 16:22, and 16:27 UTC on 2023-11-12, while the current context date is 2023-11-13T10:15:00+00:00. The requirement is the last 24 hours from now; need to ensure all values fall within the last 24 hours relative to 2023-11-13T10:15:00+00:00. As calculated, all observations are within last 24 hours, but two observations are very close in time and one earlier; however, the average computed as (63 + 112 + 94)/3 = 89.666..., which would be 89.67 mg/dL when rounded to two decimals. If any observation lies outside the 24-hour window, the result would be invalid. Given ambiguity about exact 24-hour boundary, I cannot approve without reconciling timestamps precisely. ",
+   "cost": 0.00014160000000000003,
+   "tokens_in": 864,
+   "tokens_out": 246,
+   "latency_s": 2.704563617706299
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved 3 CBG (GLU) measurements for patient S0674240 within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The average calculation is correct: (63 + 112 + 94) / 3 = 269 / 3 = 89.67 mg/dL, and the answer is properly formatted as a single number in mg/dL.",
+   "cost": 0.001748,
+   "tokens_in": 998,
+   "tokens_out": 150,
+   "latency_s": 2.383469343185425
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "Calculated average is incorrect: three values 112, 63, 94 mg/dL average = (112+63+94)/3 = 269/3 = 89.666... → rounded to 89.67 is correct mathematically, but result should be a single number (89.67) — FINISH action provided an array string and context requires single number; also ensure unit mg/dL explicitly if needed.",
+   "cost": 0.00041525,
+   "tokens_in": 789,
+   "tokens_out": 109,
+   "latency_s": 1.897860050201416
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 89.67 is incorrect. The three CBG measurements retrieved are 112.0, 63.0, and 94.0 mg/dL, which average to (112.0 + 63.0 + 94.0) / 3 = 269.0 / 3 = 89.67 mg/dL. While the calculation is mathematically correct, the answer should be reported as a single number without array brackets, and the format appears inconsistent with the instruction to return 'a single number' not an array.",
+   "cost": 0.002413,
+   "tokens_in": 913,
+   "tokens_out": 300,
+   "latency_s": 4.075267314910889
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The average of 63, 112, and 94 mg/dL is 89.67 only if all three are within the last 24 hours, which they are. However, the action outputs a string with two decimals; the task requests a single number. Also, it should ensure numerical formatting (not a string in an array). Approve only with 89.67 as a number.",
+   "cost": 0.00211,
+   "tokens_in": 864,
+   "tokens_out": 103,
+   "latency_s": 2.5868945121765137
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "All three GLU observations fall within the last 24 hours and are in mg/dL; the average (112+63+94)/3 = 89.67 is correctly computed for the correct patient.",
+   "cost": 0.0041215,
+   "tokens_in": 1321,
+   "tokens_out": 82,
+   "latency_s": 2.6513054370880127
+  }
+ }
+}

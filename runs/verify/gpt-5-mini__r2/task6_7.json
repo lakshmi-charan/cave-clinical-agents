@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Three GLU observations within the 24-hour window (131, 121, 117 mg/dL) average to 123.0 mg/dL; patient and timeframe match and units are mg/dL.",
+   "cost": 0.00035775,
+   "tokens_in": 911,
+   "tokens_out": 65,
+   "latency_s": 1.4106383323669434
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action incorrectly treats the values as 131, 121, 117 mg/dL but omits the 86 mg/dL from 2023-10-10 which is outside the last 24 hours. Additionally, the assistant's mean calculation should be re-evaluated against the exact timestamps relative to current time 2023-11-13T10:15:00Z.",
+   "cost": 8.955000000000001e-05,
+   "tokens_in": 911,
+   "tokens_out": 110,
+   "latency_s": 1.9803683757781982
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent incorrectly excluded Observation 344996 (86.0 mg/dL from 2023-10-10) from the calculation, which is outside the 24-hour window, but then calculated the average of only 3 values (131+121+117)/3 = 123.0 when it should have included all 3 valid observations. However, the more critical error is that the calculation itself is correct for the 3 observations within the last 24 hours, but the agent should verify this is the complete and accurate average: (131+121+117)/3 = 369/3 = 123.0 mg/dL is mathematically correct. Upon review, the answer of 123.0 is actually correct, but I must reject because the agent's work shows it properly identified 3 observations in the correct time window and calculated their mean correctly.",
+   "cost": 0.00255,
+   "tokens_in": 1050,
+   "tokens_out": 300,
+   "latency_s": 4.1913838386535645
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Calculating mean of the four GLU observations within the 24-hour window (117, 121, 131, 86) yields average 455/4 = 113.75 ≈ 113.8; however only three timestamps are within last 24h from 2023-11-13T10:15Z (18:16, 20:58, 22:45) average = (117+121+131)/3 = 369/3 = 123.0, matching the proposed result.",
+   "cost": 0.00047375,
+   "tokens_in": 847,
+   "tokens_out": 131,
+   "latency_s": 2.0486342906951904
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 123.0 mg/dL is incorrect. The valid CBG measurements within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) are: 131.0, 121.0, and 117.0 mg/dL. The correct average is (131.0 + 121.0 + 117.0) / 3 = 123.0 mg/dL. However, one observation (344996 from 2023-10-10) is outside the 24-hour window and should be excluded. The calculation appears coincidentally correct but the justification is unclear; the average should be explicitly stated as 123.0 based on the three valid measurements.",
+   "cost": 0.002476,
+   "tokens_in": 976,
+   "tokens_out": 300,
+   "latency_s": 3.7575132846832275
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly filtered to GLU observations within the last 24 hours for patient S1152319 and averaged 131, 121, and 117 mg/dL to 123.0. The out-of-range 2023-10-10 result was excluded, and units were already mg/dL.",
+   "cost": 0.00198875,
+   "tokens_in": 911,
+   "tokens_out": 85,
+   "latency_s": 2.369194984436035
+  }
+ }
+}

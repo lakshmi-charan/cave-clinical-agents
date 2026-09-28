@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Bundle shows observations through 2023-11-12T12:28:00+00:00 (85 mg/dL) which is the latest timestamp in the list; the proposed final statement matches the data and patient ID.",
+   "cost": 0.00052675,
+   "tokens_in": 1555,
+   "tokens_out": 69,
+   "latency_s": 2.0957329273223877
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The most recent GLU observation in the provided bundle is 85.0 mg/dL at 2023-11-12T12:28:00+00:00, which matches the data. However, the proposed action states 85 mg/dL with the same timestamp but the instruction requires precise formatting and verification that no newer observations exist outside the provided list. To be safe, I cannot approve FINISH without explicit confirmation that no newer GLU observations exist beyond 2023-11-12T12:28:00+00:00 in the same dataset.",
+   "cost": 0.00013534999999999998,
+   "tokens_in": 1555,
+   "tokens_out": 144,
+   "latency_s": 2.7715063095092773
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent identified observation 307411 (2023-11-12T12:28:00+00:00, 85 mg/dL) as most recent, but observation 307407 (2023-11-12T12:15:00+00:00, 79 mg/dL) is actually more recent when sorted by effectiveDateTime. The correct most recent CBG is 79 mg/dL at 2023-11-12T12:15:00+00:00.",
+   "cost": 0.002529,
+   "tokens_in": 1789,
+   "tokens_out": 148,
+   "latency_s": 2.5286355018615723
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The most recent GLU observations by effective time in the provided list are 2023-11-12T12:28:00 (85 mg/dL) and 2023-11-12T12:15:00 (79 mg/dL); but there is also 2023-11-12T01:06:00 (99 mg/dL). The most recent timestamp is 2023-11-12T12:28:00 — the value 85 mg/dL is correct, however the FINISH action should reference that it is the most recent and ensure no later observations exist; because the proposed message omitted mentioning the 79 mg/dL at 12:15 (which is earlier) but otherwise is correct, I reject to require exactness in stating it is the most recent and include the exact observation id/time provenance.",
+   "cost": 0.00075775,
+   "tokens_in": 1463,
+   "tokens_out": 196,
+   "latency_s": 4.195287704467773
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer is incorrect. Reviewing the timestamps, Observation 307407 at 2023-11-12T12:15:00+00:00 (79.0 mg/dL) is more recent than Observation 307411 at 2023-11-12T12:28:00+00:00 is actually LATER. The most recent CBG is Observation 307400 at 2023-11-12T01:06:00+00:00 with 99.0 mg/dL, which is the latest timestamp in the entire dataset.",
+   "cost": 0.002516,
+   "tokens_in": 1686,
+   "tokens_out": 166,
+   "latency_s": 2.3247666358947754
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The most recent observation in the list is 2023-11-12T12:28:00+00:00 with 85 mg/dL, but there is a later one on 2023-11-12T12:15:00+00:00 (79 mg/dL) is earlier; however 2023-11-12T01:06:00 and 12:28 same day. Need to confirm if any observation on 2023-11-12 later than 12:28; none. But the agent overlooked the date 2023-11-12T12:28 is indeed most recent; however the current time is 2023-11-13, so no 2023-11-13 values exist. Wait: 2023-11-12T12:28 is correct. Yet observation 307400 at 2023-11-12T01:06 is earlier. 12:28 is the latest. The rejection was due to uncertainty; better to approve? The agent’s answer matches the most recent entry. Approve.",
+   "cost": 0.00441375,
+   "tokens_in": 1555,
+   "tokens_out": 247,
+   "latency_s": 3.4257588386535645
+  }
+ }
+}

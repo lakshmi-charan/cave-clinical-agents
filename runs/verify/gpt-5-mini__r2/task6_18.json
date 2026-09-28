@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation list shows a single GLU within the requested 24‑hour window (2023-11-12T13:00:00+00:00) with value 127 mg/dL; reporting the average as 127 mg/dL is correct.",
+   "cost": 0.000553,
+   "tokens_in": 1604,
+   "tokens_out": 76,
+   "latency_s": 1.9966630935668945
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The provided data set includes a GLU observation at 2023-11-12T13:00:00+00:00 with value 127 mg/dL within the last 24 hours from 2023-11-13T10:15:00+00:00. If this is the only measurement in the window, the average is 127 mg/dL. However, ensure there are no additional observations within the exact 24-hour window that were missed.",
+   "cost": 0.0001298,
+   "tokens_in": 1604,
+   "tokens_out": 124,
+   "latency_s": 2.3955798149108887
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's answer is incorrect. While there is one observation (323611) at 2023-11-12T13:00:00+00:00 with value 127 mg/dL within the 24-hour window, the query results show 20 total observations, most of which are outside the specified date range. The agent should have filtered the results to only include observations between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z before calculating the average. Only observation 323611 (127 mg/dL on 2023-11-12T13:00:00) falls within this window, making the average 127 correct by coincidence, but the agent's reasoning is flawed as it did not properly verify that only one measurement exists in the last 24 hours.",
+   "cost": 0.002954,
+   "tokens_in": 1839,
+   "tokens_out": 223,
+   "latency_s": 3.427630662918091
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The bundle includes one observation within the last 24 hours: 2023-11-12T13:00:00Z (127 mg/dL) but the query window was 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z; that measurement is within window, so average equals 127 — however FINISH proposed [127] without verifying no other observations in window; need confirmation there is exactly one and then finish. ",
+   "cost": 0.00062725,
+   "tokens_in": 1501,
+   "tokens_out": 126,
+   "latency_s": 3.125530242919922
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 127 mg/dL is incorrect. Only ONE observation (323611 from 2023-11-12T13:00:00) falls within the last 24 hours (between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z). The correct average should be 127.0 mg/dL, but the agent should verify this is the only qualifying measurement and report it as such, not as an average of multiple values.",
+   "cost": 0.002476,
+   "tokens_in": 1726,
+   "tokens_out": 150,
+   "latency_s": 2.801107168197632
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The query correctly filters GLU observations for patient S1478444 within the last 24 hours window, yielding a single value (127 mg/dL). The reported average of 127 matches and uses the correct unit.",
+   "cost": 0.002665,
+   "tokens_in": 1604,
+   "tokens_out": 66,
+   "latency_s": 1.9156646728515625
+  }
+ }
+}

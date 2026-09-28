@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned zero magnesium results in the last 24 hours for patient S3195056, so not ordering magnesium replacement is correct and follows the protocol.",
+   "cost": 0.0003135,
+   "tokens_in": 830,
+   "tokens_out": 53,
+   "latency_s": 1.3266761302947998
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The earlier step claimed no serum magnesium in last 24 hours based on a search result with total 0, but we cannot conclude without confirming date filtering. The task requires checking last 24 hours; if none, do nothing. If there might be data outside 24 hours, we must verify date/time of observations. Also a FINISH action must only be approved if every requested order has been placed correctly; here no order was placed, but we could still finish with no order if verified.",
+   "cost": 9.190000000000001e-05,
+   "tokens_in": 830,
+   "tokens_out": 126,
+   "latency_s": 1.749743938446045
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly followed the conditional logic: it queried for magnesium levels within the relevant timeframe, found none (Bundle total=0), and appropriately concluded that no order should be placed per the instruction 'If no magnesium level has been recorded in the last 24 hours, don't order anything.' The FINISH action accurately reports this outcome.",
+   "cost": 0.001553,
+   "tokens_in": 1003,
+   "tokens_out": 110,
+   "latency_s": 2.116344928741455
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The observation search for code=MG and patient S3195056 returned zero results within the timeframe, so no recent magnesium level exists and no IV magnesium order should be placed.",
+   "cost": 0.00030675,
+   "tokens_in": 771,
+   "tokens_out": 57,
+   "latency_s": 1.5712988376617432
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search for magnesium levels (code=MG) returned zero results (Bundle total=0), confirming no magnesium level has been recorded in the last 24 hours. Per the task instructions, no order should be placed when no magnesium level is available, making the FINISH action correct.",
+   "cost": 0.001431,
+   "tokens_in": 931,
+   "tokens_out": 100,
+   "latency_s": 2.1130809783935547
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The search returned no magnesium observations for patient S3195056, and the instruction says not to order anything if no level was recorded in the last 24 hours. The FINISH statement correctly reflects this and no orders were placed.",
+   "cost": 0.0017175,
+   "tokens_in": 830,
+   "tokens_out": 68,
+   "latency_s": 2.0117151737213135
+  }
+ }
+}

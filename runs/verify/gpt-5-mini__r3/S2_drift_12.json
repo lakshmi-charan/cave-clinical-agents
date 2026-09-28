@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Two observations in the 24-hour window (7.55 and 7.05 mmol/L) were correctly identified, averaged ((7.55+7.05)/2=7.30 mmol/L) and converted to mg/dL (7.30×18=131.4 mg/dL); result matches calculation.",
+   "cost": 0.00057975,
+   "tokens_in": 1615,
+   "tokens_out": 88,
+   "latency_s": 1.5241103172302246
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed action assumes two last-24h glucose measurements (7.05 and 7.55 mmol/L) exist within last 24h; however, observations show 7.55 mmol/L at 2023-11-13T07:56:00+00:00 and 7.05 mmol/L at 2023-11-12T21:26:00+00:00, which are within last 24h, but the times need to be aligned with current date 2023-11-13T10:15:00+00:00; still, need to verify all data points within window and ensure conversion factor 1 mmol/L = 18 mg/dL is correct. Also, the requested output is a single number in mg/dL; a precise calculation should be performed and confirmed before finishing.",
+   "cost": 0.00016035000000000002,
+   "tokens_in": 1615,
+   "tokens_out": 199,
+   "latency_s": 2.3509409427642822
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's calculation is incorrect. Only 3 observations fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): observations 270654 (7.55 mmol/L at 2023-11-13T07:56:00), 270659 (7.27 mmol/L at 2023-11-10T23:35:00 - outside window), and 270665 (7.05 mmol/L at 2023-11-12T21:26:00). The correct measurements within 24 hours are 7.55 and 7.05 mmol/L. The average is (7.55 + 7.05)/2 = 7.3 mmol/L = 131.4 mg/dL, which matches the proposed answer numerically, but the agent only identified 2 measurements when there should be verification of the exact count and the calculation methodology is unclear from the rationale provided.",
+   "cost": 0.003259,
+   "tokens_in": 1894,
+   "tokens_out": 273,
+   "latency_s": 3.446932792663574
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation search returned two measurements within the 24‑hour window (2023-11-12T21:26:00 7.05 mmol/L and 2023-11-13T07:56:00 7.55 mmol/L). Converting mmol/L to mg/dL (multiply by 18): average = ((7.05+7.55)/2)*18 = (7.30*18) = 131.4 mg/dL, which matches the proposed result.",
+   "cost": 0.00063425,
+   "tokens_in": 1529,
+   "tokens_out": 126,
+   "latency_s": 1.9112534523010254
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 131.4 mg/dL is incorrect. Only 2 observations fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): Observation 270654 (7.55 mmol/L) and Observation 270665 (7.05 mmol/L). Converting to mg/dL: (7.55 + 7.05)/2 = 7.3 mmol/L × 18 = 131.4 mg/dL appears arithmetically correct, but the calculation should verify only these 2 valid measurements were used and properly converted.",
+   "cost": 0.003294,
+   "tokens_in": 1794,
+   "tokens_out": 300,
+   "latency_s": 4.2407612800598145
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 86.0,
+   "justification": "The agent correctly filtered CBG (GLU) observations within 2023-11-12T10:15 to 2023-11-13T10:15, found two values (7.05 and 7.55 mmol/L), converted to mg/dL (×18), averaged to 131.4 mg/dL, and reported a single number as requested.",
+   "cost": 0.00301875,
+   "tokens_in": 1615,
+   "tokens_out": 100,
+   "latency_s": 1.9892535209655762
+  }
+ }
+}

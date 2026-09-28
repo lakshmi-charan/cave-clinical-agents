@@ -1,0 +1,150 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly determined that no HbA1C values exist in the patient's chart (both code searches returned Bundle total=0), and per the task instructions, a new HbA1C lab test should be ordered when no measurement is available. The ServiceRequest is properly formatted with correct LOINC code 4548-4, appropriate status/intent values, correct patient reference, and current timestamp.",
+   "cost": 0.001709,
+   "tokens_in": 1114,
+   "tokens_out": 119,
+   "latency_s": 2.1388766765594482
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 80.0,
+   "justification": "No prior HbA1C observation found via both code searches, so answer is -1 and ordering a new HbA1C ServiceRequest with correct LOINC code, patient, and current date is appropriate per protocol.",
+   "cost": 0.0045965,
+   "tokens_in": 1471,
+   "tokens_out": 92,
+   "latency_s": 2.3191640377044678
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Searches for A1C (code A1C) and LOINC 4548-4 returned no results, so ordering a new Hemoglobin A1c (LOINC 4548-4) ServiceRequest for Patient/S2033286 with the specified authoredOn, status, intent, and priority matches the task and is appropriate.",
+   "cost": 0.00042725,
+   "tokens_in": 973,
+   "tokens_out": 92,
+   "latency_s": 2.353667974472046
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The proposed action correctly orders a new HbA1C lab test (LOINC 4548-4) for patient S2033286 via ServiceRequest since no prior HbA1C values were found in the chart (both searches returned Bundle total=0). The order is properly formatted with correct patient reference, LOINC code, timestamp, and status/intent parameters.",
+   "cost": 0.001534,
+   "tokens_in": 954,
+   "tokens_out": 116,
+   "latency_s": 2.0311663150787354
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Searches for A1C and LOINC 4548-4 returned no observations (total=0), so ordering a routine HbA1c ServiceRequest for Patient/S2033286 dated now is appropriate and follows the requested LOINC code and timing.",
+   "cost": 0.0003595,
+   "tokens_in": 830,
+   "tokens_out": 76,
+   "latency_s": 1.8802289962768555
+  },
+  "p1|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires reporting the last HbA1C value and date first, then conditionally ordering only if that value is >1 year old. Since no HbA1C exists, the answer should be [-1] per instructions, but the agent should FINISH with this answer rather than automatically ordering a new test without explicit clinician confirmation that an order is desired when no baseline exists.",
+   "cost": 0.00173,
+   "tokens_in": 1155,
+   "tokens_out": 115,
+   "latency_s": 2.2822225093841553
+  },
+  "p2|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The clinician's request requires answering the question about the last HbA1C value FIRST before conditionally ordering a new test. The assistant must provide the answer [-1] to indicate no measurement is available, but this FINISH step skips that required response and proceeds directly to ordering without explicitly communicating the finding to the clinician.",
+   "cost": 0.001619,
+   "tokens_in": 1094,
+   "tokens_out": 105,
+   "latency_s": 1.9364049434661865
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "Before issuing a ServiceRequest to order an HbA1c test, we must confirm the patient identity and ensure the request aligns with current clinical data. The provided trajectory indicates no existing HbA1c observation found, but we cannot assume the patient context or that a new order should be placed without clinician confirmation; also the proposal uses a ServiceRequest rather than a direct Observation.Create for a new lab order consistent with the platform's typical workflow.",
+   "cost": 9.465000000000001e-05,
+   "tokens_in": 973,
+   "tokens_out": 115,
+   "latency_s": 1.9707896709442139
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No HbA1c observations found with either local code A1C or LOINC 4548-4, so measurement is unavailable and a new test should be ordered. The ServiceRequest correctly orders HbA1c for the right patient with appropriate coding, intent, status, and timestamp.",
+   "cost": 0.00203625,
+   "tokens_in": 973,
+   "tokens_out": 82,
+   "latency_s": 2.3962836265563965
+  }
+ },
+ "1": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly searched for HbA1C values using both the code 'A1C' and LOINC code '4548-4', both returning no results. Since no prior HbA1C measurement exists, the condition 'greater than 1 year old' is satisfied (no value = order new test), and the agent appropriately ordered a new HbA1C lab test via ServiceRequest with correct parameters and patient reference. The final answer accurately reports [-1] for no measurement and documents the new order.",
+   "cost": 0.001965,
+   "tokens_in": 1230,
+   "tokens_out": 147,
+   "latency_s": 2.6910533905029297
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "Both searches for HbA1C (by code and LOINC) returned zero results, correctly warranting a -1 answer and a new lab order, which was placed; the final answer accurately reflects this.",
+   "cost": 0.004894,
+   "tokens_in": 1614,
+   "tokens_out": 86,
+   "latency_s": 2.6099932193756104
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Searches for A1C and LOINC 4548-4 returned no results for Patient S2033286, and a ServiceRequest for LOINC 4548-4 was created with correct patient reference, authoredOn, status, intent, and routine priority as requested.",
+   "cost": 0.00043025,
+   "tokens_in": 1081,
+   "tokens_out": 80,
+   "latency_s": 1.5011954307556152
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for HbA1C values using both the code 'A1C' and LOINC code '4548-4', found no results (Bundle total=0), and appropriately ordered a new HbA1C lab test via ServiceRequest since no prior value existed. The FINISH action accurately reports the findings and confirms the order was placed.",
+   "cost": 0.001577,
+   "tokens_in": 1012,
+   "tokens_out": 113,
+   "latency_s": 2.071714401245117
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observations search returned no HbA1c (codes A1C or 4548-4), so reporting -1 is correct; a ServiceRequest for LOINC 4548-4 was created on 2023-11-13T10:15:00+00:00 as required.",
+   "cost": 0.00039125,
+   "tokens_in": 885,
+   "tokens_out": 85,
+   "latency_s": 1.6877682209014893
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The FINISH action assumes a value of -1 and that a new HbA1C test was ordered, but the prior steps show no HbA1C data found and a ServiceRequest created, which is not a complete verification of the requirement: we must confirm the last HbA1C value/date (or -1 if unavailable) before ordering, and ensure the order is placed correctly. Additionally, we should verify there is no existing Observation with code A1C or 4548-4 prior to ordering and confirm patient identity and data integrity.",
+   "cost": 0.00010925,
+   "tokens_in": 1081,
+   "tokens_out": 138,
+   "latency_s": 1.9886016845703125
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent queried HbA1c by both local code A1C and LOINC 4548-4 for patient S2033286 and found none, correctly reporting -1 and ordering a new HbA1c via ServiceRequest with appropriate code, intent, status, priority, subject, and authoredOn date. No omissions or duplications.",
+   "cost": 0.00228125,
+   "tokens_in": 1081,
+   "tokens_out": 93,
+   "latency_s": 2.6038923263549805
+  }
+ }
+}

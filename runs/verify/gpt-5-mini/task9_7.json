@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Search returned no serum potassium observations (bundle total=0), so withholding replacement is appropriate; recommending a timed lab order is correct — ensure clinician places the actual ServiceRequest for 08:00 next day before acting.",
+   "cost": 0.00035725,
+   "tokens_in": 909,
+   "tokens_out": 65,
+   "latency_s": 1.891765832901001
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action asserts no potassium observation exists and suggests ordering a tomorrow 08:00 lab, but we must verify the availability of the most recent observation before deciding to order replacement. Since the prior step reported total=0 results, we should re-check data sources (e.g., different codes or recent entries) before concluding no data exists and before issuing orders.",
+   "cost": 8.585000000000001e-05,
+   "tokens_in": 909,
+   "tokens_out": 101,
+   "latency_s": 1.3866112232208252
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task explicitly requires ordering a morning serum potassium level to be completed the next day at 8am as part of the protocol ('Also pair this order with a morning serum potassium level'). The agent should have created a ServiceRequest for this lab draw even though no prior potassium result exists, rather than merely recommending it. The FINISH action fails to execute the complete requested task.",
+   "cost": 0.00168,
+   "tokens_in": 1085,
+   "tokens_out": 119,
+   "latency_s": 2.603400230407715
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no potassium labs, so cannot assess; no replacement ordered appropriately; recommending to order next-day 08:00 serum K with dosing instructions is correct and safe.",
+   "cost": 0.00032575,
+   "tokens_in": 847,
+   "tokens_out": 57,
+   "latency_s": 1.9211170673370361
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task explicitly requires checking the 'most recent potassium level' and ordering replacement if low, paired with a follow-up morning lab. The agent found no potassium observations but did not attempt to retrieve historical data with a broader date range, nor did it place the requested follow-up serum potassium order for tomorrow at 8am as instructed. The FINISH action reports only a recommendation rather than completing the actual ordered tasks.",
+   "cost": 0.001645,
+   "tokens_in": 1010,
+   "tokens_out": 127,
+   "latency_s": 3.078394651412964
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The task requires placing a paired lab order for a serum potassium tomorrow at 08:00 and ordering potassium replacement if low. Although no prior lab was found, the agent neither placed the morning lab order nor confirmed that no replacement was indicated by an actual value. FINISH cannot be approved because required orders were not placed.",
+   "cost": 0.00199625,
+   "tokens_in": 909,
+   "tokens_out": 86,
+   "latency_s": 3.053182363510132
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 87, \"justification\": \"The agent only queried using LOINC code 2823-3, but the task explicitly provides the potassium code \\\"K\\\" for lab lookup; it should have tried code=K (or both) before concluding no data exists, so finishing without verifying via the correct ",
+   "parse_error": true,
+   "cost": 0.006604,
+   "tokens_in": 1442,
+   "tokens_out": 300,
+   "latency_s": 5.264407634735107
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "Agent correctly searched for serum potassium (LOINC 2823-3) and found no results, so dosing cannot be determined; it did not place any replacement orders and correctly recommended obtaining labs (including eGFR) before ordering per institutional protocol.",
+   "cost": 0.0003845,
+   "tokens_in": 962,
+   "tokens_out": 72,
+   "latency_s": 2.5877363681793213
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action assumes no potassium result exists, but we should first verify if any potassium data exists beyond the initial search (e.g., recent results may be in a different Observation search scope or code). Also, we must ensure we only place orders if eGFR ≥30; the action plan should be contingent on the latest data rather than a blanket recommendation.",
+   "cost": 8.85e-05,
+   "tokens_in": 962,
+   "tokens_out": 101,
+   "latency_s": 2.3432810306549072
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent prematurely finished without completing the task. Before concluding that no potassium level exists, the agent should have retrieved the patient's eGFR status (required by protocol) and should attempt broader searches or verify the data availability. More critically, the task explicitly requests orders be placed IF potassium is low—the agent cannot finish without either placing the orders or definitively confirming no actionable potassium result exists after appropriate investigation.",
+   "cost": 0.001794,
+   "tokens_in": 1154,
+   "tokens_out": 128,
+   "latency_s": 4.00218939781189
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly found no serum potassium results (LOINC 2823-3) for patient S0848879, therefore cannot calculate or safely order replacement; the recommendation to obtain BMP including K and eGFR and to follow the stated dosing and scheduling protocol if K low and eGFR ≥30 is appropriate.",
+   "cost": 0.0003975,
+   "tokens_in": 902,
+   "tokens_out": 86,
+   "latency_s": 3.1432244777679443
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is premature and incomplete. The task requires checking the patient's most recent potassium level, but the search returned zero results. Before concluding, the agent should attempt to retrieve potassium data without the date filter or with a broader date range to ensure no recent value exists. Additionally, the eGFR must be checked per institutional protocol before any clinical recommendation can be finalized. The current response abandons the task rather than completing the necessary data retrieval steps.",
+   "cost": 0.001761,
+   "tokens_in": 1081,
+   "tokens_out": 136,
+   "latency_s": 3.740081787109375
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The task required checking most recent potassium and, if low with eGFR ≥30, ordering oral potassium and scheduling a serum potassium for tomorrow 08:00. The agent only searched for potassium, did not check eGFR, and did not place the required morning lab order. FINISH is premature because not all requested orders were placed and eGFR was not verified to apply the protocol.",
+   "cost": 0.0022225,
+   "tokens_in": 962,
+   "tokens_out": 102,
+   "latency_s": 2.3183810710906982
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The task explicitly states the code for potassium is 'K', but the agent searched using LOINC code 2823-3 and got zero results, then prematurely finished without retrying with the correct code 'K' as instructed.",
+   "cost": 0.0062365,
+   "tokens_in": 1527,
+   "tokens_out": 242,
+   "latency_s": 4.391726970672607
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly searched for the exact patient first and found no match, which prevents safe identification. Without a valid patient, it is appropriate to neither check labs nor place any orders. The FINISH statement accurately reflects that no action was taken.",
+   "cost": 0.00176375,
+   "tokens_in": 851,
+   "tokens_out": 70,
+   "latency_s": 1.585782527923584
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned no matching patient record for Michael Edwards DOB 1960-06-25, so it is correct and safe to not check labs or place orders; FINISH with no medication ordered is appropriate.",
+   "cost": 0.00033875,
+   "tokens_in": 851,
+   "tokens_out": 63,
+   "latency_s": 1.7351810932159424
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for the patient using appropriate identifiers (name and DOB) and received a null result (Bundle total=0). Since the patient cannot be found in the system, it is impossible to retrieve lab values or place orders, making the FINISH action with the stated explanation the appropriate and safe response.",
+   "cost": 0.001505,
+   "tokens_in": 1015,
+   "tokens_out": 98,
+   "latency_s": 2.0144948959350586
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No patient record was found, so checking labs or placing orders is not possible. The final message correctly states inability to check magnesium and appropriately avoids placing any order.",
+   "cost": 0.00154,
+   "tokens_in": 800,
+   "tokens_out": 54,
+   "latency_s": 2.2738137245178223
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The patient search returned zero results (Bundle total=0), meaning no patient named Michael Edwards with DOB 1960-06-25 exists in the system. Per the task instructions, if no magnesium level can be checked, no order should be placed. The FINISH action correctly reports this outcome.",
+   "cost": 0.001447,
+   "tokens_in": 957,
+   "tokens_out": 98,
+   "latency_s": 1.8675220012664795
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The patient lookup returned zero results, but there is a possibility of alternate identifiers (middle name, different DOB format). Before concluding, re-try search with broader criteria (name only, birth year, or identifier). The current proposed FINISH would incorrectly state no patient found and prevent necessary checks if a patient exists under a slightly different record.",
+   "cost": 8.055e-05,
+   "tokens_in": 851,
+   "tokens_out": 95,
+   "latency_s": 1.5727016925811768
+  }
+ }
+}

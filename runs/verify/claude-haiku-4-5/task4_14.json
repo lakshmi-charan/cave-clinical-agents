@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried for magnesium observations within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) for patient S6530532. The search results returned two observations, but both are from August 2023, which is well outside the 24-hour window. The agent correctly concluded that no measurement exists within the last 24 hours and appropriately returned -1 as instructed.",
+   "cost": 0.001896,
+   "tokens_in": 1191,
+   "tokens_out": 141,
+   "latency_s": 2.7091875076293945
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The returned observations are both from August 2023, well outside the last 24 hours window, so returning -1 is correct per the task instructions.",
+   "cost": 0.0044665,
+   "tokens_in": 1523,
+   "tokens_out": 66,
+   "latency_s": 1.9357833862304688
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned only two magnesium observations from August 2023, both outside the requested 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); returning -1 is correct.",
+   "cost": 0.0004145,
+   "tokens_in": 1034,
+   "tokens_out": 78,
+   "latency_s": 1.9937050342559814
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The query results show two magnesium observations, but both are from August 2023 (2023-08-15 and 2023-08-16), which are NOT within the last 24 hours from the current time of 2023-11-13T10:15:00. The correct answer should be -1 since no measurement within the last 24 hours is available, but the proposed action returns [-1] in an array format rather than as a single number as specified in the task requirements.",
+   "cost": 0.001609,
+   "tokens_in": 884,
+   "tokens_out": 145,
+   "latency_s": 2.3677620887756348
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Search for observations coded MG for patient S6530532 in the specified 24-hour window returned no results within that range (results are from August), so returning -1 is correct.",
+   "cost": 0.0003075,
+   "tokens_in": 758,
+   "tokens_out": 59,
+   "latency_s": 1.533663272857666
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action FINISH would return -1 due to no magnesium measurement within last 24 hours, which is correct based on retrieved data; however, we must ensure no more recent data exists outside the provided results. If latest data could exist elsewhere, we should re-run search with broader date or verify data source before finishing.",
+   "cost": 8.85e-05,
+   "tokens_in": 1034,
+   "tokens_out": 92,
+   "latency_s": 1.7485837936401367
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The query correctly searched the last 24 hours for code MG for patient S6530532 and found no observations in that window. Returning -1 matches the instructions exactly.",
+   "cost": 0.0018525,
+   "tokens_in": 1034,
+   "tokens_out": 56,
+   "latency_s": 1.90669584274292
+  }
+ }
+}

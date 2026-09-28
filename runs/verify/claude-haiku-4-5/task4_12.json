@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that the only magnesium observation found (from 2019-09-29) is far outside the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) and appropriately returned -1 per the instructions. The search query parameters were correct and the logic is sound.",
+   "cost": 0.001637,
+   "tokens_in": 1047,
+   "tokens_out": 118,
+   "latency_s": 2.0426042079925537
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The only returned magnesium observation is from 2019, far outside the 24-hour window, so correctly reporting -1 per the instructions is appropriate.",
+   "cost": 0.004144,
+   "tokens_in": 1366,
+   "tokens_out": 73,
+   "latency_s": 2.104645013809204
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "Query returned one MG observation dated 2019-09-29, which is outside the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00), so returning -1 is correct.",
+   "cost": 0.0003855,
+   "tokens_in": 910,
+   "tokens_out": 79,
+   "latency_s": 1.8311750888824463
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query returned one magnesium observation (2.1 mg/dL), but it's from 2019-09-29, which is NOT within the last 24 hours from the current time of 2023-11-13T10:15:00. The correct answer should be -1 since no measurement exists within the last 24 hours, but the agent should verify this is truly the only result before finishing.",
+   "cost": 0.002337,
+   "tokens_in": 837,
+   "tokens_out": 300,
+   "latency_s": 4.229404449462891
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search for MG in last 24 hours returned one Observation dated 2019, which is outside the window; thus no recent Mg level exists and returning -1 is correct.",
+   "cost": 0.0002935,
+   "tokens_in": 718,
+   "tokens_out": 57,
+   "latency_s": 1.58186674118042
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH relies on observed data: magnesium observation exists but is from 2019, not within last 24 hours; no recent Mg measurement found. This matches the requirement to return -1 if none within 24 hours.",
+   "cost": 7.51e-05,
+   "tokens_in": 910,
+   "tokens_out": 74,
+   "latency_s": 1.5005497932434082
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The search correctly queried the last 24 hours and returned only an older 2019 result, so no qualifying measurement exists. FINISH with -1 matches the instructions.",
+   "cost": 0.0016975,
+   "tokens_in": 910,
+   "tokens_out": 56,
+   "latency_s": 2.1620328426361084
+  }
+ }
+}

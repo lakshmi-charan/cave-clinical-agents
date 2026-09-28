@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Observation search returned zero results for A1C for patient S2090974; reporting -1 and recommending ordering HbA1C (LOINC 4548-4) is correct and safe given the instruction to order if last result is unavailable or >1 year old.",
+   "cost": 0.0003555,
+   "tokens_in": 806,
+   "tokens_out": 77,
+   "latency_s": 2.541621685028076
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 62.0,
+   "justification": "The proposed FINISH action assumes no HbA1C data found, but the prior step reports zero results without verifying potential data in different codes or later observations. Also, ordering a new HbA1C should be contingent on date: if a value exists but is over 1 year old, we should order; if exactly under 1 year, do not. We need to confirm the absence or capture the latest value and its date before concluding.",
+   "cost": 8.71e-05,
+   "tokens_in": 806,
+   "tokens_out": 117,
+   "latency_s": 2.1523027420043945
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete. The task explicitly requires ordering a new HbA1C lab test when no measurement is available (which is the case here). The agent must execute a POST /ServiceRequest to actually place the order before finishing, not merely recommend it.",
+   "cost": 0.001382,
+   "tokens_in": 932,
+   "tokens_out": 90,
+   "latency_s": 1.96722412109375
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no HbA1C (A1C) results for patient S2090974 and current date is 2023-11-13, so ordering a new HbA1C (LOINC 4548-4) is appropriate per instructions.",
+   "cost": 0.00034925,
+   "tokens_in": 717,
+   "tokens_out": 85,
+   "latency_s": 1.984924554824829
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete. While it correctly reports that no HbA1C was found (returning -1), it fails to actually place the required new HbA1C lab order. The task explicitly states 'If the lab value result date is greater than 1 year old, order a new HbA1C lab test' - and with no prior result, an order should be placed using ServiceRequest.Create with LOINC code 4548-4 before finishing.",
+   "cost": 0.001531,
+   "tokens_in": 831,
+   "tokens_out": 140,
+   "latency_s": 2.5923027992248535
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The agent correctly found no HbA1C results and reported -1, but it failed to place the required ServiceRequest to order a new HbA1C lab (LOINC 4548-4). The FINISH action is premature because the requested order has not been created.",
+   "cost": 0.0017975,
+   "tokens_in": 806,
+   "tokens_out": 79,
+   "latency_s": 1.9036638736724854
+  }
+ }
+}

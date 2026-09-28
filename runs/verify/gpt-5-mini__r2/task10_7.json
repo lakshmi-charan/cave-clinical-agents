@@ -1,0 +1,133 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no A1C results for Patient S1891852 and current date is 2023-11-13; ordering a STAT ServiceRequest for LOINC 4548-4 for Patient/S1891852 is appropriate and follows the task instructions.",
+   "cost": 0.0003765,
+   "tokens_in": 898,
+   "tokens_out": 76,
+   "latency_s": 2.185344934463501
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 72, \"justification\": \"The prior search for HbA1C (A1C) observations returned total=0, but the trajectory lacks confirmation of the patient identifier or date constraints. Before placing a ServiceRequest for a new HbA1C, we should ensure the patient S1891852 exist",
+   "parse_error": true,
+   "cost": 0.0001045,
+   "tokens_in": 898,
+   "tokens_out": 149,
+   "latency_s": 2.5453672409057617
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action contains a critical error: the 'note' field should be a simple string, not an object with a 'text' property. Additionally, the priority 'stat' may be inappropriate for a routine screening lab when no clinical urgency is indicated. The order should use priority 'routine' unless clinically justified otherwise.",
+   "cost": 0.001559,
+   "tokens_in": 1039,
+   "tokens_out": 104,
+   "latency_s": 2.193089723587036
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "No prior A1C observations were found for patient S1891852 and the current date is 2023-11-13; ordering a STAT HbA1c (LOINC 4548-4) for that patient with correct authoredOn, status, intent, priority, subject, and note is appropriate and follows instructions.",
+   "cost": 0.00038575,
+   "tokens_in": 831,
+   "tokens_out": 89,
+   "latency_s": 2.000077962875366
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action orders HbA1C with priority 'stat' (urgent), but the task only requires ordering when the last result is >1 year old. Since no prior HbA1C was found (Bundle total=0), the ordering condition is met, but 'stat' priority is inappropriate for a routine screening lab—should be 'routine' priority instead.",
+   "cost": 0.001531,
+   "tokens_in": 961,
+   "tokens_out": 114,
+   "latency_s": 2.461632251739502
+  },
+  "p1|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "GET returned no A1C observations (Bundle total=0) so ordering HbA1c (LOINC 4548-4) for Patient/S1891852 and authoredOn timestamp match current context; request fields sensible and intent/status appropriate.",
+   "cost": 0.00037625,
+   "tokens_in": 929,
+   "tokens_out": 72,
+   "latency_s": 1.7226426601409912
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No prior A1C observations were found (search returned 0), the ServiceRequest uses correct LOINC 4548-4, correct patient reference, appropriate authoredOn and intent/status; note documents reason for order.",
+   "cost": 0.00035425,
+   "tokens_in": 881,
+   "tokens_out": 67,
+   "latency_s": 1.7692039012908936
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The agent correctly identified no A1C result and ordering is appropriate, but the ServiceRequest has issues: priority should not be stat without indication, note should be an array per FHIR, and the justification references problem list unnecessarily. Also ensure proper fields (e.g., requester, encounter if required). Please correct structure and use a routine/normal priority.",
+   "cost": 0.0020525,
+   "tokens_in": 898,
+   "tokens_out": 93,
+   "latency_s": 2.432833194732666
+  }
+ },
+ "1": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "GET returned no A1C observations (Bundle total=0), so reporting [-1] is correct; the ServiceRequest was created with LOINC 4548-4, correct patient reference, authoredOn timestamp, status intent and priority as requested—ordering is appropriate and safe.",
+   "cost": 0.00041425,
+   "tokens_in": 1025,
+   "tokens_out": 79,
+   "latency_s": 1.9805667400360107
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Action aligns with request: no HbA1C found (-1) and a new HbA1C order placed. However, confirmation that no prior HbA1C exists relies on Step 1 result showing zero observations; if data was mislabeled, could be incorrect.",
+   "cost": 8.405000000000001e-05,
+   "tokens_in": 1025,
+   "tokens_out": 82,
+   "latency_s": 1.614748239517212
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly searched for HbA1C results using the appropriate code (A1C) and patient identifier, found no prior measurements (correctly returning [-1]), and appropriately ordered a new HbA1C lab test using the correct LOINC code (4548-4) via ServiceRequest since no recent value existed. The task has been completed as specified.",
+   "cost": 0.001741,
+   "tokens_in": 1181,
+   "tokens_out": 112,
+   "latency_s": 2.3928887844085693
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no A1C results for patient S1891852, and a ServiceRequest for LOINC 4548-4 was placed with authoredOn 2023-11-13T10:15:00+00:00 for the correct patient and intent; ordering is appropriate when no prior result exists.",
+   "cost": 0.000404,
+   "tokens_in": 912,
+   "tokens_out": 88,
+   "latency_s": 1.9513537883758545
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for HbA1C values (code=A1C) for patient S1891852 and found none (Bundle total=0), appropriately returning [-1] for the last value. Since no measurement was available, the agent correctly ordered a new HbA1C lab test via ServiceRequest with the correct LOINC code (4548-4), proper patient reference, and current timestamp. The task has been completed accurately.",
+   "cost": 0.001701,
+   "tokens_in": 1051,
+   "tokens_out": 130,
+   "latency_s": 2.883065938949585
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 84.0,
+   "justification": "The HbA1C search correctly found no results and -1 is appropriate. However, the ServiceRequest has an invalid note field type (should be an array of Annotation) and an unnecessary stat priority not specified by the request. Also, the justification mentions problem list, which wasn’t queried. The order should be corrected before finishing.",
+   "cost": 0.00217125,
+   "tokens_in": 1025,
+   "tokens_out": 89,
+   "latency_s": 2.112868309020996
+  }
+ }
+}

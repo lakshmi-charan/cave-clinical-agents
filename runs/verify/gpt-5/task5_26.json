@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The query correctly checked the last 24 hours and found no magnesium result within that window. Per instructions, no order should be placed when no recent result exists, and the finish summary is accurate.",
+   "cost": 0.0018275,
+   "tokens_in": 974,
+   "tokens_out": 61,
+   "latency_s": 1.573875904083252
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observations returned are from 2023-10-14 and 2023-10-13, both older than the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00); therefore no replacement order is indicated and FINISH message is correct.",
+   "cost": 0.0004275,
+   "tokens_in": 974,
+   "tokens_out": 92,
+   "latency_s": 1.8245980739593506
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that no serum magnesium level exists within the last 24 hours (current time 2023-11-13T10:15:00+00:00; last result from 2023-10-14T12:10:00+00:00 is ~30 days old). Per task instructions, no order should be placed when no magnesium level has been recorded in the last 24 hours, which is exactly what the FINISH action reports.",
+   "cost": 0.001855,
+   "tokens_in": 1160,
+   "tokens_out": 139,
+   "latency_s": 2.394688129425049
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search correctly checked magnesium labs within the last 24 hours and found none. Per instructions, no replacement should be ordered when no recent level exists, and the finish statement accurately reflects this.",
+   "cost": 0.0017525,
+   "tokens_in": 922,
+   "tokens_out": 60,
+   "latency_s": 1.52935791015625
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly searched for magnesium levels (code=MG) within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00). The results show no observations in that timeframe—the most recent magnesium level is from 2023-10-14, which is outside the 24-hour window. Per the task instructions, no order should be placed when no magnesium level has been recorded in the last 24 hours, making the FINISH action with no order placement correct.",
+   "cost": 0.001898,
+   "tokens_in": 1098,
+   "tokens_out": 160,
+   "latency_s": 2.404510498046875
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 58.0,
+   "justification": "The step uses last magnesium value from 2023-10-14, which is more than 24 hours ago relative to 2023-11-13; however the retrieved data set spans 2023-10-14 and 2023-10-13 only, leaving ambiguity about any 24-hour latest result within 2023-11-12 to 2023-11-13. The instruction requires exactly last 24 hours; missing evidence of a result within that window means we should not order, but the proposed finish text references an exact timestamp that may be outdated. A safe approach is to perform another query for observations in the last 24 hours to confirm before FINISH.",
+   "cost": 0.0001139,
+   "tokens_in": 974,
+   "tokens_out": 163,
+   "latency_s": 2.2366600036621094
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search correctly filtered for the last 24 hours and returned no results within that window (the results shown are from October, over 24 hours prior), so per instructions no order should be placed, and the FINISH message accurately reflects this.",
+   "cost": 0.0047315,
+   "tokens_in": 1517,
+   "tokens_out": 94,
+   "latency_s": 2.690206289291382
+  }
+ }
+}

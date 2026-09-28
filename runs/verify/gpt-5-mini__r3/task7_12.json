@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The returned Observation bundle shows the latest GLU effectiveDateTime is 2023-11-12T15:41:00+00:00 with value 86 mg/dL; the FINISH reports that exact most recent CBG for patient S1891852.",
+   "cost": 0.00053925,
+   "tokens_in": 1541,
+   "tokens_out": 77,
+   "latency_s": 1.4650990962982178
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The most recent GLU observation for S1891852 is 2023-11-12T15:41:00+00:00 with value 86.0 mg/dL, which matches the proposed finish data (86 mg/dL at that time).",
+   "cost": 0.00010945000000000002,
+   "tokens_in": 1541,
+   "tokens_out": 81,
+   "latency_s": 1.4421806335449219
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent identified Observation 343298 (2023-11-12T15:41:00) as the most recent CBG, but failed to notice Observation 343298 at 2023-11-12T15:41:00 and Observation 343304 at 2023-11-12T14:41:00 are both on 2023-11-12. The truly most recent CBG is Observation 343298 at 2023-11-12T15:41:00+00:00 with value 86.0 mg/dL, which is correct; however, the agent should verify this is indeed the latest timestamp in the entire result set before finishing.",
+   "cost": 0.003271,
+   "tokens_in": 1771,
+   "tokens_out": 300,
+   "latency_s": 4.092804670333862
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent GLU observation timestamp in the returned bundle is 2023-11-12T15:41:00+00:00 (86 mg/dL), but there is an observation at 2023-11-06T21:07:00+00:00 and others; however the bundle includes a later date 2023-11-12T15:41:00+00:00 and also 2023-11-12T14:41:00+00:00 — 15:41 is the latest shown. The proposed FINISH text is correct about value and timestamp, but I cannot approve FINISH because I must ensure no observations after 2023-11-12T15:41:00 exist (bundle total=20 shows none later); still, protocol requires explicit verification of 'most recent' ordering — approve only after confirming no later entries.",
+   "cost": 0.0007755,
+   "tokens_in": 1462,
+   "tokens_out": 205,
+   "latency_s": 2.4366283416748047
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer is incorrect. While Observation 343298 (86.0 mg/dL at 2023-11-12T15:41:00) is listed, there is a more recent observation: Observation 343298 at 2023-11-12T15:41:00 is NOT the most recent. Observation 343297 at 2023-11-10T19:11:00 is earlier, but examining all timestamps, the most recent CBG is Observation 343298 at 2023-11-12T15:41:00+00:00 with 86.0 mg/dL. However, re-examining the data more carefully: the current time is 2023-11-13T10:15:00, and the latest timestamp in the results is 2023-11-12T15:41:00 (Observation 343298 = 86 mg/dL). This answer appears correct upon verification. Approving.",
+   "cost": 0.003185,
+   "tokens_in": 1685,
+   "tokens_out": 300,
+   "latency_s": 4.846898555755615
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The latest Observation by effectiveDateTime is 2023-11-12T15:41:00+00:00 with value 86 mg/dL for patient S1891852. The reported answer matches this most recent CBG.",
+   "cost": 0.00263625,
+   "tokens_in": 1541,
+   "tokens_out": 71,
+   "latency_s": 2.3594324588775635
+  }
+ }
+}

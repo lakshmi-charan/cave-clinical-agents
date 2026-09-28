@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 91.0,
+   "justification": "The query correctly searched for magnesium (code MG) for patient S1777769 within the last 24 hours. The only result was from 2019, outside the time window, so returning -1 matches the instructions.",
+   "cost": 0.001665,
+   "tokens_in": 796,
+   "tokens_out": 67,
+   "latency_s": 1.507631778717041
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "Search returned one MG observation dated 2019-09-29, outside the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00); returning -1 is correct per instructions.",
+   "cost": 0.000355,
+   "tokens_in": 796,
+   "tokens_out": 78,
+   "latency_s": 1.5599722862243652
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's logic is contradictory. The search query correctly specified the date range for the last 24 hours (ge2023-11-12T10:15:00+00:00 and le2023-11-13T10:15:00+00:00), but the returned result from 2019-09-29 should not have been included in that result set. The agent should either: (1) verify the search results are correct, or (2) if the result is genuinely from outside the 24-hour window, report -1 as correct. However, the proposed answer of -1 appears correct given no valid recent measurement exists, but the reasoning about why a 2019 result was returned needs clarification before approving.",
+   "cost": 0.001916,
+   "tokens_in": 926,
+   "tokens_out": 198,
+   "latency_s": 3.4156033992767334
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The only retrieved magnesium Observation within the specified last 24 hours window returned no results; the single result is from 2019 and thus outside the window. Returning -1 matches the instructions.",
+   "cost": 0.001505,
+   "tokens_in": 724,
+   "tokens_out": 60,
+   "latency_s": 1.5261256694793701
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query returned one magnesium observation (2.1 mg/dL), but it is from 2019-09-29, which is NOT within the last 24 hours from the current time of 2023-11-13T10:15:00. The correct answer should be -1 since no measurement exists within the last 24 hours, but the agent should verify this is truly the only result before finishing, or the finish action should return -1 with proper justification that the single result found is outside the 24-hour window.",
+   "cost": 0.001663,
+   "tokens_in": 843,
+   "tokens_out": 164,
+   "latency_s": 2.7120697498321533
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The latest magnesium observation in the last 24 hours is not found; the only MG observation is from 2019, which is outside 24 hours, so -1 is correct per instructions.",
+   "cost": 6.62e-05,
+   "tokens_in": 796,
+   "tokens_out": 66,
+   "latency_s": 2.118379831314087
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The only magnesium observation found dates from 2019, well outside the 24-hour window, so per instructions the correct answer is -1.",
+   "cost": 0.003739,
+   "tokens_in": 1232,
+   "tokens_out": 66,
+   "latency_s": 2.400757074356079
+  }
+ }
+}

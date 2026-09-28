@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend response lists 60 points and the last point [1699852500,120.0] is the most recent; reporting 120.0 mg/dL with that epoch timestamp correctly answers the request for the most recent CBG for patient S3213957.",
+   "cost": 0.00047875,
+   "tokens_in": 1283,
+   "tokens_out": 79,
+   "latency_s": 1.5363452434539795
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The most recent data point is at the end of the provided points array, but the protocol requires explicit selection of the latest entry; the last pair is [1699852500,120.0] with code GLU. However, the agent proposed 120.0 mg/dL at epoch 1699852500. We should confirm that this is indeed the most recent and that units are mg/dL. The response also mentions 60 points; ensure recency corresponds to the final timestamp. Given potential ambiguity, I cannot fully confirm without re-checking for any newer entries beyond the provided window.",
+   "cost": 0.00012335000000000002,
+   "tokens_in": 1283,
+   "tokens_out": 148,
+   "latency_s": 2.0834360122680664
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried the lab-trend endpoint for patient S3213957 with GLU code and identified the most recent CBG value as the last data point in the returned array: 120.0 mg/dL at epoch timestamp 1699852500 (which converts to 2023-11-15T02:15:00 UTC, appropriately recent relative to the current time of 2023-11-13T10:15:00). The answer is factually correct based on the data retrieved.",
+   "cost": 0.002122,
+   "tokens_in": 1392,
+   "tokens_out": 146,
+   "latency_s": 2.468613862991333
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Lab-trend points show last entry [1699852500,120.0]; that is the most recent GLU value (120.0 mg/dL) so the reported result and timestamp are correct.",
+   "cost": 0.000431,
+   "tokens_in": 1212,
+   "tokens_out": 64,
+   "latency_s": 1.641329288482666
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer is incomplete and imprecise. While 120.0 mg/dL at epoch 1699852500 is indeed the most recent CBG value in the data, the answer should convert the epoch timestamp to a human-readable date (2023-11-13T02:15:00 UTC) for clinical clarity, and should verify this is actually the most recent measurement relative to the current time (2023-11-13T10:15:00 UTC), which it is. The answer format lacks the necessary clinical context and date conversion.",
+   "cost": 0.002084,
+   "tokens_in": 1314,
+   "tokens_out": 154,
+   "latency_s": 2.9032938480377197
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "Patient and code match. The last data point in the lab-trend series (epoch 1699852500) is 120.0, making it the most recent CBG; the answer correctly reports it.",
+   "cost": 0.00225375,
+   "tokens_in": 1283,
+   "tokens_out": 65,
+   "latency_s": 1.7844550609588623
+  }
+ }
+}

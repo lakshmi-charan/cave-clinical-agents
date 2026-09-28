@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query covered correct patient and 24-hour window; there is one GLU observation within that period (90 mg/dL at 2023-11-13T01:12:00Z), so the average is 90 mg/dL.",
+   "cost": 0.00054,
+   "tokens_in": 1584,
+   "tokens_out": 72,
+   "latency_s": 1.7331106662750244
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed action assumes a single GLU observation in last 24h and computes average as 90 mg/dL, but the data dump includes multiple observations across various dates; need to filter strictly last 24 hours from 2023-11-13T10:15:00Z and compute average of all measurements within that window. No explicit confirmation of all observations in the 24h window beyond 2023-11-13T01:12:00Z; other entries like 2023-11-06T17:11:00Z are outside the 24h window but should be excluded. Without exact set of last 24h measurements, the final value is not confidently determined.",
+   "cost": 0.0001472,
+   "tokens_in": 1584,
+   "tokens_out": 170,
+   "latency_s": 1.9679012298583984
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that only one GLU observation (Observation 321729 with value 90.0 mg/dL at 2023-11-13T01:12:00+00:00) falls within the last 24 hours from the reference time of 2023-11-13T10:15:00+00:00. The average of a single value is that value itself (90 mg/dL), which is already in the requested unit. The answer is correct.",
+   "cost": 0.002536,
+   "tokens_in": 1821,
+   "tokens_out": 143,
+   "latency_s": 3.004323959350586
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation search for GLU within the specified 24-hour window returned one measurement at 2023-11-13T01:12:00Z with value 90 mg/dL; average = 90 mg/dL, so FINISH([90]) is correct.",
+   "cost": 0.00053125,
+   "tokens_in": 1501,
+   "tokens_out": 78,
+   "latency_s": 1.8546650409698486
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 90 mg/dL is incorrect. Only ONE observation (321729 at 2023-11-13T01:12:00) falls within the last 24 hours from the current time (2023-11-13T10:15:00). The correct average of a single value is 90.0 mg/dL, but the agent should verify this is the only qualifying measurement and report it correctly as the average of all measurements within the 24-hour window, which happens to be just this one value.",
+   "cost": 0.003226,
+   "tokens_in": 1726,
+   "tokens_out": 300,
+   "latency_s": 7.406745910644531
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The search correctly queried GLU observations between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z. One measurement at 2023-11-13T01:12:00Z was found (90 mg/dL), so the average is 90, matching the requested unit and timeframe.",
+   "cost": 0.00297,
+   "tokens_in": 1584,
+   "tokens_out": 99,
+   "latency_s": 2.171858072280884
+  }
+ }
+}

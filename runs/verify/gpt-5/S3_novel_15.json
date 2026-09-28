@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The task requires ordering a serum potassium for tomorrow at 08:00 paired with repletion if low. Even with no recent result, you should still place the follow-up lab order at 8am next day. Additionally, you did not search for labs beyond the past year nor consider ordering the lab despite missing data, and no orders were placed.",
+   "cost": 0.00202,
+   "tokens_in": 880,
+   "tokens_out": 92,
+   "latency_s": 2.278430223464966
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The lab trend returned no serum potassium results for patient S6533864 in the past year, so withholding replacement and not placing a follow-up potassium order is appropriate; the agent noted inability to determine low K and recommended ordering a morning K if clinically needed.",
+   "cost": 0.000366,
+   "tokens_in": 880,
+   "tokens_out": 73,
+   "latency_s": 1.8340680599212646
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The agent's proposed FINISH action is incomplete and does not fulfill the task requirements. The task explicitly requests ordering a morning serum potassium level for the next day at 8am to be paired with potassium replacement if low; the agent has deferred this decision rather than placing the follow-up lab order as instructed. Additionally, the agent should have attempted to retrieve potassium data with a more appropriate time window or alternative search method before concluding no data exists.",
+   "cost": 0.0017,
+   "tokens_in": 1035,
+   "tokens_out": 133,
+   "latency_s": 2.984429359436035
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "You did not complete the requested workflow. Even with no prior result, you should still place the morning serum potassium for tomorrow at 08:00 as explicitly requested, and only skip the repletion order if the most recent value is unavailable or not low. Also, state that no repletion was ordered due to no result, but ensure the lab order is placed.",
+   "cost": 0.0019725,
+   "tokens_in": 818,
+   "tokens_out": 95,
+   "latency_s": 2.3874619007110596
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. While the agent correctly identified that no potassium data was found, the task explicitly states 'If low, then order replacement potassium' - but this is conditional on finding a low level. The critical issue is that the task also requests pairing any potassium order 'with a morning serum potassium level to be completed the next day at 8am,' which should have been clarified with the clinician rather than unilaterally decided. Additionally, the agent should have attempted to retrieve the most recent potassium level using alternative methods (e.g., Observation.Search with appropriate parameters) before concluding no data exists, as the lab-trend service returned an empty result that may not represent a complete search.",
+   "cost": 0.001976,
+   "tokens_in": 961,
+   "tokens_out": 203,
+   "latency_s": 3.4758095741271973
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action asserts no potassium data exists and skips placing a repletion order, but the task requires checking the most recent potassium level and placing a potassium replacement order if low, with a next-day 8am serum potassium lab paired. The lab-trend result shows no data, but we cannot conclude no data exist or that no action is needed without checking the actual most recent observation. A safe approach would be to query Observations for code 2823-3 directly and, if a value exists and is below 3.5, compute and place the potassium repletion order with the paired next-day lab.",
+   "cost": 0.00010480000000000001,
+   "tokens_in": 880,
+   "tokens_out": 152,
+   "latency_s": 2.0397584438323975
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 90, \"justification\": \"The agent queried $lab-trend using the LOINC code (2823-3) instead of the specified potassium code 'K', so the empty",
+   "parse_error": true,
+   "cost": 0.0064765,
+   "tokens_in": 1391,
+   "tokens_out": 300,
+   "latency_s": 4.879822015762329
+  }
+ }
+}

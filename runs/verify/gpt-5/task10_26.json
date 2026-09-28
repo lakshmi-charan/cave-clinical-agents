@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "No HbA1C result was found, so reporting [-1, -1] is correct; however, the instructions require ordering a new HbA1C if the last result is older than 1 year, which includes the case of no available measurement. A ServiceRequest for HbA1C (LOINC 4548-4) should be placed.",
+   "cost": 0.0019,
+   "tokens_in": 760,
+   "tokens_out": 95,
+   "latency_s": 2.1075143814086914
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no A1C results (Bundle total=0), so reporting [-1, -1] is correct; ordering a new A1C is only required if prior result >1 year old and none exists, so no automatic order per the stated rule.",
+   "cost": 0.000342,
+   "tokens_in": 760,
+   "tokens_out": 76,
+   "latency_s": 1.6276495456695557
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires ordering a new HbA1C lab test if no measurement exists or if the last one is >1 year old. Since no HbA1C value was found (Bundle total=0), this qualifies as missing data that warrants a new order. The agent should place a ServiceRequest for HbA1C (LOINC 4548-4) before finishing.",
+   "cost": 0.001475,
+   "tokens_in": 880,
+   "tokens_out": 119,
+   "latency_s": 2.029630661010742
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "No HbA1C observations were found for patient S6352985, so reporting [-1] is correct. No order was placed because the instruction to order applies only if a lab value exists and is >1 year old.",
+   "cost": 0.00154,
+   "tokens_in": 688,
+   "tokens_out": 68,
+   "latency_s": 1.4745349884033203
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires two actions: (1) report the last HbA1C value and date, and (2) if the result is >1 year old, order a new HbA1C test. The search returned no results (total=0), so the answer [-1, -1] is correct for the first part, but the FINISH action fails to complete the second required action—ordering a new HbA1C lab test via ServiceRequest.Create with LOINC code 4548-4, which should be placed since no prior result exists (effectively >1 year old).",
+   "cost": 0.001614,
+   "tokens_in": 799,
+   "tokens_out": 163,
+   "latency_s": 2.7813072204589844
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "No HbA1C observation found for patient S6352985 in the provided data; therefore cannot determine last value or date. The proposed FINISH action incorrectly reports [-1, -1] and would not trigger a new order since there is no measurement to compare against one year.",
+   "cost": 7.159999999999999e-05,
+   "tokens_in": 760,
+   "tokens_out": 84,
+   "latency_s": 2.0195910930633545
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0059565,
+   "tokens_in": 1183,
+   "tokens_out": 300,
+   "latency_s": 4.764252662658691
+  }
+ }
+}

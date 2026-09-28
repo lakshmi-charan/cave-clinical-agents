@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No serum potassium observations were returned for patient S2823623, so deferring potassium replacement is appropriate; ordering the morning serum K for 2023-11-14 08:00 and providing the specified dosing rule and NDC is correct and safe.",
+   "cost": 0.0003995,
+   "tokens_in": 1006,
+   "tokens_out": 74,
+   "latency_s": 1.3690659999847412
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action assumes no observed potassium data and delays replacement; however, the system requires checking and actions to ensure correct patient, data, and dosing. A safer path is to first verify if any potassium observation exists (even if not found in previous query) and then, if low, place a replacement order with exact dosing tied to the latest value and schedule the morning lab. The current proposed finish does not place the necessary morning lab order or the replacement consistent with the provided data and patient context.",
+   "cost": 0.0001015,
+   "tokens_in": 1006,
+   "tokens_out": 128,
+   "latency_s": 2.490450382232666
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The task explicitly requires ordering a morning serum potassium level to be completed the next day at 8am IF potassium is low, but the proposed FINISH action does not actually place this ServiceRequest order. The agent should have created the morning lab order (ServiceRequest with occurrenceDateTime 2023-11-14T08:00:00+00:00) before finishing, or at minimum must complete this action before the task is considered done.",
+   "cost": 0.001854,
+   "tokens_in": 1199,
+   "tokens_out": 131,
+   "latency_s": 2.6105854511260986
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No recent serum K observed (Observation search returned 0), so withholding replacement is appropriate and ordering a morning potassium draw for 2023-11-14 08:00 is correct; dosing rule and NDC are stated for future action if K<3.5.",
+   "cost": 0.0003815,
+   "tokens_in": 910,
+   "tokens_out": 77,
+   "latency_s": 2.111710548400879
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action fails to complete the task as stated. The task explicitly requires ordering a morning serum potassium level to be completed the next day at 8am if potassium is low, but the agent has not actually placed this ServiceRequest order. The agent should have created the morning lab order (ServiceRequest with code 2823-3, occurrenceDateTime 2023-11-14T08:00:00+00:00) before finishing, rather than merely recommending it.",
+   "cost": 0.00179,
+   "tokens_in": 1085,
+   "tokens_out": 141,
+   "latency_s": 2.5803706645965576
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The task required placing orders if low and pairing with a morning potassium lab. The agent neither placed a ServiceRequest for the 8am potassium lab nor confirmed that no replacement was needed with evidence; instead it finished without creating any orders. FINISH cannot be approved because required orders have not been placed.",
+   "cost": 0.0020775,
+   "tokens_in": 1006,
+   "tokens_out": 82,
+   "latency_s": 3.375525951385498
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The agent queried the correct patient and time window, obtained five CBG (GLU) observations all within the last 24 hours, and computed the mean correctly in mg/dL: (167+172+165+172+133)/5 = 161.8. No unit conversion needed and data is complete.",
+   "cost": 0.0020225,
+   "tokens_in": 930,
+   "tokens_out": 86,
+   "latency_s": 1.695528507232666
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The five GLU values within the last 24 hours (167,172,165,172,133 mg/dL) average to 161.8 mg/dL, matching the proposed result and correct patient/time window.",
+   "cost": 0.0003665,
+   "tokens_in": 930,
+   "tokens_out": 67,
+   "latency_s": 1.5783016681671143
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved 5 CBG observations for patient S6268253 within the last 24 hours (from 2023-11-12T10:15:00 onwards). The average calculation is correct: (167.0 + 172.0 + 165.0 + 172.0 + 133.0) / 5 = 809.0 / 5 = 161.8 mg/dL. The answer is properly formatted as a single number in mg/dL as requested.",
+   "cost": 0.001837,
+   "tokens_in": 1072,
+   "tokens_out": 153,
+   "latency_s": 2.1174089908599854
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The last-24h window from 2023-11-12T10:15 to 2023-11-13T10:15 includes five CBGs: 167, 172, 172, 133, 165 mg/dL. Their average is 161.8 mg/dL, but the FINISH payload includes brackets “[161.8]” instead of a single number, violating the required output format.",
+   "cost": 0.0022125,
+   "tokens_in": 874,
+   "tokens_out": 112,
+   "latency_s": 1.7648656368255615
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 161.8 mg/dL is correct. All 5 CBG measurements for patient S6268253 within the last 24 hours (from 2023-11-12T10:15:00 onwards) are included: (167.0 + 172.0 + 165.0 + 172.0 + 133.0) / 5 = 809.0 / 5 = 161.8 mg/dL. The calculation is accurate and the patient identifier is correct.",
+   "cost": 0.001794,
+   "tokens_in": 1009,
+   "tokens_out": 157,
+   "latency_s": 2.4835102558135986
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action uses a precomputed average (161.8) without showing the explicit calculation steps or ensuring all last-24-hour observations are included; also there is a potential date boundary issue given current time 2023-11-13T10:15:00+00:00 and observations spanning 12th and 13th. A full audit of included measurements and calculation is required before finishing.",
+   "cost": 9.09e-05,
+   "tokens_in": 930,
+   "tokens_out": 111,
+   "latency_s": 1.7508785724639893
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "All 5 GLU observations fall within the last 24 hours and their average (167+172+172+133+165)/5 = 161.8 mg/dL matches the reported answer.",
+   "cost": 0.004649,
+   "tokens_in": 1400,
+   "tokens_out": 115,
+   "latency_s": 2.8350942134857178
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The agent correctly searched for LOINC 2823-3 and found zero results, so it cannot safely calculate or place a potassium replacement order; the suggested next steps (order morning potassium 2823-3 at 08:00 and only prescribe replacement if result confirms low per dosing rule with NDC provided) are appropriate and safe.",
+   "cost": 0.00043575,
+   "tokens_in": 1015,
+   "tokens_out": 91,
+   "latency_s": 2.4467973709106445
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 65.0,
+   "justification": "The proposed FINISH step asserts no potassium results exist and suggests scheduling a draw for tomorrow, but the available data shows a search for 2823-3 returned total=0. Before finishing, we should verify that there truly are no results, confirm patient identity, and ensure that attempting to schedule a draw or pre-signing a medication order complies with policies. The action to schedule a draw or create an order should be contingent on obtaining or confirming a result; proceed only after a valid result is retrieved or explicitly approved.",
+   "cost": 0.00010315,
+   "tokens_in": 1015,
+   "tokens_out": 131,
+   "latency_s": 2.3614258766174316
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete because the task explicitly requires ordering a morning serum potassium level for the next day at 8am if potassium is low. While the agent correctly identified that no baseline potassium exists, it should have proactively created the ServiceRequest for the 8am potassium draw rather than asking the clinician to choose between options A or B. The task's conditional logic ('If low, then order replacement potassium...Also pair this order with a morning serum potassium level') cannot be fully satisfied without at least creating the follow-up lab order.",
+   "cost": 0.002013,
+   "tokens_in": 1208,
+   "tokens_out": 161,
+   "latency_s": 3.252534866333008
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "GET returned no potassium results; therefore cannot calculate or order replacement—recommend ordering morning potassium for 08:00 next day and provide dosing rule; offering to create ServiceRequest or hold MedicationRequest is appropriate and safe.",
+   "cost": 0.000368,
+   "tokens_in": 952,
+   "tokens_out": 65,
+   "latency_s": 1.5343563556671143
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is inappropriate because the task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level. The agent should have ordered the morning potassium level (ServiceRequest for LOINC 2823-3 at 08:00 tomorrow) as a necessary next step, rather than finishing and asking the user for direction. The task is incomplete—at minimum, the follow-up lab order should be placed now.",
+   "cost": 0.001806,
+   "tokens_in": 1131,
+   "tokens_out": 135,
+   "latency_s": 4.082698583602905
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task required: check the most recent potassium; if low, order replacement per protocol; and pair with a morning potassium lab for tomorrow at 08:00. The agent only searched and then finished without placing the required ServiceRequest for the 8am potassium, and did not place a medication order (which is appropriate since no level), but the lab order is still required. Therefore finishing now omits a requested order.",
+   "cost": 0.00233875,
+   "tokens_in": 1015,
+   "tokens_out": 107,
+   "latency_s": 2.0755233764648438
+  }
+ }
+}

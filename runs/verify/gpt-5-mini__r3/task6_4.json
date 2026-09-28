@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Calculation correct: mean of [110,131,64,95,88,67,83,65,106] = 809/9 = 89.888... → 89.9 mg/dL; observations are within the 24‑hour window and all for patient S6541609.",
+   "cost": 0.0004425,
+   "tokens_in": 1098,
+   "tokens_out": 84,
+   "latency_s": 1.4768023490905762
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action uses a value 89.9 without explicit confirmation that the average was correctly computed from all valid last-24h observations; also verify that all listed observations fall within the last 24 hours relative to 2023-11-13T10:15:00Z. A precise calculation should be performed and the result documented.",
+   "cost": 9.410000000000001e-05,
+   "tokens_in": 1098,
+   "tokens_out": 98,
+   "latency_s": 1.92498779296875
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved all GLU observations for patient S6541609 from the last 24 hours (since 2023-11-12T10:15:00Z through 2023-11-13T10:15:00Z). The arithmetic is correct: (110+131+64+95+88+67+83+65+106)/9 = 809/9 = 89.89 ≈ 89.9 mg/dL. All nine measurements are within the 24-hour window and already in mg/dL units.",
+   "cost": 0.002066,
+   "tokens_in": 1266,
+   "tokens_out": 160,
+   "latency_s": 2.745553493499756
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer 89.9 is incorrect: averaging the nine listed GLU values (110,131,64,95,88,67,83,65,106) yields 90.333... mg/dL, not 89.9; also rounding should be specified (e.g., 90.3 or 90).",
+   "cost": 0.00044075,
+   "tokens_in": 1035,
+   "tokens_out": 91,
+   "latency_s": 1.6520907878875732
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved 9 CBG measurements for patient S6541609 within the last 24 hours (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The average of these values (110+131+64+95+88+67+83+65+106)/9 = 809/9 = 89.89 mg/dL, which rounds to 89.9 mg/dL as reported.",
+   "cost": 0.001934,
+   "tokens_in": 1194,
+   "tokens_out": 148,
+   "latency_s": 2.7829737663269043
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The agent averaged all 9 results, but 3 observations at 2023-11-12 11:56 and 11:58 (two entries) are before the 24-hour window starting 2023-11-12 10:15. Only 6 values within the last 24 hours should be averaged: 110, 106, 131, 83, 88, 95 mg/dL, whose mean is 102.2 mg/dL, not 89.9.",
+   "cost": 0.0026425,
+   "tokens_in": 1098,
+   "tokens_out": 127,
+   "latency_s": 2.4321608543395996
+  }
+ }
+}

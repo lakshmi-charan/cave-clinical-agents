@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The reported answer [100] is not verified. Within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z), only one GLU observation is shown: 2023-11-13T02:04:00Z at 100 mg/dL. The agent didn’t demonstrate the calculation, and we must ensure the final value matches the data and that no other observations within the window were included or omitted. Please recompute explicitly and then finish.",
+   "cost": 0.00269125,
+   "tokens_in": 1065,
+   "tokens_out": 136,
+   "latency_s": 2.591632843017578
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query returned one GLU within the 24-hour window (2023-11-13T02:04:00+00:00 = 100 mg/dL); average of that single value is 100 mg/dL, so FINISH([100]) is correct.",
+   "cost": 0.00042225,
+   "tokens_in": 1065,
+   "tokens_out": 78,
+   "latency_s": 1.5748741626739502
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 100 mg/dL is incorrect. Only one observation (343933 from 2023-11-13T02:04:00+00:00 with value 100.0 mg/dL) falls within the last 24 hours (between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z). The average of a single value is 100, but the agent should have explicitly verified that only one measurement exists in the 24-hour window before reporting the answer.",
+   "cost": 0.002025,
+   "tokens_in": 1225,
+   "tokens_out": 160,
+   "latency_s": 2.4559695720672607
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The FINISH answer is incorrect. Within the last 24 hours (2023-11-12T10:15Z to 2023-11-13T10:15Z), there is exactly one CBG (GLU) measurement: 100.0 mg/dL at 2023-11-13T02:04Z, so the average should be 100, not -1.",
+   "cost": 0.00232125,
+   "tokens_in": 1009,
+   "tokens_out": 106,
+   "latency_s": 1.9812369346618652
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 100 mg/dL is incorrect. Only ONE observation (343933 at 2023-11-13T02:04:00) falls within the last 24 hours from the reference time (2023-11-13T10:15:00). The correct average should be 100.0 mg/dL, but this is based on a single measurement, not multiple measurements. However, the agent should verify this is the only valid data point and report accordingly. The query appears correct but the answer needs verification that only one measurement exists in the 24-hour window.",
+   "cost": 0.001977,
+   "tokens_in": 1162,
+   "tokens_out": 163,
+   "latency_s": 3.0610527992248535
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The provided trajectory shows observations within last 24 hours but the list includes a value from 2023-11-13T02:04:00Z (within 24h) and others outside. The user asked for average over last 24 hours; however, only 2 observations fall within 24h window: 2023-11-13T02:04:00Z and 2023-11-13T10:15:00Z boundary not in list; 2023-11-08 is outside. The average cannot be computed reliably from the given subset; also the instruction requires computing a single number mg/dL or -1 if none. As a result, action should be re-evaluated and not FINISH.",
+   "cost": 0.00012525,
+   "tokens_in": 1065,
+   "tokens_out": 180,
+   "latency_s": 2.0973286628723145
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Only one observation (343933, 2023-11-13T02:04) falls within the 24-hour window, with value 100 mg/dL, so the average is correctly computed as 100.",
+   "cost": 0.005494,
+   "tokens_in": 1570,
+   "tokens_out": 157,
+   "latency_s": 2.5132973194122314
+  }
+ }
+}

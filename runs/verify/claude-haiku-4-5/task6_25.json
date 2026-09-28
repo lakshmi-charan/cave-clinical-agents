@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's analysis contains a critical error. The observation from 2023-11-11T02:52:00+00:00 is actually within the last 24 hours from the current time of 2023-11-13T10:15:00+00:00 (approximately 32 hours ago, which exceeds 24 hours). However, the agent incorrectly dismissed this measurement. More importantly, the query used date=ge2023-11-12&date=le2023-11-13 which uses only date boundaries without time, potentially including measurements from the entire day of 2023-11-12 and 2023-11-13. The agent should have carefully filtered for measurements strictly within the 24-hour window (2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00). No measurements in the returned results fall within this precise 24-hour window, so -1 is correct, but the agent's reasoning about the 2023-11-11 measurement was flawed.",
+   "cost": 0.003596,
+   "tokens_in": 2206,
+   "tokens_out": 278,
+   "latency_s": 4.1632912158966064
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The returned observations show no GLU measurement between 2023-11-12T10:15 and 2023-11-13T10:15; the closest is 2023-11-11T02:52, which is outside the 24-hour window, so -1 is correct.",
+   "cost": 0.007664,
+   "tokens_in": 2666,
+   "tokens_out": 100,
+   "latency_s": 2.2738301753997803
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The retrieved observations show none with effectiveDateTime on or after 2023-11-12T10:15:00+00:00; the latest GLU entries are earlier than the 24‑hour window, so returning -1 is correct.",
+   "cost": 0.0006345,
+   "tokens_in": 1946,
+   "tokens_out": 74,
+   "latency_s": 1.4972319602966309
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query results show one measurement within the last 24 hours: Observation 305504 from 2023-11-11T02:52:00+00:00 with a value of 89.0 mg/dL (which is within the 24-hour window from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The correct answer should be 89, not -1.",
+   "cost": 0.00262,
+   "tokens_in": 1880,
+   "tokens_out": 148,
+   "latency_s": 2.282033681869507
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No GLU observations fall within the last 24 hours (2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00) per the retrieved bundle, so returning -1 is correct.",
+   "cost": 0.00057275,
+   "tokens_in": 1643,
+   "tokens_out": 81,
+   "latency_s": 1.401566982269287
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action finishes with an answer (-1) but the trace shows a measurement on 2023-11-11 which is outside the 24-hour window; however there is also a 2023-11-11 timestamp that is still >24h from 2023-11-13 10:15. We should confirm there is truly zero data in last 24h before concluding -1. The action relies on correct data handling; ensure any measurement within 2023-11-12 10:15 to 2023-11-13 10:15 is checked.",
+   "cost": 0.0001565,
+   "tokens_in": 1946,
+   "tokens_out": 148,
+   "latency_s": 2.1721351146698
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The search retrieved no GLU observations within 2023-11-12T10:15Z to 2023-11-13T10:15Z. The most recent listed (2023-11-11T02:52Z) is outside 24 hours. Returning -1 matches the instructions.",
+   "cost": 0.0032925,
+   "tokens_in": 1946,
+   "tokens_out": 86,
+   "latency_s": 2.390979290008545
+  }
+ }
+}

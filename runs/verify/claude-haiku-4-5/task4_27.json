@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent magnesium level within the last 24 hours. Observation 78920 from 2023-11-13T01:18:00+00:00 with value 1.8 mg/dL is the most recent measurement within the specified window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z), and it is already in the requested unit of mg/dL.",
+   "cost": 0.002679,
+   "tokens_in": 1969,
+   "tokens_out": 142,
+   "latency_s": 2.517300844192505
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Within the 24-hour window (2023-11-12T10:15 to 2023-11-13T10:15), the most recent observation is at 2023-11-13T01:18:00 with value 1.8 mg/dL, which matches the proposed answer.",
+   "cost": 0.0069565,
+   "tokens_in": 2367,
+   "tokens_out": 104,
+   "latency_s": 2.225658893585205
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The GET returned an Observation at 2023-11-13T01:18:00+00:00 with MG = 1.8 mg/dL, which falls within the 24-hour window (>=2023-11-12T10:15:00Z to <=2023-11-13T10:15:00Z); the proposed FINISH value 1.8 matches this most recent result.",
+   "cost": 0.00064475,
+   "tokens_in": 1699,
+   "tokens_out": 110,
+   "latency_s": 1.8292186260223389
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved magnesium observations for patient S6227720 within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The most recent measurement is Observation 78920 from 2023-11-13T01:18:00+00:00 with a value of 1.8 mg/dL, which is already in the requested unit. The answer of 1.8 is correct.",
+   "cost": 0.002476,
+   "tokens_in": 1731,
+   "tokens_out": 149,
+   "latency_s": 2.454010486602783
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 80.0,
+   "justification": "The most recent MG observation within the last 24 hours (between 2023-11-12T10:15:00Z and 2023-11-13T10:15:00Z) is 1.8 mg/dL at 2023-11-13T01:18:00Z, so the FINISH payload [1.8] is correct value but action should report a single number (not in an array); reject to ensure format correctness.",
+   "cost": 0.000612,
+   "tokens_in": 1480,
+   "tokens_out": 121,
+   "latency_s": 2.1353158950805664
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed action uses a pre-specified answer (1.8) without verifying the most recent within the exact last-24h window; while there is a magnesium observation on 2023-11-13T01:18:00Z, there may be a more recent entry within 10:15-01:18 window. Need to confirm the latest observation within 24h before acting.",
+   "cost": 0.00012815,
+   "tokens_in": 1699,
+   "tokens_out": 108,
+   "latency_s": 1.5498602390289307
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search correctly scoped to patient S6227720 and the past 24 hours. The latest MG observation in that window is 2023-11-13T01:18:00Z with value 1.8 mg/dL, already in mg/dL. Reporting 1.8 is correct.",
+   "cost": 0.00297375,
+   "tokens_in": 1699,
+   "tokens_out": 85,
+   "latency_s": 3.1688601970672607
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The search timeframe was correctly set for the last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15). There is an observation at 2023-11-12T09:48 which is 27 minutes before the window, so indeed there are no observations within the last 24 hours. However, the FINISH action returns [-1] as a list instead of a single number as requested; formatting is incorrect.",
+   "cost": 0.00255,
+   "tokens_in": 1072,
+   "tokens_out": 121,
+   "latency_s": 2.609280824661255
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "Bundle shows observations at 2023-11-12T09:48:00 and 2023-11-12T00:54:00 and 2023-11-12T02:25:00 which are within the 24‑hour window (from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z includes 2023-11-12T09:48? Actually 09:48 is before 10:15 so only 00:54 and 02:25 are before; however 00:54 and 02:25 are also before 10:15—none are >=2023-11-12T10:15:00, so there are no measurements in the specified last 24 hours; but the GET used ge2023-11-12T10:15:00 should have returned only those >= that time — the returned bundle includes entries earlier, so the query/results mismatch; because of this inconsistency, I cannot approve returning -1 without clarified correct filtered data.",
+   "cost": 0.000766,
+   "tokens_in": 1072,
+   "tokens_out": 249,
+   "latency_s": 4.594602108001709
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's conclusion is incorrect. Multiple observations fall within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00): observations at 2023-11-12T00:54:00, 2023-11-12T02:25:00, and 2023-11-12T09:48:00. The average of these three values (118.0 + 151.0 + 163.0) / 3 = 144.0 mg/dL, not -1.",
+   "cost": 0.002077,
+   "tokens_in": 1232,
+   "tokens_out": 169,
+   "latency_s": 2.74141001701355
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 97.0,
+   "justification": "There are CBG (GLU) observations within the last 24 hours: 2023-11-12T00:54, 02:25, and 09:48 UTC with values 118, 151, and 163 mg/dL. The average should be calculated, not -1.",
+   "cost": 0.00213375,
+   "tokens_in": 1019,
+   "tokens_out": 86,
+   "latency_s": 1.928236484527588
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query correctly retrieved 8 GLU observations, and 5 of them fall within the last 24 hours (from 2023-11-12T10:15:00 onwards): 118.0, 151.0, 163.0, 102.0, and 88.0 mg/dL. The average is (118+151+163+102+88)/5 = 124.4 mg/dL, not -1.",
+   "cost": 0.001918,
+   "tokens_in": 1173,
+   "tokens_out": 149,
+   "latency_s": 2.2313003540039062
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The trajectory shows there are observations within last 24 hours (e.g., 2023-11-12T09:48:00+00:00 and 00:54:00). The proposed FINISH action incorrectly states no measurements in last 24 hours. Verification needed before finishing.",
+   "cost": 8.840000000000001e-05,
+   "tokens_in": 1072,
+   "tokens_out": 87,
+   "latency_s": 1.718632459640503
+  }
+ }
+}

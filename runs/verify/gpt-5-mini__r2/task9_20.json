@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No serum potassium results were returned for patient S3236936, so ordering empiric replacement would be unsafe; recommending a morning serum potassium draw at 2023-11-14T08:00 and deferring medication ordering until a result is available follows the dosing protocol and safety requirements.",
+   "cost": 0.00043475,
+   "tokens_in": 1099,
+   "tokens_out": 80,
+   "latency_s": 1.5568292140960693
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "Action would rely on missing patient data (no potassium result found). Before proceeding, the plan should be to obtain a dated morning potassium level as requested. However, the proposed FINISH content includes an instruction to place a replacement order only after the morning result is available, which is appropriate, but the FINISH step also asserts that no result was found and proposes to finish with a lab order; we need to confirm actual data exists (or fetch latest Observation) before finalizing, and ensure timing aligns with system capabilities.",
+   "cost": 0.00010695,
+   "tokens_in": 1099,
+   "tokens_out": 130,
+   "latency_s": 2.0300629138946533
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent has not completed the task as requested. The task explicitly asks to 'order replacement potassium according to dosing instructions' AND 'pair this order with a morning serum potassium level to be completed the next day at 8am.' The agent found no potassium result but then stopped without placing the morning lab order that was explicitly requested. At minimum, the ServiceRequest for the serum potassium level on 2023-11-14 at 08:00 should have been created before finishing.",
+   "cost": 0.002036,
+   "tokens_in": 1306,
+   "tokens_out": 146,
+   "latency_s": 2.643298864364624
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No potassium lab (LOINC 2823-3) was found for patient S3236936; recommending to defer empiric replacement and order a morning potassium draw for 2023-11-14 08:00 is correct and follows the provided dosing rule and safety constraints.",
+   "cost": 0.00040775,
+   "tokens_in": 999,
+   "tokens_out": 79,
+   "latency_s": 2.3293962478637695
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action reports that no potassium level was found, but the task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level. The agent should have proceeded to order the morning serum potassium level (via ServiceRequest.Create for 2023-11-14 at 08:00) rather than finishing without completing the requested orders. The task cannot be marked complete when the serum potassium order has not been placed.",
+   "cost": 0.001881,
+   "tokens_in": 1186,
+   "tokens_out": 139,
+   "latency_s": 2.874875783920288
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The task required placing orders if low and in all cases placing a morning serum potassium lab for next day at 08:00. The agent neither placed a ServiceRequest for the lab nor attempted to order potassium; a FINISH without placing the required lab order is incomplete.",
+   "cost": 0.00213375,
+   "tokens_in": 1099,
+   "tokens_out": 76,
+   "latency_s": 2.377530097961426
+  }
+ }
+}

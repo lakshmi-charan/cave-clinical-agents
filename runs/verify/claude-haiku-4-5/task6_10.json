@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that only one CBG observation (167.0 mg/dL at 2023-11-12T13:35:00+00:00) falls within the 24-hour window from 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z. All other observations are from 2020-2021 and are outside the specified timeframe. The average of a single value is correctly calculated as 167.0 mg/dL.",
+   "cost": 0.002788,
+   "tokens_in": 2033,
+   "tokens_out": 151,
+   "latency_s": 2.574854612350464
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Only one observation (167.0 mg/dL at 2023-11-12T13:35:00Z) falls within the specified 24-hour window, so the average equals that single value; all other results are outside the range despite the search filter apparently not being enforced by the server.",
+   "cost": 0.007229,
+   "tokens_in": 2472,
+   "tokens_out": 105,
+   "latency_s": 2.324887275695801
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query retrieved observations for patient S6268253 and within the specified 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00) only one GLU at 2023-11-12T13:35:00 with 167 mg/dL; average of single value is 167 mg/dL.",
+   "cost": 0.00065325,
+   "tokens_in": 1789,
+   "tokens_out": 103,
+   "latency_s": 2.1416990756988525
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action returns only a single value (167.0) instead of calculating the average of all CBG measurements within the last 24 hours. The query correctly retrieved 2 observations within the 24-hour window (2023-11-12T13:35:00Z with 167.0 mg/dL and 2023-11-11T02:04:00Z with 153.0 mg/dL), so the correct average should be (167.0 + 153.0) / 2 = 160.0 mg/dL, not 167.0.",
+   "cost": 0.002568,
+   "tokens_in": 1728,
+   "tokens_out": 168,
+   "latency_s": 2.5311102867126465
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query returned one GLU observation within the last 24 hours (167 mg/dL at 2023-11-12T13:35:00Z); average of single value is 167 mg/dL, so FINISH([167.0]) is correct.",
+   "cost": 0.00052975,
+   "tokens_in": 1503,
+   "tokens_out": 77,
+   "latency_s": 1.9179408550262451
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 65.0,
+   "justification": "Action relies on the right patient and data; the last 24h window contains one GLU observation (2023-11-12T13:35:00+00:00) with 167 mg/dL, so average = 167 mg/dL. Ensure no other 24h measurements were missed; data shows only one within window.",
+   "cost": 0.00012865,
+   "tokens_in": 1789,
+   "tokens_out": 98,
+   "latency_s": 1.5815327167510986
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly filtered to the last 24 hours (2023-11-12T10:15Z to 2023-11-13T10:15Z) and identified a single CBG value of 167.0 mg/dL, making the average 167.0. Units already in mg/dL and within timeframe; no other values qualify.",
+   "cost": 0.00320625,
+   "tokens_in": 1789,
+   "tokens_out": 97,
+   "latency_s": 1.9714980125427246
+  }
+ }
+}

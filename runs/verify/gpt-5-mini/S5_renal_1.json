@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No serum K observations were found and no eGFR result was available per the query; recommending to order a morning K at 08:00 and withholding replacement until results (and eGFR) are available follows the protocol and dosing rules.",
+   "cost": 0.0003935,
+   "tokens_in": 1006,
+   "tokens_out": 71,
+   "latency_s": 1.8182499408721924
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "Action relies on missing data: there is no potassium result or eGFR data found to determine need for replacement or protocol applicability. The proposed finish would prematurely cancel ordering until data is available; however, a morning potassium order for tomorrow could be appropriate if policy allows, but we cannot confirm due to missing data in current step. Recommend rechecking with actual data before finishing.",
+   "cost": 9.070000000000002e-05,
+   "tokens_in": 1006,
+   "tokens_out": 101,
+   "latency_s": 2.1527838706970215
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. The agent failed to retrieve the patient's eGFR (required by protocol before any ordering decision) and did not attempt to order the morning serum potassium level as explicitly requested. The task requires ordering a morning potassium lab paired with any replacement order; at minimum, the morning lab order should be placed now, not deferred.",
+   "cost": 0.001801,
+   "tokens_in": 1201,
+   "tokens_out": 120,
+   "latency_s": 2.830435276031494
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed finish correctly reports no recent potassium or eGFR labs, avoids ordering replacement without necessary data, and schedules a serum potassium lab for tomorrow at 08:00 as requested; it follows institutional protocol and dosing guidance by deferring replacement until results are available.",
+   "cost": 0.0003805,
+   "tokens_in": 922,
+   "tokens_out": 75,
+   "latency_s": 1.9369652271270752
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action violates the task requirements. The task explicitly states to 'order replacement potassium according to dosing instructions' IF low, AND to 'pair this order with a morning serum potassium level.' The agent should have first retrieved the eGFR to check the institutional protocol constraint, then attempted to obtain the most recent potassium level through broader search parameters or alternative queries before concluding it's unavailable. Prematurely finishing without attempting these prerequisite checks and without placing any orders (when the task mandates ordering if conditions are met) is incorrect.",
+   "cost": 0.001888,
+   "tokens_in": 1098,
+   "tokens_out": 158,
+   "latency_s": 3.273249864578247
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 89.0,
+   "justification": "The task requires checking most recent potassium and, if low, ordering replacement and a paired lab for tomorrow 08:00. The agent did not search for eGFR (EGFR code) to apply the protocol and did not place the service request for the morning potassium lab. FINISH is premature because required orders were not placed and data search was incomplete.",
+   "cost": 0.0021975,
+   "tokens_in": 1006,
+   "tokens_out": 94,
+   "latency_s": 2.8002610206604004
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 97, \"justification\": \"The agent searched",
+   "parse_error": true,
+   "cost": 0.006954,
+   "tokens_in": 1582,
+   "tokens_out": 300,
+   "latency_s": 5.636117696762085
+  }
+ }
+}

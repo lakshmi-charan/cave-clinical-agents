@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned zero potassium observations so no replacement order is appropriate; recommending obtaining a serum K now and scheduling the morning K for 2023-11-14T08:00 aligns with the task and dosing rules without making unsafe assumptions.",
+   "cost": 0.000381,
+   "tokens_in": 972,
+   "tokens_out": 69,
+   "latency_s": 2.2716336250305176
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action asserts no result found and suggests scheduling the lab and future dosing based on a hypothetical value. It would be unsafe to place orders or schedule paired labs without confirming current potassium value; an actual lab result is required to determine whether replacement is indicated and to calculate the correct dosing according to the rule.",
+   "cost": 8.46e-05,
+   "tokens_in": 972,
+   "tokens_out": 90,
+   "latency_s": 1.7359771728515625
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent correctly identified that no potassium result exists, but the FINISH action is inappropriate because the task explicitly requires checking the most recent potassium level and ordering replacement IF low. The agent should have attempted to obtain a current potassium level first (via a new lab order or by checking if one exists elsewhere) before concluding the task is complete. Finishing without attempting to retrieve or order the prerequisite lab violates the task requirement to 'check' the level before conditional ordering.",
+   "cost": 0.001837,
+   "tokens_in": 1157,
+   "tokens_out": 136,
+   "latency_s": 2.9087648391723633
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for the most recent serum potassium (LOINC 2823-3) and found no results, so withholding replacement is appropriate; recommended next steps (obtain lab now and optionally schedule morning lab at 2023-11-14T08:00:00+00:00, and apply the specified dosing rule and NDC once a value exists) match the task and dosing instructions.",
+   "cost": 0.000439,
+   "tokens_in": 916,
+   "tokens_out": 105,
+   "latency_s": 2.4234015941619873
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires ordering replacement potassium IF low, and pairing it with a morning serum potassium level. The agent correctly identified that no potassium result exists, but then failed to execute the task by not ordering the initial serum potassium lab that is necessary to determine if replacement is needed. The FINISH action inappropriately delegates this critical first step back to the clinician rather than completing it through available FHIR functions (ServiceRequest.Create for the stat potassium lab).",
+   "cost": 0.001799,
+   "tokens_in": 1089,
+   "tokens_out": 142,
+   "latency_s": 2.7984611988067627
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task required checking the most recent potassium and, if low, ordering replacement and also placing a paired morning potassium lab for tomorrow at 8am. The agent stopped after finding no result and did not place the morning lab order. A FINISH action is not acceptable because not every requested order has been placed.",
+   "cost": 0.002055,
+   "tokens_in": 972,
+   "tokens_out": 84,
+   "latency_s": 2.672401189804077
+  }
+ }
+}

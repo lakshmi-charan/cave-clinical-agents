@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's interpretation of 'low' magnesium is incorrect. The dosing instructions define mild deficiency as 1.5-1.9 mg/dL, meaning levels below 1.9 mg/dL warrant treatment. At 2.0 mg/dL, the patient's level is borderline but technically not in the deficiency range, however the agent's reasoning that 2.0 is 'not low' contradicts the clinical definition provided (mild deficiency starts at 1.9). More critically, the task states 'If low, then order replacement' but provides no clear definition of what constitutes 'low'—the agent should have clarified whether 2.0 mg/dL meets the threshold for treatment per the dosing protocol, or simply reported the finding without ordering. The FINISH action is premature without explicit confirmation that 2.0 mg/dL does not meet treatment criteria.",
+   "cost": 0.002215,
+   "tokens_in": 1025,
+   "tokens_out": 238,
+   "latency_s": 3.631535530090332
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The magnesium level of 2.0 mg/dL was correctly retrieved within the 24-hour window and is above the mild deficiency threshold (1.5-1.9 mg/dL), so correctly no order was placed and the FINISH summary is accurate.",
+   "cost": 0.0043665,
+   "tokens_in": 1315,
+   "tokens_out": 108,
+   "latency_s": 2.5141568183898926
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent MG result within 24 hours is 2.0 mg/dL (2023-11-13T05:15:00+00:00), which is above the low thresholds given, so withholding IV magnesium is correct and no order is needed.",
+   "cost": 0.00037125,
+   "tokens_in": 869,
+   "tokens_out": 77,
+   "latency_s": 2.198601007461548
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab query correctly retrieved magnesium results from the last 24 hours (since 2023-11-12T10:15:00, which is 24 hours before the current time of 2023-11-13T10:15:00). The result shows a serum magnesium level of 2.0 mg/dL, which is above the mild deficiency threshold of 1.5 mg/dL, so no replacement is indicated per protocol. The conclusion is correct.",
+   "cost": 0.001552,
+   "tokens_in": 832,
+   "tokens_out": 144,
+   "latency_s": 2.361924648284912
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab result shows MG 2.0 mg/dL within past 24 hours (measured 2023-11-13T05:15Z), which is not low per provided thresholds, so no IV magnesium order is appropriate.",
+   "cost": 0.0003155,
+   "tokens_in": 702,
+   "tokens_out": 70,
+   "latency_s": 1.8957786560058594
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The last recorded Mg is 2.0 mg/dL within 24 hours, not low per provided criteria (mild deficiency starts at 1.5-1.9 mg/dL; however 2.0 mg/dL is above that). No order needed per instruction. Action aligns with request.",
+   "cost": 7.945e-05,
+   "tokens_in": 869,
+   "tokens_out": 90,
+   "latency_s": 1.6553623676300049
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The lab query correctly found a magnesium level within 24 hours (2.0 mg/dL at 2023-11-13T05:15Z). This is not low per the provided thresholds, so no IV magnesium order should be placed. The final statement accurately reflects this and no orders were made.",
+   "cost": 0.00193625,
+   "tokens_in": 869,
+   "tokens_out": 85,
+   "latency_s": 2.0034422874450684
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The search correctly queried GLU observations for patient S2450227 within the past 24 hours and none of the returned results fall within that window. According to instructions, the correct output is -1.",
+   "cost": 0.00258,
+   "tokens_in": 1560,
+   "tokens_out": 63,
+   "latency_s": 2.0854971408843994
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query retrieved 20 GLU observations and none are within 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00; returning -1 for no measurements in last 24 hours is correct.",
+   "cost": 0.000556,
+   "tokens_in": 1560,
+   "tokens_out": 83,
+   "latency_s": 1.5906121730804443
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The query results contain measurements from 2023-11-10 and 2023-11-11 that fall within the last 24 hours (before 2023-11-13T10:15:00). Observations 311390 (2023-11-11T17:21:00, 105.0 mg/dL) and 311396 (2023-11-10T14:25:00, 111.0 mg/dL) should be included in the average calculation, not excluded.",
+   "cost": 0.002551,
+   "tokens_in": 1791,
+   "tokens_out": 152,
+   "latency_s": 5.13858699798584
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The search correctly queried GLU observations within the last 24 hours, and the returned bundle shows no results in that window; thus, returning -1 is correct per instructions.",
+   "cost": 0.00245375,
+   "tokens_in": 1507,
+   "tokens_out": 57,
+   "latency_s": 2.2348434925079346
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved GLU observations for patient S2450227 within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00), but the results contain only ONE valid measurement in that window: Observation 311390 from 2023-11-11T17:21:00 (105.0 mg/dL). The proposed answer of -1 is incorrect; the average should be 105.0 mg/dL since there is at least one measurement available within the last 24 hours.",
+   "cost": 0.002563,
+   "tokens_in": 1733,
+   "tokens_out": 166,
+   "latency_s": 2.6282620429992676
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The provided data set shows GLU observations but none within the last 24 hours; the requested output is -1 if no measurement in last 24h, which aligns with the data. However, there is a potential ambiguity: the query used date range up to 2023-11-13T10:15:00Z, and the latest within range is 2023-11-11T17:21:00Z and 2023-11-10T14:25:00Z, which are >24h old relative to 2023-11-13T10:15:00Z; thus -1 is appropriate.",
+   "cost": 0.000142,
+   "tokens_in": 1560,
+   "tokens_out": 160,
+   "latency_s": 2.114670753479004
+  }
+ }
+}

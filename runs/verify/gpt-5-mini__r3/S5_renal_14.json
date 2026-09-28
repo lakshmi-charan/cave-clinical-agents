@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No serum potassium observation found so withholding replacement is correct; ordering a morning potassium for 2023-11-14T08:00 and recommending stat BMP/eGFR check with the stated dosing algorithm and eGFR safety cutoff aligns with the protocol.",
+   "cost": 0.00040925,
+   "tokens_in": 1053,
+   "tokens_out": 73,
+   "latency_s": 2.016216516494751
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 48.0,
+   "justification": "Action proposes placing a morning potassium order and conditional replacement without confirming an available recent potassium value or current eGFR data. Must verify patient S1235870 has a recent potassium result (LOINC 2823-3) and eGFR >=30 before ordering any replacement; also ensure the paired morning potassium order is feasible within system time constraints and that the date/time matches 2023-11-14 08:00. The proposed FINISH action assumes missing data and suggests actions that require actual data and precise ordering steps.",
+   "cost": 0.00010425,
+   "tokens_in": 1053,
+   "tokens_out": 129,
+   "latency_s": 2.1612672805786133
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action violates the task requirements: (1) it does not place the ordered morning serum potassium level for tomorrow at 8am as explicitly requested—it only recommends it; (2) it fails to complete the task by leaving contingent orders unexecuted rather than placing the actual ServiceRequest for the lab draw. The task requires placing both the replacement potassium (if indicated) AND the paired morning serum potassium order; this response defers both instead of executing at least the lab order that should be placed now.",
+   "cost": 0.002021,
+   "tokens_in": 1266,
+   "tokens_out": 151,
+   "latency_s": 3.188070058822632
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No serum potassium result was found; recommending no replacement now is safe. Ordering a morning potassium for 2023-11-14T08:00+00:00 and advising to check eGFR before any oral potassium per institutional protocol matches the task and dosing instructions.",
+   "cost": 0.0004,
+   "tokens_in": 984,
+   "tokens_out": 77,
+   "latency_s": 1.7031476497650146
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The FINISH action is incomplete and does not fulfill the task requirements. The task explicitly states 'If low, then order replacement potassium' and 'pair this order with a morning serum potassium level'—but no orders have been placed. The agent should have first searched for the most recent potassium level (which returned 0 results), then searched for eGFR to check the safety constraint, and then placed the morning serum potassium order as requested. Instead, the agent is deferring all actions with recommendations rather than executing the ordered morning lab draw.",
+   "cost": 0.001971,
+   "tokens_in": 1181,
+   "tokens_out": 158,
+   "latency_s": 3.4718735218048096
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The task requires placing orders if low and pairing with a morning potassium lab. The agent neither checked eGFR nor ordered the morning potassium via ServiceRequest.Create. FINISH is premature because required orders have not been placed and protocol checks were not completed.",
+   "cost": 0.00203625,
+   "tokens_in": 1053,
+   "tokens_out": 72,
+   "latency_s": 2.349179983139038
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent MG observation is 2023-11-12T12:50:00+00:00 with value 2.1 mg/dL, which is within 24 hours of 2023-11-13T10:15:00+00:00 and is not low, so no replacement order is indicated.",
+   "cost": 0.00046975,
+   "tokens_in": 1151,
+   "tokens_out": 91,
+   "latency_s": 1.7323253154754639
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action asserts that the most recent magnesium is 2.1 mg/dL within 24 hours and that no replacement was placed. While the data shows 2.1 mg/dL at 2023-11-12T12:50:00+00:00, the instruction requires to confirm no seizure of a lower recent value; however, you should still verify that no newer magnesium value in the last 24 hours exists beyond the listed entries and ensure the action (or inaction) aligns with protocol. To be safe, re-check the last 24 hours and confirm no ordering action was taken in the system before finishing.",
+   "cost": 0.00012115,
+   "tokens_in": 1151,
+   "tokens_out": 159,
+   "latency_s": 2.1264240741729736
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The magnesium level of 2.1 mg/dL from 2023-11-12T12:50:00 is NOT within the last 24 hours from the current time of 2023-11-13T10:15:00. The time difference is approximately 21.4 hours, which is within 24 hours, but more critically, the task states 'If no magnesium level has been recorded in the last 24 hours, don't order anything' — and this level IS within 24 hours. However, the agent's conclusion is correct (no order needed since 2.1 mg/dL is normal), but the FINISH statement should clarify the exact time elapsed and confirm the level is normal (≥2.0 mg/dL is typically normal range).",
+   "cost": 0.002878,
+   "tokens_in": 1378,
+   "tokens_out": 300,
+   "latency_s": 4.230583667755127
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent MG is 2.1 mg/dL at 2023-11-12T12:50:00+00:00 which is within 24 hours of 2023-11-13T10:15:00+00:00 and is not low, so no replacement order is appropriate.",
+   "cost": 0.000446,
+   "tokens_in": 1088,
+   "tokens_out": 87,
+   "latency_s": 2.014615774154663
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent magnesium level (2.1 mg/dL from 2023-11-12T12:50:00) is NOT within the last 24 hours from the current time (2023-11-13T10:15:00). The time difference is approximately 21.4 hours, which exceeds 24 hours. Per task instructions, if no magnesium level has been recorded in the last 24 hours, nothing should be ordered—but the agent should not have claimed this result was 'within the last 24 hours.'",
+   "cost": 0.002094,
+   "tokens_in": 1299,
+   "tokens_out": 159,
+   "latency_s": 2.554265022277832
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The latest magnesium is 2.1 mg/dL at 2023-11-12T12:50:00Z, but current time is 2023-11-13T10:15:00Z, which is 21h25m later than the lab draw? Actually it’s 21h25m after 12:50 previous day would be 2023-11-13 10:15 minus 2023-11-12 12:50 = 21h25m, so within 24h. However, the agent stated it was within 24 hours correctly and did not order replacement since 2.1 mg/dL is not low. Wait: 10:15 − 12:50 previous day is 21h25m, yes within 24h, so the conclusion is correct. But verify: The task required checking last 24h and ordering only if low. That was satisfied. However, ensure no orders were placed—correct. The FINISH is acceptable. Correction: I miscalculated; decision should approve.",
+   "cost": 0.00386875,
+   "tokens_in": 1151,
+   "tokens_out": 243,
+   "latency_s": 4.4609551429748535
+  }
+ }
+}

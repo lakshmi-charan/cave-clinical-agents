@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried for serum magnesium levels within the last 24 hours using appropriate date parameters (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The search returned zero results, which satisfies the conditional requirement to not order anything when no magnesium level has been recorded in the last 24 hours. The FINISH action accurately reflects this finding.",
+   "cost": 0.001792,
+   "tokens_in": 1147,
+   "tokens_out": 129,
+   "latency_s": 2.3024470806121826
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The lab search for code MG in the last 24 hours returned zero results, so per instructions no order should be placed, and the FINISH message correctly reflects this outcome.",
+   "cost": 0.004524,
+   "tokens_in": 1502,
+   "tokens_out": 77,
+   "latency_s": 1.9682483673095703
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 99.0,
+   "justification": "Observation search returned zero magnesium results in the specified 24-hour window, matching the instruction to not place an order when no recent magnesium level exists.",
+   "cost": 0.00034425,
+   "tokens_in": 969,
+   "tokens_out": 51,
+   "latency_s": 1.4306414127349854
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried for serum magnesium levels within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) using the appropriate code 'MG' and patient identifier. The search returned zero results, which means no magnesium level was recorded in the specified timeframe. Per the task instructions, no medication order should be placed when no magnesium level has been recorded in the last 24 hours, making the FINISH action appropriate.",
+   "cost": 0.001725,
+   "tokens_in": 965,
+   "tokens_out": 152,
+   "latency_s": 2.1001744270324707
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search for Observation code MG for patient S1715871 within the specified 24-hour window returned zero results, so per instructions no replacement order should be placed; the FINISH statement correctly reports this and takes no action.",
+   "cost": 0.000334,
+   "tokens_in": 808,
+   "tokens_out": 66,
+   "latency_s": 1.4845056533813477
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The trajectory shows a failed initial data retrieval (no results) but the instruction requires verifying the last 24 hours; potential exists that a magnesium observation exists outside the exact date filter or in a different code. Without confirming the 24-hour window exactly, proceeding with a FINISH stating no level recorded may be premature. Re-run Observation.Search for MG within the precise last 24 hours and confirm before finalizing.",
+   "cost": 9.205000000000001e-05,
+   "tokens_in": 969,
+   "tokens_out": 109,
+   "latency_s": 1.8103735446929932
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The agent correctly searched for MG observations within the last 24 hours for the specified patient and found none. Per instructions, no replacement should be ordered, and the FINISH statement accurately reflects this.",
+   "cost": 0.00182125,
+   "tokens_in": 969,
+   "tokens_out": 61,
+   "latency_s": 1.592787742614746
+  }
+ }
+}

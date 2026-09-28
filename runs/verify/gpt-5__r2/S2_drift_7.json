@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "Right patient and time window are correct, but the unit conversion is wrong. Magnesium: 1 mmol/L = 2.43 mg/dL, so 0.864 mmol/L equals about 2.10 mg/dL, not 2.43 mg/dL × 0.864 = 2.10. The agent should return 2.10 (rounded appropriately), not its stated conversion.",
+   "cost": 0.00201625,
+   "tokens_in": 773,
+   "tokens_out": 105,
+   "latency_s": 2.3045008182525635
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation matches patient S0558682 within last 24 hours (2023-11-13T07:15Z) and conversion using 1 mmol/L = 2.4305 yields 0.864 * 2.4305 = 2.100 mg/dL (rounded to three decimals); action is correct and safe.",
+   "cost": 0.00037525,
+   "tokens_in": 773,
+   "tokens_out": 91,
+   "latency_s": 2.0078022480010986
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved a magnesium observation (0.864 mmol/L) from 2023-11-13T07:15:00+00:00, which is within the last 24 hours from the current time of 2023-11-13T10:15:00+00:00. The unit conversion is accurate: 0.864 mmol/L × 2.4305 mg/dL per mmol/L = 2.1 mg/dL (rounded appropriately).",
+   "cost": 0.001669,
+   "tokens_in": 914,
+   "tokens_out": 151,
+   "latency_s": 2.9010446071624756
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The latest magnesium result is 0.864 mmol/L at 2023-11-13T07:15:00Z, which is within 24 hours, but the FINISH step did not convert it to mg/dL as required. It should be reported as a single number in mg/dL.",
+   "cost": 0.0017325,
+   "tokens_in": 706,
+   "tokens_out": 85,
+   "latency_s": 2.0987844467163086
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The observation retrieved is within the last 24 hours (2023-11-13T07:15:00 is 3 hours before the current time of 2023-11-13T10:15:00). The magnesium value of 0.864 mmol/L converts to approximately 2.1 mg/dL (using conversion factor 0.864 × 2.43 ≈ 2.1), which matches the proposed answer.",
+   "cost": 0.001527,
+   "tokens_in": 827,
+   "tokens_out": 140,
+   "latency_s": 2.2386555671691895
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The latest magnesium Observation within last 24 hours is 0.864 mmol/L; conversion to mg/dL using 1 mmol/L = 2.4305 mg/dL yields 2.104 mg/dL. Proceeding assumes the value is MG code and correct timestamp. If exact unit handling is required, confirm that mg/dL is the desired unit.",
+   "cost": 7.905000000000001e-05,
+   "tokens_in": 773,
+   "tokens_out": 101,
+   "latency_s": 1.7930541038513184
+  }
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The lab order timing and patient are correct, and eGFR >=30 permits ordering; however, the task also requires potassium replacement if low, which has not been assessed because no recent potassium result was found. Before placing orders, the agent should first order a STAT potassium now (or otherwise obtain the most recent level) to determine if repletion is needed, then add the morning 8am lab. Additionally, ServiceRequest.note should be an array; current structure may be invalid.",
+   "cost": 0.00267625,
+   "tokens_in": 1189,
+   "tokens_out": 119,
+   "latency_s": 3.0107321739196777
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient verified (S6524007); no recent K result found and eGFR is 75 (>30) so ordering a serum potassium for 2023-11-14 08:00 is appropriate and matches LOINC 2823-3 and the requested timing/notes (stat priority acceptable for morning draw). The action does not attempt potassium replacement since no potassium value to calculate dosing.",
+   "cost": 0.00050325,
+   "tokens_in": 1189,
+   "tokens_out": 103,
+   "latency_s": 1.74849534034729
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires checking if potassium is LOW and THEN ordering replacement potassium paired with a follow-up lab. However, no recent potassium level was found (Bundle total=0 in Step 2), so there is no baseline value to determine if replacement is needed. The agent is ordering only the follow-up lab without first establishing that the patient's potassium is actually low or ordering the replacement potassium itself. The task cannot be completed as specified without a potassium result to trigger the replacement order.",
+   "cost": 0.00212,
+   "tokens_in": 1395,
+   "tokens_out": 145,
+   "latency_s": 2.6910223960876465
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "A morning potassium lab is appropriate for 2023-11-14 08:00 and eGFR is acceptable, but the action omits checking the most recent potassium level and, if low, ordering potassium repletion per protocol. Also, ServiceRequest.note should be an array; ensure full task requirements (lab plus conditional medication order) are fulfilled before proceeding.",
+   "cost": 0.00226,
+   "tokens_in": 1040,
+   "tokens_out": 96,
+   "latency_s": 2.4958224296569824
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action orders a serum potassium lab, but the prerequisite potassium replacement order was never placed. Step 2 found no recent potassium level (Bundle total=0), so the agent cannot determine if the patient's potassium is low or calculate the replacement dose needed. The task requires checking the level first, then ordering replacement IF low, then pairing it with the follow-up lab—but the replacement order is missing entirely.",
+   "cost": 0.001867,
+   "tokens_in": 1217,
+   "tokens_out": 130,
+   "latency_s": 2.7114360332489014
+  },
+  "p1|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "The timing and coding of the lab order are correct, but the task also requires checking the most recent potassium and, if low, ordering oral potassium repletion accordingly. The agent has not addressed potassium replacement at all; thus requested orders are incomplete.",
+   "cost": 0.00223625,
+   "tokens_in": 1221,
+   "tokens_out": 71,
+   "latency_s": 1.9346044063568115
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The ServiceRequest includes a single note object instead of an array per FHIR spec and sets priority to stat despite a scheduled time; otherwise content (patient, code 2823-3, timing 2023-11-14 08:00, intent/status) is appropriate. Also, the clinician requested potassium replacement if low; since the recent potassium wasn’t found, a paired medication order decision is pending, so this isolated order risks partial execution.",
+   "cost": 0.002595,
+   "tokens_in": 1172,
+   "tokens_out": 113,
+   "latency_s": 2.9501843452453613
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "Action attempts to create a ServiceRequest for a potassium lab without first confirming a recent potassium value. While eGFR is sufficient, we must check for an existing potassium observation (LOINC 2823-3) and, if low, calculate replacement dosing before placing any medication orders. The proposed action also treats the lab order as a medication replacement action, which is inappropriate without validating the potassium level first.",
+   "cost": 0.00010065000000000001,
+   "tokens_in": 1189,
+   "tokens_out": 103,
+   "latency_s": 1.834423303604126
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The instructions say to check the most recent potassium and, if low, order replacement dosing; otherwise, still pair with a morning potassium for next day 8am. You correctly ordered the 8am potassium and confirmed eGFR ≥30, but you failed to check potassium using the provided local code “K.” Only LOINC 2823-3 was queried, so you cannot conclude no result exists; potassium replacement decision is premature.",
+   "cost": 0.00279375,
+   "tokens_in": 1347,
+   "tokens_out": 111,
+   "latency_s": 4.991307497024536
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Patient confirmed S6524007; no serum K observation found and eGFR 75 (>30) so protocol allows labs; morning potassium (LOINC 2823-3) was ordered for 2023-11-14T08:00 and no replacement was ordered because no K value to calculate dose — matches instructions.",
+   "cost": 0.00051475,
+   "tokens_in": 1347,
+   "tokens_out": 89,
+   "latency_s": 1.429569959640503
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires checking if potassium is LOW and then ordering replacement IF low. The agent found no recent potassium result but did not attempt to retrieve historical potassium data or clarify the baseline threshold (3.5 mEq/L). Without establishing the patient's actual potassium level, the agent cannot determine if replacement is needed. The task is incomplete: a potassium lab was ordered for tomorrow, but the immediate clinical decision (whether to replace potassium today based on current status) remains unresolved.",
+   "cost": 0.002316,
+   "tokens_in": 1581,
+   "tokens_out": 147,
+   "latency_s": 2.817854404449463
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 87.0,
+   "justification": "Did not check most recent potassium using the provided code 'K'; only searched LOINC 2823-3 and concluded none available. The morning lab order was placed with priority 'stat' (should be routine) and note field structure may be incorrect. Cannot FINISH because potassium level may exist under code K and dosing action not yet correctly determined or ordered.",
+   "cost": 0.002395,
+   "tokens_in": 1156,
+   "tokens_out": 95,
+   "latency_s": 3.405642509460449
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task cannot be completed as proposed because the most recent potassium level is unavailable (Step 2 returned 0 results), making it impossible to determine if it is low or calculate the replacement dose. The morning lab order was placed prematurely without first establishing a baseline potassium value to assess whether replacement is needed.",
+   "cost": 0.001867,
+   "tokens_in": 1352,
+   "tokens_out": 103,
+   "latency_s": 2.158172607421875
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Action aligns with protocol: no recent potassium value found, eGFR >=30, so no replacement order can be calculated; a morning serum potassium lab (LOINC 2823-3) has been scheduled for 2023-11-14 08:00. FINISH data summary matches steps.",
+   "cost": 0.00010295000000000002,
+   "tokens_in": 1347,
+   "tokens_out": 89,
+   "latency_s": 1.5500764846801758
+  }
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "ServiceRequest targets Patient/S6227720, uses SNOMED code 306181000000106, authoredOn matches current timestamp, intent/status/priority appropriate, and the free-text note exactly matches requested content.",
+   "cost": 0.000336,
+   "tokens_in": 824,
+   "tokens_out": 65,
+   "latency_s": 1.8659310340881348
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action to POST a ServiceRequest with a stat priority and a detailed note must be validated against protocol: ensure patient S6227720 is correct and that the note content matches the clinician's request exactly. The current payload uses 'stat' priority; if the clinician did not specify urgent/stat, this could be inappropriate. Also ensure the note text exactly matches the requested wording without omission or modification and that the SNOMED code is correctly used for orthopedic surgery referral. A verification step is required before proceeding.",
+   "cost": 9.28e-05,
+   "tokens_in": 824,
+   "tokens_out": 129,
+   "latency_s": 2.3302767276763916
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "```json\n{\n  \"decision\": \"reject\",\n  \"confidence\": 85,\n  \"justification\": \"The proposed action uses 'priority': 'stat' which indicates an emergent/urgent referral, but the task does not specify stat priority. Additionally, the 'note' parameter should be an array of Note objects (each with 'text' fiel",
+   "parse_error": true,
+   "cost": 0.001562,
+   "tokens_in": 967,
+   "tokens_out": 119,
+   "latency_s": 2.6086719036102295
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest targets the correct patient ID, uses the specified SNOMED code for orthopedic referral, includes the exact free-text referral content, uses the provided authoredOn timestamp, and sets appropriate request fields (status, intent, priority). The only minor issue is note should be an array per FHIR but content is correct; otherwise safe and correct.",
+   "cost": 0.00038125,
+   "tokens_in": 789,
+   "tokens_out": 92,
+   "latency_s": 2.0104451179504395
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses priority 'stat' (emergent) for an orthopedic referral for a knee injury, which is not clinically appropriate. Acute knee injuries with ACL tears typically warrant 'urgent' or 'routine' priority depending on clinical context, not 'stat'. Additionally, the note structure appears incorrect—FHIR ServiceRequest.note should be an array of Annotation objects, not a single object with 'text' property.",
+   "cost": 0.001591,
+   "tokens_in": 926,
+   "tokens_out": 133,
+   "latency_s": 2.802419424057007
+  },
+  "p1|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest targets Patient/S6227720, uses the correct SNOMED code 306181000000106, includes the exact requested free-text note, has authoredOn set to the current timestamp, intent/status/priority appropriate for an order; no conflicting or missing elements were identified.",
+   "cost": 0.00037375,
+   "tokens_in": 855,
+   "tokens_out": 80,
+   "latency_s": 2.1355841159820557
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Request targets correct patient and uses the provided SNOMED code, authoredOn timestamp, intent/status/priority appropriate, and free-text note exactly matches clinician instructions with no additions or omissions.",
+   "cost": 0.00031975,
+   "tokens_in": 807,
+   "tokens_out": 59,
+   "latency_s": 1.5529487133026123
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The note field must be an array of Annotation objects, not a single object. Also, the priority “stat” was not specified by the user; default/unspecified is safer. Otherwise correct patient, code, intent, status, authoredOn, and required free text are appropriate.",
+   "cost": 0.00182,
+   "tokens_in": 824,
+   "tokens_out": 79,
+   "latency_s": 2.5305426120758057
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The priority was set to 'stat' without any instruction or clinical justification for urgency, which is an unrequested addition not specified in the task.",
+   "cost": 0.0040565,
+   "tokens_in": 1351,
+   "tokens_out": 68,
+   "latency_s": 2.776668071746826
+  }
+ },
+ "1": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "ServiceRequest created matches patient S6227720, uses SNOMED code 306181000000106, authoredOn timestamp matches context, status/intent/priority appropriate, and the free-text note exactly contains the requested Situation/Background/Assessment/Recommendation content.",
+   "cost": 0.0003695,
+   "tokens_in": 878,
+   "tokens_out": 75,
+   "latency_s": 1.7246875762939453
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The ServiceRequest with SNOMED code 306181000000106 and the exact provided free-text note appears correctly recorded for patient S6227720. However, I cannot verify downstream system confirmation or ensure no duplicate referrals were created without access to live system state.",
+   "cost": 7.59e-05,
+   "tokens_in": 878,
+   "tokens_out": 80,
+   "latency_s": 1.620065450668335
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was correctly created with the right patient (S6227720), correct SNOMED code (306181000000106), appropriate status/intent/priority, and the exact free-text note requested including all SBAR elements (Situation, Background, Assessment, Recommendation). The FINISH action accurately reports what was accomplished.",
+   "cost": 0.001551,
+   "tokens_in": 1031,
+   "tokens_out": 104,
+   "latency_s": 2.376124620437622
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "ServiceRequest was created for Patient/S6227720 with SNOMED code 306181000000106, authoredOn timestamp matches context, status/intent/priority appropriate, and the referral free-text exactly matches the requested Situation/Background/Assessment/Recommendation.",
+   "cost": 0.000355,
+   "tokens_in": 828,
+   "tokens_out": 74,
+   "latency_s": 1.8021111488342285
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was correctly created with the right patient (S6227720), correct SNOMED code (306181000000106), appropriate status/intent/priority, correct timestamp, and the exact referral text as specified in the task. The FINISH action accurately reports what was accomplished.",
+   "cost": 0.001442,
+   "tokens_in": 972,
+   "tokens_out": 94,
+   "latency_s": 2.1114120483398438
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 76.0,
+   "justification": "The ServiceRequest note field in FHIR should be an array of Annotation objects, not a single object. Also, the priority was set to stat, but the user did not request urgency. Please correct the note to an array (e.g., note: [{text: ...}]) and consider default priority if not specified, then finish.",
+   "cost": 0.0019975,
+   "tokens_in": 878,
+   "tokens_out": 90,
+   "latency_s": 2.4602389335632324
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.006584,
+   "tokens_in": 1434,
+   "tokens_out": 300,
+   "latency_s": 4.750146389007568
+  }
+ }
+}

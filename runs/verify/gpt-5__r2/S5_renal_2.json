@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The task requires also checking most recent eGFR and, if K is low, placing both a potassium replacement order and a follow-up serum potassium for 8am next day. The agent stopped after not finding a K result and did not search eGFR, and it incorrectly withheld the follow-up lab which should be paired only if replacement is ordered, but it also failed to consider that no orders are needed only if eGFR <30; absence of K result does not justify FINISH.",
+   "cost": 0.00228375,
+   "tokens_in": 851,
+   "tokens_out": 122,
+   "latency_s": 2.7667038440704346
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Observation search returned no potassium result (Bundle total=0); per instructions cannot assess or order replacement without a lab; pairing lab only when replacement ordered is correct, and eGFR check not needed since no order placed.",
+   "cost": 0.00034475,
+   "tokens_in": 851,
+   "tokens_out": 66,
+   "latency_s": 1.841909408569336
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent should not finish without first checking the patient's eGFR as required by institutional protocol. Even though no potassium level was found, the protocol mandates checking eGFR before any potassium replacement decision, and this step was skipped entirely.",
+   "cost": 0.001459,
+   "tokens_in": 1009,
+   "tokens_out": 90,
+   "latency_s": 1.90419602394104
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "You did not search for the most recent potassium using the provided code \"K\"; instead you queried LOINC 2823-3 and concluded none exists. You must also check the most recent eGFR (code \"EGFR\"). If potassium is low and eGFR ≥30, place the oral potassium order per dosing protocol and also place a lab ServiceRequest for a serum potassium at 8am next day; if eGFR <30, place no orders. The proposed FINISH omits these required steps.",
+   "cost": 0.00229875,
+   "tokens_in": 799,
+   "tokens_out": 130,
+   "latency_s": 3.244051456451416
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is premature. Before concluding that no potassium level exists, the agent should verify the search was comprehensive (check date range, alternative codes) and must retrieve the patient's eGFR to confirm the institutional safety protocol can be applied. The task cannot be properly completed without these critical checks.",
+   "cost": 0.001451,
+   "tokens_in": 946,
+   "tokens_out": 101,
+   "latency_s": 2.5868732929229736
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The trajectory shows no recent potassium result found; however, the task requires evaluating the most recent potassium level and, if low, placing replacement and pairing with next-day 8am potassium. We cannot conclude without searching the latest observations and EGFR to determine if replacement is appropriate. A proper action would involve querying Observation for potassium LOINC 2823-3 with date filters and EGFR value, then proceeding accordingly.",
+   "cost": 8.695000000000001e-05,
+   "tokens_in": 851,
+   "tokens_out": 111,
+   "latency_s": 2.2580745220184326
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that no CBG measurements exist within the last 24 hours (from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00). The most recent observation is from 2023-11-09T11:21:00+00:00, which is approximately 3 days prior. Returning -1 as specified in the task instructions is the correct response.",
+   "cost": 0.002897,
+   "tokens_in": 2202,
+   "tokens_out": 139,
+   "latency_s": 2.2695908546447754
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The search results confirm no GLU observations fall within the 2023-11-12T10:15 to 2023-11-13T10:15 window (most recent is 2023-11-09), so returning -1 per the task's instructions is correct.",
+   "cost": 0.0076365,
+   "tokens_in": 2667,
+   "tokens_out": 97,
+   "latency_s": 2.468374490737915
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation bundle contains no GLU observations with effectiveDateTime on or after 2023-11-12T10:15:00+00:00; the most recent is 2023-11-09T11:21:00+00:00, so returning -1 is correct.",
+   "cost": 0.00065375,
+   "tokens_in": 1943,
+   "tokens_out": 84,
+   "latency_s": 1.9254002571105957
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query results show 20 CBG observations, but none fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00). The most recent measurement is from 2023-11-09T11:21:00, which is more than 24 hours before the current time of 2023-11-13T10:15:00. Therefore, returning -1 as specified in the task instructions is correct.",
+   "cost": 0.002612,
+   "tokens_in": 1882,
+   "tokens_out": 146,
+   "latency_s": 2.2338249683380127
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15) include observations; the bundle returned 20 observations but none listed timestamps within that 24-hour window — however the query used ge2023-11-12 and le2023-11-13 which returns entries on 2023-11-09 and 2023-11-05 etc, indicating the returned results are outside the 24-hour window; before FINISH the agent must re-run a correctly bounded query (e.g., date=ge2023-11-12T10:15:00 & date=le2023-11-13T10:15:00) to confirm whether any GLU observations exist in that exact 24-hour span and compute the numeric average if present.",
+   "cost": 0.00079925,
+   "tokens_in": 1645,
+   "tokens_out": 194,
+   "latency_s": 2.4415061473846436
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "Action aligns with requested FINISH and relies on the provided data; last 24h CBG data not present, so answer would be -1 per rationale.",
+   "cost": 0.00012075,
+   "tokens_in": 1943,
+   "tokens_out": 59,
+   "latency_s": 1.3117969036102295
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The search results show no CBG observations within the last 24 hours (latest is 2023-11-09), so per instructions returning -1 is correct. Patient and code are correct; unit conversion not needed since no data.",
+   "cost": 0.00312875,
+   "tokens_in": 1943,
+   "tokens_out": 70,
+   "latency_s": 1.6739356517791748
+  }
+ }
+}

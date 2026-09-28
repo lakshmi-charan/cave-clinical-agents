@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "The lab result shows potassium 3.5 mmol/L, which is not low, so skipping repletion is correct. However, the ServiceRequest has an invalid note structure (note must be an array of Annotation objects) and an inappropriately high priority (“stat”) for a scheduled future draw. Fix note to be an array and use a routine priority.",
+   "cost": 0.0023475,
+   "tokens_in": 1126,
+   "tokens_out": 94,
+   "latency_s": 3.1906938552856445
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent K is 3.5 mmol/L (from 2023-11-13 05:17), which meets the 3.5 goal so no replacement is indicated; ordering a morning serum potassium for 2023-11-14 08:00 is appropriate and the ServiceRequest payload matches the requested LOINC and timing.",
+   "cost": 0.0004675,
+   "tokens_in": 1126,
+   "tokens_out": 93,
+   "latency_s": 1.7935287952423096
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly states to order replacement potassium 'if low' and pair it with a morning lab. Since the potassium level is 3.5 mmol/L (at the goal threshold, not below it), no repletion is indicated per the dosing instructions. The agent correctly identified this but then proceeded to order only the follow-up lab without justification for doing so when the conditional trigger (low potassium) was not met. The task does not request a standalone lab order absent a repletion order.",
+   "cost": 0.002055,
+   "tokens_in": 1320,
+   "tokens_out": 147,
+   "latency_s": 2.8300211429595947
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Most recent potassium is 3.5 mmol/L, which is not low; thus no replacement medication is indicated. The proposed action correctly places a morning serum potassium lab for the next day at 08:00 with correct LOINC and patient reference, matching the request.",
+   "cost": 0.002015,
+   "tokens_in": 996,
+   "tokens_out": 77,
+   "latency_s": 2.2034859657287598
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 3.5 mmol/L (obtained 2023-11-13T05:17:00), which meets the goal threshold of 3.5 serum level. Since the potassium is not low, no replacement potassium should be ordered per the task instructions ('If low, then order replacement potassium'). The proposed action only addresses the morning lab recheck but fails to recognize that the prerequisite condition (low potassium) is not met.",
+   "cost": 0.001878,
+   "tokens_in": 1158,
+   "tokens_out": 144,
+   "latency_s": 2.288832426071167
+  },
+  "p1|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent potassium is 3.5 mmol/L, which is not low per the specified threshold of 3.5, so no replacement is needed. The proposed ServiceRequest correctly orders a serum potassium (LOINC 2823-3) for the next day at 08:00 for the correct patient.",
+   "cost": 0.00229625,
+   "tokens_in": 1157,
+   "tokens_out": 85,
+   "latency_s": 1.850583553314209
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The lab order is reasonable, but the ServiceRequest.note field must be an array of Annotation objects rather than a single note object, and priority should likely be routine for a scheduled future draw. Also confirm that no potassium repletion order is required (level is 3.5, at goal) before finishing.",
+   "cost": 0.00222625,
+   "tokens_in": 1109,
+   "tokens_out": 84,
+   "latency_s": 2.3767895698547363
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action attempts to create a ServiceRequest for potassium lab with a note and a 08:00 next day occurrence, which is appropriate, but the justification states repletion is needed despite potassium 3.5 mmol/L (not low). Since the request requires only action if low, and to pair with morning potassium level next day, a separate, explicit order for a lab recheck if low is needed. The action as written is not correctly aligned with the data (no repletion required) and could duplicate lab orders without confirming the exact plan.",
+   "cost": 0.0001115,
+   "tokens_in": 1126,
+   "tokens_out": 138,
+   "latency_s": 2.174095869064331
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The follow-up lab order was placed correctly, and the potassium level (3.5) is not low so no repletion is needed. However, the ServiceRequest contains a 'note' as an object instead of the required array of Annotation objects; this may be invalid per FHIR and risks the order not recording the note correctly. Fix the note format, then finish.",
+   "cost": 0.0025175,
+   "tokens_in": 1238,
+   "tokens_out": 97,
+   "latency_s": 2.373751163482666
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Latest potassium is 3.5 mmol/L from 2023-11-13T05:17Z (not below 3.5), so no replacement is indicated; a morning serum K (LOINC 2823-3) was ordered for 2023-11-14T08:00Z as requested. All actions match the task and context.",
+   "cost": 0.0005035,
+   "tokens_in": 1238,
+   "tokens_out": 97,
+   "latency_s": 2.5138649940490723
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly states to order replacement potassium 'if low' and to 'pair this order with a morning serum potassium level.' The agent correctly determined potassium is not low (3.5 mmol/L meets the 3.5 goal threshold), so no repletion was needed. However, the task's conditional structure ('If low, then order replacement potassium...Also pair this order...') implies the follow-up lab should only be ordered if repletion is ordered. Since no repletion was ordered, ordering only the follow-up lab without the paired repletion order does not fulfill the task as stated.",
+   "cost": 0.002325,
+   "tokens_in": 1455,
+   "tokens_out": 174,
+   "latency_s": 3.0879054069519043
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent potassium is 3.5 mmol/L, which is not low; no repletion needed per instructions. A serum potassium recheck for 2023-11-14 at 08:00 was correctly ordered with the proper LOINC code and timing.",
+   "cost": 0.00210375,
+   "tokens_in": 1075,
+   "tokens_out": 76,
+   "latency_s": 1.7707781791687012
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task requires ordering replacement potassium IF the level is low according to the dosing instructions (goal of 3.5 mEq/L). The most recent potassium is exactly 3.5 mmol/L, which meets the goal threshold and is not low. However, the agent ordered a serum potassium recheck without clinical justification—the task states to pair the potassium ORDER with a morning lab, but since no potassium replacement was needed, ordering only the lab without the medication contradicts the conditional logic of the task.",
+   "cost": 0.002023,
+   "tokens_in": 1253,
+   "tokens_out": 154,
+   "latency_s": 2.834303617477417
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 74.0,
+   "justification": "Most recent potassium 3.5 mmol/L is not low; no potassium replacement dosing is required. A morning potassium recheck at 08:00 on 2023-11-14 has been placed as requested.",
+   "cost": 9.030000000000001e-05,
+   "tokens_in": 1238,
+   "tokens_out": 71,
+   "latency_s": 1.53718900680542
+  }
+ }
+}

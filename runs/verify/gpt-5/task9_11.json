@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The task requires placing a morning serum potassium order for the next day at 8am regardless, and ordering replacement potassium if low. The agent stopped after not finding a prior result and placed no lab order, omitting the required paired morning serum potassium order.",
+   "cost": 0.001805,
+   "tokens_in": 860,
+   "tokens_out": 73,
+   "latency_s": 1.6161012649536133
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "The agent correctly searched for the most recent serum potassium (LOINC 2823-3) and found no results, so it appropriately did not order replacement or pair a lab; the suggested next-step to schedule a potassium draw for 2023-11-14T08:00:00+00:00 is reasonable guidance.",
+   "cost": 0.000393,
+   "tokens_in": 860,
+   "tokens_out": 89,
+   "latency_s": 1.8014538288116455
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent's decision to finish without ordering is premature. The absence of results from a single query does not definitively mean no potassium level exists—the query may have failed, used incorrect parameters, or the data may exist but not be retrievable via that specific search. Before concluding that no potassium level is available and abandoning the task, the agent should attempt alternative retrieval methods (e.g., broader date ranges, different search parameters, or manual chart review) to ensure the most recent potassium level truly does not exist.",
+   "cost": 0.00176,
+   "tokens_in": 1020,
+   "tokens_out": 148,
+   "latency_s": 2.669797658920288
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The task requires ordering a next-day 8am serum potassium regardless of whether the current result exists, and to order replacement potassium if the most recent level is low. The agent neither placed the lab order nor attempted to search alternative potassium codes (e.g., K) before concluding unavailable. It also did not place any medication order. The FINISH summary is incomplete relative to the request.",
+   "cost": 0.00198375,
+   "tokens_in": 795,
+   "tokens_out": 99,
+   "latency_s": 2.527921676635742
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is premature and incomplete. While no potassium level was found in the search, the task requires checking the 'most recent' level, which may require a broader search strategy (e.g., searching without the code filter or with a date range) before concluding it's unavailable. Additionally, the task explicitly requires ordering replacement potassium if low and pairing it with a morning serum potassium level—neither of these orders have been attempted, so the task cannot be finished without at least attempting these actions or confirming through alternative search methods that no potassium data exists.",
+   "cost": 0.001749,
+   "tokens_in": 939,
+   "tokens_out": 162,
+   "latency_s": 3.0841798782348633
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "Action relies on missing data: no recent potassium (LOINC 2823-3) observation found for patient S3213957, so dosing cannot be determined. Recommend re-check if a recent potassium result becomes available before any replacement order or paired lab order is placed.",
+   "cost": 7.54e-05,
+   "tokens_in": 860,
+   "tokens_out": 81,
+   "latency_s": 1.6975383758544922
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 88, \"justification\": \"The agent gave up after only quer",
+   "parse_error": true,
+   "cost": 0.0063715,
+   "tokens_in": 1349,
+   "tokens_out": 300,
+   "latency_s": 4.912947416305542
+  }
+ }
+}

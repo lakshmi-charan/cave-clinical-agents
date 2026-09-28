@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Latest A1C is 5.4% on 2023-08-01, which is within 1 year of 2023-11-13, so no new order is required. The reported answer matches the chart and the protocol.",
+   "cost": 0.00187625,
+   "tokens_in": 917,
+   "tokens_out": 73,
+   "latency_s": 1.6884543895721436
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "Latest A1C observation is 5.4% dated 2023-08-01T20:29:00+00:00, which is within one year of 2023-11-13T10:15:00+00:00, so no new lab order is required and the reported values are correct.",
+   "cost": 0.00040925,
+   "tokens_in": 917,
+   "tokens_out": 90,
+   "latency_s": 2.437150001525879
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's conclusion is incorrect. The latest HbA1C (5.4%) was recorded on 2023-08-01, which is 104 days ago from the current date (2023-11-13). While this is technically within 1 year, the agent failed to complete the full task: it should have verified whether the date is >1 year old (it is not in this case, so no order is needed), but the FINISH action should only be approved after confirming this logic. More critically, the agent did not explicitly state the decision about ordering, making the completion ambiguous. However, since 104 days < 365 days, no new order is actually required, so the answer itself is correct but the reasoning should be more explicit.",
+   "cost": 0.002044,
+   "tokens_in": 1054,
+   "tokens_out": 198,
+   "latency_s": 3.532531976699829
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "The latest HbA1C is 5.4% on 2023-08-01T20:29:00+00:00, which is within 1 year of 2023-11-13, so no new order is needed. The final answer correctly reports the last value and date.",
+   "cost": 0.00194125,
+   "tokens_in": 865,
+   "tokens_out": 86,
+   "latency_s": 1.994640588760376
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action is incomplete. The last HbA1C value (5.4% from 2023-08-01) is 104 days old as of 2023-11-13, which exceeds the 1-year threshold, so a new HbA1C lab order must be placed before finishing. The task requires both answering the question AND ordering the lab test if the value is >1 year old.",
+   "cost": 0.001631,
+   "tokens_in": 996,
+   "tokens_out": 127,
+   "latency_s": 2.1700263023376465
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The latest HbA1C value is 5.4% recorded on 2023-08-01, which is within 1 year from 2023-11-13. The proposed action to finish with those values is acceptable, but the instruction requires ordering a new HbA1C only if lab value date is greater than 1 year old. Since it is not, no new order is needed. However, the FINISH step would only be correct if the provided values exactly match the latest observation data; here the assistant proposed finishing with 5.4% on 2023-08-01, which is correct. The workup requires explicitly confirming that no new order is required. To avoid risk, we reject with a need for explicit confirmation rather than assuming approval.",
+   "cost": 0.00012025,
+   "tokens_in": 917,
+   "tokens_out": 186,
+   "latency_s": 2.3309342861175537
+  }
+ }
+}

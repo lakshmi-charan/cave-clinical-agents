@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The search correctly retrieved magnesium observations for patient S2154941 within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The result shows one observation with value 2.1 mg/dL measured at 2023-11-12T13:41:00, which falls within the specified timeframe and is already in the requested unit (mg/dL). The FINISH action correctly reports this single value.",
+   "cost": 0.001776,
+   "tokens_in": 1031,
+   "tokens_out": 149,
+   "latency_s": 2.375978946685791
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The observation found is for the correct patient, code MG, within the 24-hour window, already in mg/dL, and correctly reported as 2.1.",
+   "cost": 0.004074,
+   "tokens_in": 1350,
+   "tokens_out": 70,
+   "latency_s": 2.449514389038086
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The retrieved observation timestamp 2023-11-12T13:41:00+00:00 is older than 24 hours from current time 2023-11-13T10:15:00+00:00 (20h34m? actually 20h34m? Wait recalc). Correction: 2023-11-12T13:41 to 2023-11-13T10:15 is 20h34m, which is within 24h — my mistake: but primary issue is that the agent used the correct data and unit; however the FINISH action should return a single number (2.1) — the observation is valid. Despite initial mis-evaluation, because the observation is within 24 hours, the FINISH is acceptable. Therefore approve.",
+   "cost": 0.00059675,
+   "tokens_in": 891,
+   "tokens_out": 187,
+   "latency_s": 2.574497699737549
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved magnesium (MG) labs for patient S2154941 within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The result shows one observation at 2023-11-12T13:41:00 with a value of 2.1 mg/dL, which is already in the requested unit. The FINISH action correctly reports this single value.",
+   "cost": 0.001539,
+   "tokens_in": 824,
+   "tokens_out": 143,
+   "latency_s": 2.0810844898223877
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent MG observation within last 24 hours is 2.1 mg/dL (single matching Observation at 2023-11-12T13:41:00+00:00), so returning 2.1 is correct.",
+   "cost": 0.0003205,
+   "tokens_in": 706,
+   "tokens_out": 72,
+   "latency_s": 1.5053284168243408
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 65.0,
+   "justification": "The FINISH action would duplicate the final answer without confirming the exact final step, and I cannot fully verify the 24-hour window alignment or the correctness of the provided numeric value within the current context.",
+   "cost": 7.135000000000001e-05,
+   "tokens_in": 891,
+   "tokens_out": 67,
+   "latency_s": 1.3900480270385742
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The search correctly queried magnesium (code MG) for patient S2154941 within the last 24 hours and found a result at 2023-11-12T13:41:00+00:00. The value is already in mg/dL, and returning 2.1 matches the data and timing.",
+   "cost": 0.00198375,
+   "tokens_in": 891,
+   "tokens_out": 87,
+   "latency_s": 2.318408966064453
+  }
+ }
+}

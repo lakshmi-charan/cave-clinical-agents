@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires pairing any potassium order with a morning serum potassium level at 8am the next day. While the current potassium level (4.0 mmol/L) is above threshold and doesn't require replacement, the agent failed to order the follow-up serum potassium level that was requested as part of the task requirements.",
+   "cost": 0.001723,
+   "tokens_in": 1158,
+   "tokens_out": 113,
+   "latency_s": 2.2375190258026123
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The most recent potassium level (4.0 mmol/L) is above the 3.5 threshold, so no replacement or repeat lab order is warranted per the stated protocol, and the agent correctly reports this without placing unnecessary orders.",
+   "cost": 0.004819,
+   "tokens_in": 1524,
+   "tokens_out": 101,
+   "latency_s": 2.4678635597229004
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent K is 4.0 mmol/L from 2023-11-13T06:40:00Z, which is above the 3.5 mmol/L threshold so no replacement or follow-up order is indicated per protocol; the proposed finish correctly reports findings and no orders were placed.",
+   "cost": 0.00041075,
+   "tokens_in": 979,
+   "tokens_out": 83,
+   "latency_s": 1.9557952880859375
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The task requires ordering a morning serum potassium level to be completed the next day at 8am regardless of whether replacement potassium is ordered. Since the potassium level is normal (4.0 mmol/L, above the 3.5 threshold), no replacement is needed, but the paired follow-up lab order at 2023-11-14T08:00:00+00:00 was never placed and should have been completed before finishing.",
+   "cost": 0.00168,
+   "tokens_in": 1000,
+   "tokens_out": 136,
+   "latency_s": 1.9819552898406982
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation shows K 4.0 mmol/L on 2023-11-13T06:40:00Z which is above 3.5 mmol/L, so no replacement or lab order is indicated per instructions; proposed FINISH correctly reports this and places no orders.",
+   "cost": 0.000368,
+   "tokens_in": 848,
+   "tokens_out": 78,
+   "latency_s": 1.8945386409759521
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The patient S3084624 has a recent potassium of 4.0 mmol/L, which is above threshold. However, the task requires pairing any morning potassium level the next day at 8am if a replacement is ordered. Since the instruction is to place an order only if low, and to pair with a morning level the next day, we should not prematurely conclude and should confirm the next-day plan rather than FINISH. Additionally, ensure that the most recent low threshold is 3.5; 4.0 is above, so no order is placed. The proposed FINISH action is consistent with data, but the instruction to pair with a next-day morning level is not actionable today and requires scheduling.",
+   "cost": 0.00011695,
+   "tokens_in": 979,
+   "tokens_out": 170,
+   "latency_s": 2.3307433128356934
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "While the potassium is normal and no replacement is needed, the user also requested pairing this with a morning serum potassium lab for the next day at 8am. No ServiceRequest for a repeat potassium (LOINC 2823-3) was placed, so the task is incomplete.",
+   "cost": 0.00201375,
+   "tokens_in": 979,
+   "tokens_out": 79,
+   "latency_s": 2.0294361114501953
+  }
+ }
+}

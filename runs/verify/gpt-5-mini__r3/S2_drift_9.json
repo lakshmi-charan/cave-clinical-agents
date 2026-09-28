@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "One observation (2023-11-13T01:15:00+00:00) is within last 24 hours from 2023-11-13T10:15:00? Yes, but conversion and average are incorrect: values in mmol/L (5.16,5.88,11.32) ×18 = 92.88,105.84,203.76; their average = (92.88+105.84+203.76)/3 = 134.826... ≈134.83 mg/dL, not 134.16 as proposed.",
+   "cost": 0.00050325,
+   "tokens_in": 853,
+   "tokens_out": 145,
+   "latency_s": 2.7112157344818115
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 55.0,
+   "justification": "The proposed FINISH action uses a computed average (134.16 mg/dL) but the conversion and averaging steps are not shown in a verifiable, step-by-step manner. Additionally, one measurement time appears to be outside the last 24 hours relative to 2023-11-13T10:15:00+00:00 (01:15). A precise check is needed: confirm all three observations fall within the last 24 hours and show the exact converted values and calculation. If all three are within 24 hours, the average should be recomputed and the final value provided clearly.",
+   "cost": 0.00010025,
+   "tokens_in": 853,
+   "tokens_out": 144,
+   "latency_s": 1.7063028812408447
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The conversion and calculation are incorrect. The three mmol/L values (5.16, 5.88, 11.32) convert to mg/dL as (92.88, 105.84, 203.76), which average to 134.16 mg/dL. However, only 2 of the 3 measurements fall within the last 24 hours (from 2023-11-13T10:15:00 back to 2023-11-12T10:15:00): observations at 05:15 and 08:15 on 2023-11-13 are included, but the observation at 01:15 on 2023-11-13 is also within 24 hours. Upon review, all three ARE within 24 hours, so the calculation should be verified: (92.88 + 105.84 + 203.76) / 3 = 134.16 is mathematically correct. The answer appears correct.",
+   "cost": 0.002495,
+   "tokens_in": 995,
+   "tokens_out": 300,
+   "latency_s": 3.2932417392730713
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "Observations present: 11.32, 5.16, 5.88 mmol/L within last 24h; the proposed single value 134.16 (mg/dL) does not match the correctly converted average. Correct: average mmol/L = (11.32+5.16+5.88)/3 = 7.4533 mmol/L → in mg/dL (multiply by 18) = 134.1594 ≈ 134.16; however timestamp 01:15,05:15,08:15 are within 24h of 2023-11-13T10:15Z, so numeric is correct but action should report a single number without brackets and ensure sign; proposed FINISH payload [134.16] uses an array—does not follow required single-number format.",
+   "cost": 0.00057775,
+   "tokens_in": 775,
+   "tokens_out": 192,
+   "latency_s": 2.7663486003875732
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 134.16 mg/dL is incorrect. The three CBG measurements are in mmol/L (5.16, 5.88, 11.32), which convert to approximately 92.88, 105.84, and 203.76 mg/dL respectively. The correct average is (92.88 + 105.84 + 203.76) / 3 = 134.16 mg/dL. However, all three measurements fall within the last 24 hours (from 2023-11-13T01:15:00 to 2023-11-13T08:15:00, with current time at 2023-11-13T10:15:00), so the calculation appears correct at 134.16 mg/dL. Upon recalculation, this answer is actually correct and should be approved.",
+   "cost": 0.002404,
+   "tokens_in": 904,
+   "tokens_out": 300,
+   "latency_s": 3.8325259685516357
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The conversion from mmol/L to mg/dL is correct (values: 92.88, 105.84, 203.76 mg/dL), but the average is miscalculated. The correct average of the three values is 134.16 mg/dL (not 134.16 with brackets? The agent’s FINISH payload is fine format-wise, but ensure computed mean is 134.16 exactly).",
+   "cost": 0.00214625,
+   "tokens_in": 853,
+   "tokens_out": 108,
+   "latency_s": 2.734114646911621
+  }
+ }
+}

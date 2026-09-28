@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for LOINC 2823-3 and found zero results, so it appropriately did not place a potassium order and recommended scheduling a serum K at 2023-11-14T08:00:00+00:00; recommendations and next steps follow the dosing rule and include safety checks.",
+   "cost": 0.0004295,
+   "tokens_in": 1022,
+   "tokens_out": 87,
+   "latency_s": 2.296090602874756
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed finish asserts that no potassium observation exists and recommends creating a morning potassium level service request, but it also includes a plan to wait until tomorrow to evaluate. The user asked to check most recent potassium level and act if low. Since there is no data retrieved, we cannot confirm ‘low’ or not. However, we should not prematurely finish with a decision or propose creating orders without explicit confirmation. A safer approach is to request or perform a fresh potassium observation search and, if found low, place replacement order and pair with next-day morning draw. Action should be withheld until data confirms low potassium; thus, reject the finish as stated and propose to execute a serum potassium draw request for 2023-11-14 08:00 if appropriate after data retrieval.",
+   "cost": 0.0001235,
+   "tokens_in": 1022,
+   "tokens_out": 181,
+   "latency_s": 2.731348752975464
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task explicitly requires ordering replacement potassium IF low, and pairing it with a morning serum potassium level. The agent cannot complete the task as stated because no current potassium level was found, but the appropriate response is to first order the serum potassium level to establish a baseline—not to finish without taking any action. The FINISH action reports incomplete task execution and defers decisions to the clinician rather than fulfilling the original request.",
+   "cost": 0.001865,
+   "tokens_in": 1215,
+   "tokens_out": 130,
+   "latency_s": 2.8456661701202393
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "The Observation search returned zero potassium results so it's correct not to place replacement medication; recommending ordering the morning serum potassium for 2023-11-14T08:00:00+00:00 and deferring replacement until a lab confirms low K follows the dosing protocol and safety checks.",
+   "cost": 0.00039975,
+   "tokens_in": 959,
+   "tokens_out": 80,
+   "latency_s": 2.006774663925171
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is premature and incomplete. The task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level—but the agent has not yet attempted to retrieve the most recent potassium level with appropriate date filtering. A single search without date parameters may have missed recent results; the agent should retry with a date filter (e.g., last 7-30 days) before concluding no data exists and deferring the task.",
+   "cost": 0.001824,
+   "tokens_in": 1139,
+   "tokens_out": 137,
+   "latency_s": 2.966567277908325
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task required ordering potassium replacement if low and pairing it with a morning potassium lab. The agent neither found an alternative potassium source (e.g., code 'K') nor placed the morning lab order. A FINISH is premature because required orders were not placed and alternatives not exhausted.",
+   "cost": 0.0020575,
+   "tokens_in": 1022,
+   "tokens_out": 78,
+   "latency_s": 2.02561092376709
+  }
+ }
+}

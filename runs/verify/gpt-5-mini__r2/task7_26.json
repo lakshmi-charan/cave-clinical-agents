@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed most recent CBG is incorrect: the bundle contains GLU observations dated 2023-11-12T15:41:00 (110 mg/dL) but also 2023-11-12T04:05:00, 2023-11-12T00:52:00, and later on 2023-11-13T? Current time 2023-11-13T10:15:00; however the most recent timestamp in the bundle is 2023-11-12T15:41:00 (110 mg/dL) — but there are entries on 2023-11-11 and 2023-11-12 and 2023-11-09/10; no observation on 2023-11-13 is present. The agent’s finish statement omitted verifying there are no more recent GLU entries and incorrectly framed certainty; require re-check that no observation after 2023-11-12T15:41:00 exists in the bundle before finishing.",
+   "cost": 0.0008545,
+   "tokens_in": 1538,
+   "tokens_out": 235,
+   "latency_s": 5.2107648849487305
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Most recent GLU observation by date is 2023-11-12T15:41:00+00:00 with value 110.0 mg/dL (Observation 292330). This matches the provided final statement. Ensure no later observations exist in bundle; if any after 2023-11-12T15:41:00+00:00, adjust.",
+   "cost": 0.0001189,
+   "tokens_in": 1538,
+   "tokens_out": 105,
+   "latency_s": 2.0918734073638916
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent CBG observation by sorting all returned GLU observations by effectiveDateTime. Observation 292330 with timestamp 2023-11-12T15:41:00+00:00 is indeed the most recent CBG value (110 mg/dL) prior to the current time of 2023-11-13T10:15:00+00:00, and the answer is accurate and complete.",
+   "cost": 0.00242,
+   "tokens_in": 1770,
+   "tokens_out": 130,
+   "latency_s": 2.5739705562591553
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The proposed most recent CBG (110 mg/dL at 2023-11-12T15:41:00) is not the latest timestamp in the returned list; there are later observations on 2023-11-12T15:41 is earlier than 2023-11-12T15:41? Actually the feed includes 2023-11-12T15:41 and 2023-11-12T00:52 and 2023-11-12T04:05 and 2023-11-11 and 2023-11-10— the latest datetime present is 2023-11-12T15:41:00+00:00? However there is no observation after 2023-11-12T15:41 in the bundle; but check shows 2019-... My earlier uncertainty prompts rejection to avoid approving a possibly incorrect most-recent selection.",
+   "cost": 0.00079375,
+   "tokens_in": 1471,
+   "tokens_out": 213,
+   "latency_s": 2.98553466796875
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer is incorrect. Reviewing the timestamps, Observation 292330 (2023-11-12T15:41:00+00:00) is NOT the most recent CBG. Observation 292315 (2023-11-12T04:05:00+00:00, 133.0 mg/dL) occurs later in the same day, making it more recent. The most recent CBG is actually 133.0 mg/dL from Observation 292315 at 2023-11-12T04:05:00+00:00.",
+   "cost": 0.002521,
+   "tokens_in": 1696,
+   "tokens_out": 165,
+   "latency_s": 3.0925824642181396
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The listed observations include 2023-11-12T15:41:00 as the latest; however, there is also an entry on 2023-11-12T15:41:00 and earlier ones the same day, but none later than 15:41. Wait—there is an observation on 2023-11-12T15:41:00 (110 mg/dL) which is indeed the latest timestamp shown. However, verify completeness: there is an observation on 2023-11-12T15:41:00 and no entries on 2023-11-13. The answer seems correct; but I must ensure no later 2023-11-12 time exists. There isn't. Still, to be safe, the agent should sort/confirm within the bundle rather than assume. Since uncertainty remains, reject.",
+   "cost": 0.0039025,
+   "tokens_in": 1538,
+   "tokens_out": 198,
+   "latency_s": 4.35163688659668
+  }
+ }
+}

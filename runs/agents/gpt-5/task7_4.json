@@ -1,0 +1,143 @@
+{
+ "steps": [
+  {
+   "round": 0,
+   "raw": "THOUGHT: To get the patient's FHIR ID from the provided identifier, I'll search the Patient resource first.\nGET http://localhost:8080/fhir/Patient?identifier=S6530532",
+   "thought": "To get the patient's FHIR ID from the provided identifier, I'll search the Patient resource first.",
+   "kind": "GET",
+   "url": "http://localhost:8080/fhir/Patient?identifier=S6530532",
+   "ok": true,
+   "response": "{\"resourceType\":\"Bundle\",\"id\":\"72911c73-988f-49c0-b078-d1959432ef53\",\"type\":\"searchset\",\"total\":1,\"entry\":[{\"resource\":{\"resourceType\":\"Patient\",\"id\":\"S6530532\",\"identifier\":[{\"use\":\"usual\",\"type\":{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"code\":\"MR\",\"display\":\"Medical Record Number\"}]},\"value\":\"S6530532\"}],\"name\":[{\"use\":\"official\",\"family\":\"Buchanan\",\"given\":[\"Brian\"]}],\"telecom\":[{\"system\":\"phone\",\"value\":\"387-339-2189\",\"use\":\"home\"}],\"gender\":\"male\",\"birthDate\":\"1954-08-10\",\"address\":[{\"line\":[\"3503 Rocha Views Suite 532\"],\"city\":\"Alfredview\",\"state\":\"TN\",\"postalCode\":\"75492\"}]}}]}",
+   "shape": [
+    "entry",
+    "entry[].resource",
+    "entry[].resource.address",
+    "entry[].resource.address[].city",
+    "entry[].resource.address[].line",
+    "entry[].resource.address[].postalCode",
+    "entry[].resource.address[].state",
+    "entry[].resource.birthDate",
+    "entry[].resource.gender",
+    "entry[].resource.id",
+    "entry[].resource.identifier",
+    "entry[].resource.identifier[].type",
+    "entry[].resource.identifier[].type.coding",
+    "entry[].resource.identifier[].use",
+    "entry[].resource.identifier[].value",
+    "entry[].resource.name",
+    "entry[].resource.name[].family",
+    "entry[].resource.name[].given",
+    "entry[].resource.name[].use",
+    "entry[].resource.resourceType",
+    "entry[].resource.telecom",
+    "entry[].resource.telecom[].system",
+    "entry[].resource.telecom[].use",
+    "entry[].resource.telecom[].value",
+    "id",
+    "resourceType",
+    "total",
+    "type"
+   ]
+  },
+  {
+   "round": 1,
+   "raw": "THOUGHT: Now that I have the patient FHIR ID, I'll query lab Observations for code GLU to find the most recent result.\nGET http://localhost:8080/fhir/Observation?code=GLU&patient=S6530532",
+   "thought": "Now that I have the patient FHIR ID, I'll query lab Observations for code GLU to find the most recent result.",
+   "kind": "GET",
+   "url": "http://localhost:8080/fhir/Observation?code=GLU&patient=S6530532",
+   "ok": true,
+   "response": "{\"resourceType\":\"Bundle\",\"id\":\"12ea236b-a6ef-4c06-b312-50b4c254c5b4\",\"type\":\"searchset\",\"entry\":[{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308138\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-20T04:09:00+00:00\",\"issued\":\"2023-08-20T04:09:00+00:00\",\"valueQuantity\":{\"value\":166.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308139\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-16T05:22:00+00:00\",\"issued\":\"2023-08-16T05:22:00+00:00\",\"valueQuantity\":{\"value\":167.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308140\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-18T14:53:00+00:00\",\"issued\":\"2023-08-18T14:53:00+00:00\",\"valueQuantity\":{\"value\":164.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308141\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-18T15:17:00+00:00\",\"issued\":\"2023-08-18T16:03:00+00:00\",\"valueQuantity\":{\"value\":181.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308142\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-15T02:11:00+00:00\",\"issued\":\"2023-08-15T02:11:00+00:00\",\"valueQuantity\":{\"value\":104.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308143\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-16T15:29:00+00:00\",\"issued\":\"2023-08-16T15:29:00+00:00\",\"valueQuantity\":{\"value\":154.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308144\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-17T03:48:00+00:00\",\"issued\":\"2023-08-17T03:48:00+00:00\",\"valueQuantity\":{\"value\":143.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308145\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-04-24T16:09:00+00:00\",\"issued\":\"2023-04-24T16:09:00+00:00\",\"valueQuantity\":{\"value\":203.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308146\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-16T00:10:00+00:00\",\"issued\":\"2023-08-16T00:10:00+00:00\",\"valueQuantity\":{\"value\":141.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308147\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-11-12T20:49:00+00:00\",\"issued\":\"2023-11-12T21:49:00+00:00\",\"valueQuantity\":{\"value\":238.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308148\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-15T14:34:00+00:00\",\"issued\":\"2023-08-15T14:34:00+00:00\",\"valueQuantity\":{\"value\":142.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308149\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-07-11T23:39:00+00:00\",\"issued\":\"2023-07-12T02:33:00+00:00\",\"valueQuantity\":{\"value\":124.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308150\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-15T06:22:00+00:00\",\"issued\":\"2023-08-15T06:22:00+00:00\",\"valueQuantity\":{\"value\":324.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308151\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-20T14:14:00+00:00\",\"issued\":\"2023-08-20T14:14:00+00:00\",\"valueQuantity\":{\"value\":244.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308152\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-16T19:10:00+00:00\",\"issued\":\"2023-08-16T19:10:00+00:00\",\"valueQuantity\":{\"value\":136.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308153\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-04-14T03:40:00+00:00\",\"issued\":\"2023-04-14T03:40:00+00:00\",\"valueQuantity\":{\"value\":124.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"}}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308154\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-21T14:26:00+00:00\",\"issued\":\"2023-08-21T14:26:00+00:00\",\"valueQuantity\":{\"value\":211.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308155\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-18T23:12:00+00:00\",\"issued\":\"2023-08-18T23:12:00+00:00\",\"valueQuantity\":{\"value\":245.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308156\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-08-20T01:26:00+00:00\",\"issued\":\"2023-08-20T01:26:00+00:00\",\"valueQuantity\":{\"value\":281.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}},{\"resource\":{\"resourceType\":\"Observation\",\"id\":\"308157\",\"status\":\"final\",\"category\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/observation-category\",\"code\":\"laboratory\",\"display\":\"Laboratory\"}]}],\"code\":{\"coding\":[{\"system\":\"http://loinc.org\",\"code\":\"GLU\",\"display\":\"GLU\"}],\"text\":\"GLU\"},\"subject\":{\"reference\":\"Patient/S6530532\",\"identifier\":{\"system\":\"http://terminology.hl7.org/CodeSystem/v2-0203\",\"value\":\"S6530532\"}},\"effectiveDateTime\":\"2023-11-13T06:42:00+00:00\",\"issued\":\"2023-11-13T06:42:00+00:00\",\"valueQuantity\":{\"value\":215.0,\"unit\":\"mg/dL\",\"system\":\"http://unitsofmeasure.org\",\"code\":\"mg/dL\"},\"interpretation\":[{\"coding\":[{\"system\":\"http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation\",\"code\":\"HIGH\",\"display\":\"High\"}]}]}}]}",
+   "shape": [
+    "entry",
+    "entry[].resource",
+    "entry[].resource.category",
+    "entry[].resource.category[].coding",
+    "entry[].resource.category[].coding[].code",
+    "entry[].resource.category[].coding[].display",
+    "entry[].resource.category[].coding[].system",
+    "entry[].resource.code",
+    "entry[].resource.code.coding",
+    "entry[].resource.code.coding[].code",
+    "entry[].resource.code.coding[].display",
+    "entry[].resource.code.coding[].system",
+    "entry[].resource.code.text",
+    "entry[].resource.effectiveDateTime",
+    "entry[].resource.id",
+    "entry[].resource.issued",
+    "entry[].resource.resourceType",
+    "entry[].resource.status",
+    "entry[].resource.subject",
+    "entry[].resource.subject.identifier",
+    "entry[].resource.subject.identifier.system",
+    "entry[].resource.subject.identifier.value",
+    "entry[].resource.subject.reference",
+    "entry[].resource.valueQuantity",
+    "entry[].resource.valueQuantity.code",
+    "entry[].resource.valueQuantity.system",
+    "entry[].resource.valueQuantity.unit",
+    "entry[].resource.valueQuantity.value",
+    "id",
+    "resourceType",
+    "type"
+   ]
+  },
+  {
+   "round": 2,
+   "raw": "THOUGHT: I have the latest GLU Observation for this patient and can provide the result.\nFINISH([\"215 mg/dL (2023-11-13T06:42:00+00:00)\"])",
+   "thought": "I have the latest GLU Observation for this patient and can provide the result.",
+   "kind": "FINISH",
+   "answer_raw": "[\"215 mg/dL (2023-11-13T06:42:00+00:00)\"]"
+  }
+ ],
+ "units": [
+  {
+   "type": "FINISH",
+   "resource": null,
+   "answer_raw": "[\"215 mg/dL (2023-11-13T06:42:00+00:00)\"]",
+   "thought": "I have the latest GLU Observation for this patient and can provide the result.",
+   "step": 2,
+   "tier": 0,
+   "raw": "THOUGHT: I have the latest GLU Observation for this patient and can provide the result.\nFINISH([\"215 mg/dL (2023-11-13T06:42:00+00:00)\"])",
+   "correct": true,
+   "why": "ok",
+   "E1": {
+    "verdict": "pass",
+    "reasons": [
+     "answer 215.0 found among recorded GLU values"
+    ],
+    "queries": 1
+   },
+   "E2": {
+    "verdict": "na",
+    "reasons": [
+     "rules apply to writes only"
+    ],
+    "queries": 0
+   },
+   "evidence_latency_s": 0.0994710922241211,
+   "E1v2": {
+    "verdict": "pass",
+    "queries": 2,
+    "reasons": [
+     "answer 215.0 found among recorded GLU values",
+     "record latest GLU matches"
+    ]
+   },
+   "E2v2": {
+    "verdict": "na",
+    "reasons": [
+     "rules apply to writes only"
+    ],
+    "queries": 0
+   }
+  }
+ ],
+ "status": "completed",
+ "agent_cost": 0.0142375,
+ "n_rounds": 3,
+ "task_id": "task7_4",
+ "agent": "gpt-5",
+ "success_internal": true,
+ "stressor": "base",
+ "template": "glu_last"
+}

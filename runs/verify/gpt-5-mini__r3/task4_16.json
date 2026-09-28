@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "All returned observations are dated 2023-11-08 through 2023-11-10, which are outside the 24-hour window relative to 2023-11-13T10:15:00Z, so returning -1 is correct.",
+   "cost": 0.0003895,
+   "tokens_in": 958,
+   "tokens_out": 75,
+   "latency_s": 1.3668007850646973
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The most recent MG observations provided are from 2023-11-10 and earlier; none fall within the last 24 hours relative to 2023-11-13T10:15:00+00:00. The correct answer per instructions is -1.",
+   "cost": 8.070000000000002e-05,
+   "tokens_in": 958,
+   "tokens_out": 82,
+   "latency_s": 1.428483247756958
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried for magnesium observations for patient S1635224 and accurately identified that the most recent measurement (2023-11-10T13:07:00+00:00) is more than 24 hours before the current time (2023-11-13T10:15:00+00:00), making it outside the requested timeframe. Returning -1 per the specified protocol is correct.",
+   "cost": 0.001756,
+   "tokens_in": 1126,
+   "tokens_out": 126,
+   "latency_s": 2.319727897644043
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH([-1]) is incorrect: there are multiple magnesium observations within the last 24 hours window (current time 2023-11-13T10:15:00+00:00 — however provided observations are from 2023-11-08 to 2023-11-10, so none are within last 24 hours). Given no measurements between 2023-11-12T10:15 and 2023-11-13T10:15, the correct response would be -1, but the agent must ensure date filtering used actual last-24-hour window; current trajectory shows latest obs is 2023-11-10, so FINISH([-1]) is appropriate only after verifying no recent labs. Rejecting because the action was submitted without that explicit verification step recorded.",
+   "cost": 0.000599,
+   "tokens_in": 884,
+   "tokens_out": 189,
+   "latency_s": 3.213906764984131
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. Observation 328208 from 2023-11-10T13:07:00+00:00 with value 3.2 mg/dL falls within the last 24 hours from the current time of 2023-11-13T10:15:00+00:00, so the correct answer should be 3.2, not -1.",
+   "cost": 0.001668,
+   "tokens_in": 1038,
+   "tokens_out": 126,
+   "latency_s": 1.9846603870391846
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "All returned magnesium observations are dated on or before 2023-11-10, which is more than 24 hours prior to 2023-11-13T10:15:00+00:00. Returning -1 matches the instruction when no measurement is available within the last 24 hours.",
+   "cost": 0.0020375,
+   "tokens_in": 958,
+   "tokens_out": 84,
+   "latency_s": 2.303025960922241
+  }
+ }
+}

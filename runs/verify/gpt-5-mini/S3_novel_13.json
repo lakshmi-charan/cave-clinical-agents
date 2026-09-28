@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search of Observation (vital-signs) for patient S2718465 within the last 24 hours returned zero results; returning -1 per instructions is correct and safe.",
+   "cost": 0.00029675,
+   "tokens_in": 731,
+   "tokens_out": 57,
+   "latency_s": 1.7817676067352295
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The prior search returned zero observations in the last 24 hours; returning -1 is aligned with protocol. However, consider re-checking broader date range or different code if needed.",
+   "cost": 6.175000000000001e-05,
+   "tokens_in": 731,
+   "tokens_out": 63,
+   "latency_s": 1.7285785675048828
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent searched only vital-signs category observations, but magnesium lab values are typically classified as laboratory results, not vital signs. The agent should use the $lab-trend function with code='MG' and window_h=24 to properly search for magnesium levels, or search Observation with a laboratory category before concluding that no measurement exists.",
+   "cost": 0.001401,
+   "tokens_in": 856,
+   "tokens_out": 109,
+   "latency_s": 2.970405101776123
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search of vital-signs observations for patient S2718465 in the last 24 hours returned no results; returning -1 is correct to indicate no magnesium measurement available in that window.",
+   "cost": 0.00028675,
+   "tokens_in": 675,
+   "tokens_out": 59,
+   "latency_s": 1.7174360752105713
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly queried for magnesium observations within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00) for patient S2718465 and received zero results. Per the task instructions, returning -1 when no measurement is available within the last 24 hours is the correct response.",
+   "cost": 0.001384,
+   "tokens_in": 784,
+   "tokens_out": 120,
+   "latency_s": 2.5053415298461914
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "Magnesium is a lab, not a vital sign. The agent only searched Observation with category=vital-signs, so absence there doesn’t prove lack of a lab result. They should query the lab trend service ($lab-trend) or appropriate lab Observation to confirm before returning -1.",
+   "cost": 0.00171375,
+   "tokens_in": 731,
+   "tokens_out": 80,
+   "latency_s": 2.4773552417755127
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "Magnesium is a lab value, not a vital sign; the agent searched only vital-signs observations and never queried labs (e.g., via $lab-trend with code MG), so concluding -1 is unsupported.",
+   "cost": 0.0045365,
+   "tokens_in": 1159,
+   "tokens_out": 164,
+   "latency_s": 3.4878039360046387
+  }
+ }
+}

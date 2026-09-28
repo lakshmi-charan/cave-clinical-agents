@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no potassium results, so withholding replacement is appropriate; recommended next steps (stat lab, morning lab at specified datetime, and conditional medication order) are correct and safe given lack of data.",
+   "cost": 0.000388,
+   "tokens_in": 1056,
+   "tokens_out": 62,
+   "latency_s": 1.5994765758514404
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action relies on a missing potassium result; however, the user instruction requires actions to be taken if low potassium is detected. Since no recent potassium value exists, we should not finalize dosing or orders without first obtaining a STAT potassium value and then computing dose. A safer approach is to request the stat BMP/serum potassium now and schedule the next-morning potassium and potential replacement based on the result.",
+   "cost": 9.680000000000001e-05,
+   "tokens_in": 1056,
+   "tokens_out": 110,
+   "latency_s": 1.7091865539550781
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The FINISH action is inappropriate because the task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level. The agent found no potassium result but did not attempt to obtain one (e.g., ordering a stat potassium level) before concluding, nor did it place the required morning serum potassium order for tomorrow at 8am. The task cannot be completed as stated without at least ordering the follow-up lab; deferring all actions to the clinician contradicts the directive to complete the orders.",
+   "cost": 0.002019,
+   "tokens_in": 1254,
+   "tokens_out": 153,
+   "latency_s": 3.1263551712036133
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The check correctly searched for most recent serum potassium (LOINC 2823-3) and found no results, so no dosing calculation or replacement order was made; the proposed next steps are appropriate and safe (stat lab, conditional replacement per provided dosing, and scheduled morning lab for 2023-11-14T08:00:00+00:00).",
+   "cost": 0.00043925,
+   "tokens_in": 989,
+   "tokens_out": 96,
+   "latency_s": 2.9927172660827637
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action does not complete the task as requested. The task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level—the agent should have proactively ordered the stat potassium lab first to determine if replacement is needed, rather than deferring the decision and asking for further instructions. A FINISH action should only be used when all requested orders are already placed correctly.",
+   "cost": 0.001792,
+   "tokens_in": 1172,
+   "tokens_out": 124,
+   "latency_s": 2.454317092895508
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task required ordering potassium replacement if low and pairing with a morning potassium lab. The agent found no potassium results but did not place the morning lab order. A FINISH action is premature because not every requested order has been placed; the morning serum potassium for tomorrow 08:00 should still be ordered.",
+   "cost": 0.00215,
+   "tokens_in": 1056,
+   "tokens_out": 83,
+   "latency_s": 2.24953031539917
+  }
+ }
+}

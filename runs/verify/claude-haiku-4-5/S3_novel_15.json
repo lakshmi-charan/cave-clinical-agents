@@ -1,0 +1,151 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly states 'If low, then order replacement potassium...Also pair this order with a morning serum potassium level.' The conditional logic requires that the potassium level be low to trigger the replacement order, and only then should the follow-up lab be paired with it. Since the patient's K is 3.7 (above the 3.5 threshold), neither the replacement order nor the paired follow-up lab should be placed.",
+   "cost": 0.00186,
+   "tokens_in": 1200,
+   "tokens_out": 132,
+   "latency_s": 2.3488783836364746
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0069515,
+   "tokens_in": 1581,
+   "tokens_out": 300,
+   "latency_s": 3.850594997406006
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab trend shows most recent potassium 3.7 mEq/L (above 3.5), so no replacement medication is indicated; ordering a morning serum potassium (LOINC 2823-3) for 2023-11-14T08:00:00 is appropriate and matches request details.",
+   "cost": 0.0004255,
+   "tokens_in": 1030,
+   "tokens_out": 84,
+   "latency_s": 1.7944416999816895
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 3.7 mEq/L, which is above the threshold of 3.5 mEq/L. Since the potassium is not low, no replacement potassium order should be placed per the conditional instruction 'If low, then order replacement potassium.' The follow-up lab order should not proceed without the primary intervention being indicated.",
+   "cost": 0.001659,
+   "tokens_in": 1059,
+   "tokens_out": 120,
+   "latency_s": 2.1088647842407227
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "Most recent potassium is 3.7 mmol/L (above threshold goal 3.5), so no replacement potassium order is indicated; placing only a lab ServiceRequest for next-day 08:00 is reasonable but the POST shown uses note as object not array and occurrenceDateTime is correct — but primary action (ordering replacement) would be inappropriate, so reject.",
+   "cost": 0.00041825,
+   "tokens_in": 913,
+   "tokens_out": 95,
+   "latency_s": 1.4032881259918213
+  },
+  "p1|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly states 'If low, then order replacement potassium...Also pair this order with a morning serum potassium level.' The conditional logic requires that the morning potassium test be paired WITH a potassium replacement order. Since the potassium level (3.7) is not low and no replacement order was placed, ordering only the follow-up lab test violates the task requirement to pair it with the replacement order.",
+   "cost": 0.001885,
+   "tokens_in": 1250,
+   "tokens_out": 127,
+   "latency_s": 2.890793800354004
+  },
+  "p2|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The clinician's request contains a conditional: order replacement potassium 'if low' and pair it with a follow-up lab. Since the potassium level (3.7 mEq/L) is NOT low (threshold is 3.5), the entire conditional chain should not execute. Ordering only the follow-up lab without the replacement potassium contradicts the 'if low' condition and leaves the request incomplete as stated.",
+   "cost": 0.00183,
+   "tokens_in": 1180,
+   "tokens_out": 130,
+   "latency_s": 2.36940860748291
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The latest potassium is 3.7 mEq/L, not low, so no replacement order is needed per dosing rules. A morning potassium level test at 8:00 AM was prepared as a ServiceRequest to pair with the observation, satisfying the pairing request.",
+   "cost": 8.35e-05,
+   "tokens_in": 1030,
+   "tokens_out": 80,
+   "latency_s": 1.717878818511963
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Latest potassium is 3.7 (above 3.5), so no repletion is indicated. The proposed ServiceRequest correctly orders a follow-up serum potassium (LOINC 2823-3) for the next day at 08:00 with correct patient, timing, and intent.",
+   "cost": 0.0020975,
+   "tokens_in": 1030,
+   "tokens_out": 81,
+   "latency_s": 2.1451218128204346
+  }
+ },
+ "1": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly states 'If low, then order replacement potassium according to dosing instructions. Also pair this order with a morning serum potassium level.' The word 'Also' indicates the morning lab should be paired WITH the potassium order. Since no potassium replacement was ordered (correctly, as 3.7 is above 3.5 threshold), ordering only the morning lab without the paired replacement order does not fulfill the conditional task structure. The morning lab order should only proceed if a replacement order is placed.",
+   "cost": 0.00212,
+   "tokens_in": 1385,
+   "tokens_out": 147,
+   "latency_s": 2.795666456222534
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent potassium of 3.7 mEq/L is above the 3.5 threshold, so no replacement was correctly needed, and the morning serum potassium level was correctly ordered for the next day at 8am as requested.",
+   "cost": 0.005474,
+   "tokens_in": 1806,
+   "tokens_out": 96,
+   "latency_s": 2.1268577575683594
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent K = 3.7 mEq/L (>3.5), so no replacement required; a ServiceRequest for LOINC 2823-3 on 2023-11-14T08:00:00Z was created per request. Actions match instructions and patient.",
+   "cost": 0.000457,
+   "tokens_in": 1180,
+   "tokens_out": 81,
+   "latency_s": 1.6411423683166504
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action is incomplete and contradicts the task requirements. The task explicitly states to order replacement potassium IF low, AND to pair it with a morning serum potassium level. While the potassium level of 3.7 mEq/L is indeed above the 3.5 threshold (so no replacement is needed), the morning serum potassium order should NOT have been placed without a corresponding potassium replacement order. The task logic requires both orders together as a pair when replacement is indicated; since no replacement was needed, the follow-up lab order should also not have been placed independently.",
+   "cost": 0.00198,
+   "tokens_in": 1160,
+   "tokens_out": 164,
+   "latency_s": 2.8925974369049072
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Recent potassium 3.7 mEq/L (from lab trend) is above 3.5 so no replacement is needed; the morning serum potassium ServiceRequest for 2023-11-14 08:00 was created as requested.",
+   "cost": 0.00039075,
+   "tokens_in": 995,
+   "tokens_out": 71,
+   "latency_s": 1.8632886409759521
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action claims to have ordered a morning serum potassium test for 2023-11-14 08:00 UTC, but the prior steps show a ServiceRequest was created with occurrenceDateTime 2023-11-14T08:00:00+00:00 and a note about morning potassium level. However, the action also states no potassium replacement due to 3.7; this is correct. The FINISH should confirm the actions taken: verify that a ServiceRequest was created (which happened) and that no potassium replacement order was placed. Since the instruction asked to pair the morning potassium level test with the next-day time and the system already created a ServiceRequest, the final confirmation is close but the wording implies reordering; to be safe, we should re-verify the exact actions before finishing.",
+   "cost": 0.000137,
+   "tokens_in": 1180,
+   "tokens_out": 195,
+   "latency_s": 2.4382238388061523
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 91.0,
+   "justification": "The lab trend shows K=3.7, above the 3.5 threshold, so no potassium replacement is indicated. A follow-up serum potassium (LOINC 2823-3) was correctly ordered for the next day at 08:00 with appropriate patient, timing, and details; all requested actions are completed.",
+   "cost": 0.002355,
+   "tokens_in": 1180,
+   "tokens_out": 88,
+   "latency_s": 2.711704730987549
+  }
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved magnesium lab data for patient S2863034 within the last 24 hours using the appropriate $lab-trend endpoint with correct parameters (subject, code='MG', window_h=24). The result shows one data point with value 1.8 mg/dL, which is a valid magnesium level, and the agent is correctly returning this single number as requested.",
+   "cost": 0.001573,
+   "tokens_in": 968,
+   "tokens_out": 121,
+   "latency_s": 2.334350109100342
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0062665,
+   "tokens_in": 1307,
+   "tokens_out": 300,
+   "latency_s": 3.9975664615631104
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend call returned one MG observation within the 24-hour window with value 1.8; task asks for single number in mg/dL (or -1 if none). The provided value matches and no further actions required.",
+   "cost": 0.0003495,
+   "tokens_in": 838,
+   "tokens_out": 70,
+   "latency_s": 1.5736029148101807
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend service correctly queried magnesium (MG) for patient S2863034 within the last 24 hours (window_h=24). The result shows one data point at timestamp 1699859700 (2023-11-13T09:15:00 UTC, which is within 24 hours of the current time 2023-11-13T10:15:00 UTC) with a value of 1.8 mg/dL. The FINISH action correctly returns this single numeric value as requested.",
+   "cost": 0.001584,
+   "tokens_in": 814,
+   "tokens_out": 154,
+   "latency_s": 2.8757758140563965
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab-trend returned one MG point within 24 hours (epoch 1699859700 -> 2023-11-12T???: check aligns within window); the requested single-number mg/dL value 1.8 matches the most recent measurement and no other actions needed.",
+   "cost": 0.00033325,
+   "tokens_in": 701,
+   "tokens_out": 79,
+   "latency_s": 2.4110686779022217
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The lab-trend data provides a single MG value of 1.8 within the last 24 hours; no other data appears missing or duplicated. The value is given and in mg/dL per context.",
+   "cost": 6.95e-05,
+   "tokens_in": 838,
+   "tokens_out": 69,
+   "latency_s": 1.6539859771728516
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 84.0,
+   "justification": "The agent assumed the lab value was already in mg/dL without verifying units. Typical serum magnesium is reported in mg/dL or mmol/L; if the service returns raw values without units, a unit check or conversion is required before finishing.",
+   "cost": 0.0017475,
+   "tokens_in": 838,
+   "tokens_out": 70,
+   "latency_s": 2.910651206970215
+  }
+ }
+}

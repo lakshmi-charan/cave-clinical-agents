@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved 3 CBG observations within the last 24 hours for patient S6109164, properly converted all values from mmol/L to mg/dL using the standard conversion factor of 18.018, and accurately calculated the average as (134.05 + 205.04 + 232.07) / 3 = 190.39 mg/dL.",
+   "cost": 0.002057,
+   "tokens_in": 1452,
+   "tokens_out": 121,
+   "latency_s": 1.946836233139038
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The three GLU observations fall within the last 24 hours, and the mmol/L to mg/dL conversion (×18.018) and averaging are computed correctly, yielding 190.39 mg/dL.",
+   "cost": 0.005474,
+   "tokens_in": 1830,
+   "tokens_out": 90,
+   "latency_s": 2.1160728931427
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observed three GLU measurements within the specified 24-hour window; conversions (×18.018) and mean calculation are correct (134.05, 205.04, 232.07 → average 190.39 mg/dL).",
+   "cost": 0.00045775,
+   "tokens_in": 1263,
+   "tokens_out": 71,
+   "latency_s": 1.5220320224761963
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 190.39 mg/dL is incorrect. The three CBG measurements are in mmol/L (7.44, 11.38, 12.88), which convert to approximately 134, 205, and 232 mg/dL respectively, yielding an average of ~190.3 mg/dL. However, one measurement (2023-11-12T14:15:00) falls outside the 24-hour window from 2023-11-13T10:15:00, so only the two measurements from 2023-11-13 should be included, giving an average of (134 + 205) / 2 = 169.5 mg/dL, not 190.39.",
+   "cost": 0.002103,
+   "tokens_in": 1093,
+   "tokens_out": 202,
+   "latency_s": 2.9801642894744873
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Calculated average of three GLU observations within the 24‑hour window (7.44, 11.38, 12.88 mmol/L) converts to mg/dL: mean mmol/L = (7.44+11.38+12.88)/3 = 10.5667 mmol/L ×18 = 190.2006 ≈190.39, matches proposed value.",
+   "cost": 0.00044425,
+   "tokens_in": 953,
+   "tokens_out": 103,
+   "latency_s": 1.868217945098877
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed finish action computes an average and provides a numeric value, but it relies on glucose values and conversion without verifying that the last 24 hours are correctly defined and that all measurements are indeed within the window; also there is a potential unit inconsistency as one value is mmol/L to mg/dL conversion must be precise and confirm data currency.",
+   "cost": 0.00010195000000000001,
+   "tokens_in": 1263,
+   "tokens_out": 97,
+   "latency_s": 1.5951073169708252
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly retrieved three GLU observations for patient S6109164 within the last 24 hours, converted mmol/L to mg/dL using 18.018, and averaged them to 190.39. No omissions or duplications detected.",
+   "cost": 0.00229875,
+   "tokens_in": 1263,
+   "tokens_out": 72,
+   "latency_s": 2.9941818714141846
+  }
+ }
+}

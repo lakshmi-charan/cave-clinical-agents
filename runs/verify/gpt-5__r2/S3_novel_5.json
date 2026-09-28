@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The latest GLU point for patient S6543355 is 185.0 at the most recent timestamp; the FINISH response correctly reports the most recent CBG value.",
+   "cost": 0.00148,
+   "tokens_in": 728,
+   "tokens_out": 57,
+   "latency_s": 1.706641674041748
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend returned three GLU points with the most recent timestamp (1699863300) corresponding to value 185; finishing with [\"185\"] correctly answers the latest CBG for patient S6543355.",
+   "cost": 0.000316,
+   "tokens_in": 728,
+   "tokens_out": 67,
+   "latency_s": 2.1762800216674805
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried the lab trend service for patient S6543355 with code GLU (capillary blood glucose). The results show three data points with timestamps in unix-seconds-utc format. The most recent point is [1699863300, 185.0], which corresponds to the highest timestamp (most recent), giving a CBG value of 185. The answer of 185 is correct.",
+   "cost": 0.001442,
+   "tokens_in": 832,
+   "tokens_out": 122,
+   "latency_s": 2.3791937828063965
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The lab trend for subject S6543355 with code GLU shows the most recent timestamp corresponds to value 185. The FINISH answer lists 185, matching the latest CBG.",
+   "cost": 0.00144875,
+   "tokens_in": 679,
+   "tokens_out": 60,
+   "latency_s": 1.7719907760620117
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend service returned 3 CBG (GLU) measurements. The most recent point is [1699863300, 185.0], where 1699863300 (unix timestamp) corresponds to 2023-11-12T15:15:00+00:00, which is the latest measurement before the current time of 2023-11-13T10:15:00+00:00. The value of 185 mg/dL is correctly identified as the most recent CBG.",
+   "cost": 0.001509,
+   "tokens_in": 779,
+   "tokens_out": 146,
+   "latency_s": 2.466252326965332
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The FINISH action would reuse a value from the lab trend, but the most recent data point timestamp 1699863300 corresponds to value 185, however the provided trajectory indicates 3 points with latest at 1699863300, but we cannot confirm it's the most recent date relative to 2023-11-13. We should verify the latest point and ensure it matches GLU code and patient. Action should be to fetch or interpret current latest point; proceed only if confirmed.",
+   "cost": 8.680000000000001e-05,
+   "tokens_in": 728,
+   "tokens_out": 126,
+   "latency_s": 2.483397960662842
+  }
+ }
+}

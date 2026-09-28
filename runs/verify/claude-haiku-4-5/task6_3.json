@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The agent correctly retrieved CBG observations for patient S2863714 within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). One valid measurement of 100.0 mg/dL was found within this timeframe, making the average 100.0 mg/dL. The answer is appropriately formatted as a single number in mg/dL units.",
+   "cost": 0.001935,
+   "tokens_in": 1255,
+   "tokens_out": 136,
+   "latency_s": 2.361574649810791
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0070265,
+   "tokens_in": 1611,
+   "tokens_out": 300,
+   "latency_s": 4.966076850891113
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Single GLU observation within the specified 24‑hour window (100.0 mg/dL) was retrieved and the average reported equals that value; patient and date range match the request.",
+   "cost": 0.000397,
+   "tokens_in": 1108,
+   "tokens_out": 60,
+   "latency_s": 1.2773215770721436
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The query retrieved only 1 CBG measurement (100.0 mg/dL at 2023-11-13T01:24:00), but the task requires the average over the last 24 hours. A single data point cannot be averaged; multiple measurements are needed to calculate a meaningful average, or -1 should be returned if insufficient data exists. The agent should either retrieve more data points or return -1 per the protocol.",
+   "cost": 0.001635,
+   "tokens_in": 990,
+   "tokens_out": 129,
+   "latency_s": 2.21695613861084
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Query returned one GLU observation within the 24-hour window (2023-11-12T10:15 to 2023-11-13T10:15): 100.0 mg/dL, so average = 100.0 mg/dL and FINISH([100.0]) is correct.",
+   "cost": 0.000391,
+   "tokens_in": 868,
+   "tokens_out": 87,
+   "latency_s": 1.5654191970825195
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The proposed FINISH action relies on a single observation and directly states the average as that value. However, the window is last 24 hours from 2023-11-13T10:15:00+00:00, and the retrieved measurement at 01:24:00+00:00 falls within that window but there may be other data points not captured in the brief. Also, ensure the final answer is a single number in mg/dL; if more data exists within the window, the average should reflect all measurements. Requesting a re-check of complete last-24h observations before finishing.",
+   "cost": 0.00011580000000000001,
+   "tokens_in": 1108,
+   "tokens_out": 151,
+   "latency_s": 1.8967020511627197
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The search correctly retrieved one GLU observation for patient S2863714 within the last 24 hours (2023-11-13T01:24:00+00:00) with value 100.0 mg/dL. The average of a single measurement is 100.0, matching the requested unit and timeframe.",
+   "cost": 0.002275,
+   "tokens_in": 1108,
+   "tokens_out": 89,
+   "latency_s": 2.3671188354492188
+  }
+ }
+}

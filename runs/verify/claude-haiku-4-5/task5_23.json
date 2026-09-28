@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for magnesium levels within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) and found only a result from 2023-11-07, which is outside this window. Per the explicit instruction 'If no magnesium level has been recorded in the last 24 hours, don't order anything,' the FINISH action appropriately reports no order was placed.",
+   "cost": 0.001931,
+   "tokens_in": 1231,
+   "tokens_out": 140,
+   "latency_s": 2.3281567096710205
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The only magnesium result found is from 2023-11-07, well outside the 24-hour window, so per instructions no order should be placed, and the FINISH message correctly reflects this.",
+   "cost": 0.0048065,
+   "tokens_in": 1599,
+   "tokens_out": 81,
+   "latency_s": 2.2208564281463623
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The observation search returned a single MG result dated 2023-11-07 which is outside the required 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00), so per the task instructions no replacement order should be placed.",
+   "cost": 0.00043325,
+   "tokens_in": 1037,
+   "tokens_out": 87,
+   "latency_s": 1.654411792755127
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incorrect. The search query used date parameters ge2023-11-12T10:15:00Z and le2023-11-13T10:15:00Z (last 24 hours), but the result shows an observation from 2023-11-07T13:33:00Z, which falls outside this window. This indicates a data inconsistency in the search results. However, the core issue is that the agent should have recognized that NO magnesium level exists within the last 24 hours and therefore should not order anything—which aligns with the proposed conclusion but the reasoning about the returned observation is contradictory. The agent should clarify that the search returned no valid results within the 24-hour window and therefore correctly did not place an order.",
+   "cost": 0.002066,
+   "tokens_in": 1046,
+   "tokens_out": 204,
+   "latency_s": 3.2368977069854736
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned a single magnesium result from 2023-11-07, which is outside the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); therefore no replacement order should be placed per instructions.",
+   "cost": 0.00038875,
+   "tokens_in": 875,
+   "tokens_out": 85,
+   "latency_s": 1.5387237071990967
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The request requires confirmation of a magnesium result within last 24 hours; the retrieved data shows a result from 2023-11-07, which is outside 24 hours. The proposed action to not order magnesium aligns with instructions, but there is some uncertainty about potential data availability or timing. The decision approves withholding an order based on provided data.",
+   "cost": 9.065000000000001e-05,
+   "tokens_in": 1037,
+   "tokens_out": 97,
+   "latency_s": 1.587583303451538
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched within the last 24 hours and found no magnesium result in that timeframe. Per instructions, no IV magnesium should be ordered, and the FINISH statement accurately reports findings and actions.",
+   "cost": 0.00191625,
+   "tokens_in": 1037,
+   "tokens_out": 62,
+   "latency_s": 1.8786687850952148
+  }
+ }
+}

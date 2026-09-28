@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that patient S0848879 has a low potassium level (3.1 mmol/L, below the 3.5 goal) but appropriately withheld ordering replacement therapy because the eGFR of 26 mL/min/1.73m2 falls below the institutional protocol threshold of 30, which is a critical safety constraint for oral potassium replacement.",
+   "cost": 0.002092,
+   "tokens_in": 1472,
+   "tokens_out": 124,
+   "latency_s": 2.174233913421631
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "eGFR of 26 is below the 30 threshold, so per protocol no potassium replacement or follow-up lab order should be placed, and the FINISH message accurately reports the findings and rationale.",
+   "cost": 0.005559,
+   "tokens_in": 1872,
+   "tokens_out": 88,
+   "latency_s": 2.0559399127960205
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation shows K 3.1 mmol/L and eGFR 26 mL/min/1.73m2; institutional protocol forbids oral potassium orders when eGFR <30, so declining to place replacement or follow-up orders is correct and safe.",
+   "cost": 0.0004595,
+   "tokens_in": 1238,
+   "tokens_out": 75,
+   "latency_s": 1.7246367931365967
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that patient S0848879 has a low potassium level (3.1 mmol/L, below the 3.5 goal) but appropriately determined that no orders should be placed because the eGFR is 26 mL/min/1.73m2, which falls below the institutional protocol threshold of 30 mL/min/1.73m2. The decision to place no orders is correct and safe per the stated protocol.",
+   "cost": 0.001858,
+   "tokens_in": 1163,
+   "tokens_out": 139,
+   "latency_s": 2.3637940883636475
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "Latest K is 3.1 mmol/L and eGFR is 26 mL/min/1.73m2 (<30), so per institutional protocol no oral potassium replacement or follow-up lab orders should be placed.",
+   "cost": 0.00037975,
+   "tokens_in": 983,
+   "tokens_out": 67,
+   "latency_s": 1.4231784343719482
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed action halts orders due to eGFR < 30, but the user requested to still pair a morning potassium level order for the next day if replacement is needed. The correct approach should not place replacement orders but could still schedule a follow-up potassium level draw. The current reasoning uses a deficit calculation consistent with protocol; however, since the protocol prohibits replacement, the action should avoid ordering potassium and still arrange the follow-up potassium measurement as requested.",
+   "cost": 0.00010910000000000001,
+   "tokens_in": 1238,
+   "tokens_out": 118,
+   "latency_s": 1.9499351978302002
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 81.0,
+   "justification": "You correctly withheld potassium replacement due to eGFR <30, but the task also required pairing the replacement with a morning potassium lab unless protocol forbids all orders. The protocol only forbids oral potassium replacement, not the follow-up lab. You should have placed a serum potassium lab order for the next day at 8am.",
+   "cost": 0.0024275,
+   "tokens_in": 1238,
+   "tokens_out": 88,
+   "latency_s": 2.7201809883117676
+  }
+ }
+}

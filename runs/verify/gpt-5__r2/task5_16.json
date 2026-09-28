@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The agent correctly retrieved the last 24-hour magnesium (2.0 mg/dL on 2023-11-12T13:31Z) for the right patient and appropriately did not order IV magnesium since it is not low per the provided dosing thresholds. All requested steps are satisfied with no omissions or unnecessary orders.",
+   "cost": 0.001995,
+   "tokens_in": 900,
+   "tokens_out": 87,
+   "latency_s": 2.4844131469726562
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Latest Mg within last 24 hours is 2.0 mg/dL (above deficiency thresholds), so no IV magnesium order is appropriate and the FINISH statement correctly reports the result and action.",
+   "cost": 0.000347,
+   "tokens_in": 900,
+   "tokens_out": 61,
+   "latency_s": 1.7072694301605225
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The magnesium level of 2.0 mg/dL is within normal range and does not meet any of the deficiency thresholds (mild <1.9, moderate <1.5, severe <1.0), so no replacement order is appropriate per protocol. The task correctly identified a recent lab value within 24 hours and appropriately determined no action was needed.",
+   "cost": 0.001653,
+   "tokens_in": 1078,
+   "tokens_out": 115,
+   "latency_s": 2.229285478591919
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab result is within the last 24 hours (2023-11-12T13:31Z vs 2023-11-13T10:15Z) and shows magnesium 2.0 mg/dL, which is not low per the given thresholds. No replacement order is appropriate, and none was placed.",
+   "cost": 0.00195125,
+   "tokens_in": 849,
+   "tokens_out": 89,
+   "latency_s": 2.3308260440826416
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The magnesium level of 2.0 mg/dL falls within the normal range (not low per the dosing protocol which defines deficiency as <1.9 mg/dL), and the lab was appropriately retrieved from within the last 24 hours (2023-11-12T13:31:00 is within 24 hours of 2023-11-13T10:15:00). The decision not to order IV magnesium is correct.",
+   "cost": 0.001711,
+   "tokens_in": 1016,
+   "tokens_out": 139,
+   "latency_s": 2.235870361328125
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The last serum magnesium within 24h is 2.0 mg/dL (normal). However, the FINISH action also asserts that no IV magnesium was ordered; while true given normal level, we must verify that no inadvertent orders or omissions occurred. The instruction requires ensuring all requested orders are placed correctly; since a normal result does not trigger replacement, no order should be placed. The proposed finish text is acceptable, but the action context requires confirming no order placement occurred or is needed, which seems aligned. Given ambiguity, I reject to request explicit confirmation that no order was placed, and to avoid assuming institutional protocols beyond provided data.",
+   "cost": 0.000107,
+   "tokens_in": 900,
+   "tokens_out": 155,
+   "latency_s": 2.722792148590088
+  }
+ }
+}

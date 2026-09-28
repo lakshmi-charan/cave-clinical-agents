@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The agent converted 0.864 mmol/L to ≈2.10 mg/dL, but 1 mmol/L Mg ≈ 2.43 mg/dL; 0.864 mmol/L ≈ 2.10 mg/dL is actually correct. However, the conclusion “not low” contradicts the dosing thresholds (mild low is 1.5–1.9 mg/dL). 2.10 mg/dL is above 1.9 mg/dL, so normal; wait, 2.10 mg/dL is normal. But the mmol/L value 0.864 mmol/L is below the typical lower limit (~0.7–1.05 mmol/L normal is ~0.75–0.95). Using mg/dL thresholds provided, result is normal; no order needed. Yet the system’s thresholds are specified only in mg/dL, and the agent applied them correctly. Still, typical unit mismatch risk exists; the mg/dL conversion appears correct and decision aligns with instructions. But to be safe, verify unit; the action is a FINISH and no orders were required. Approve.",
+   "cost": 0.00378875,
+   "tokens_in": 991,
+   "tokens_out": 255,
+   "latency_s": 3.6862235069274902
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The observed value is 0.864 mmol/L which converts to approximately 2.10 mg/dL (not low), but the trajectory states result.amount=0.864 mmol/L while the agent reported 0.864 mmol/L ≈2.10 mg/dL — conversion is correct; however the reported normal range and unit should be confirmed from the lab and the task asked to check 'serum magnesium' (MG) 'level'—the agent's conclusion (no order) is reasonable but I must reject because I cannot verify the lab reference range or units from the data and protocol requires acting only if 'low'; explicit confirmation of units/reference range is missing.",
+   "cost": 0.00056375,
+   "tokens_in": 991,
+   "tokens_out": 158,
+   "latency_s": 3.0336434841156006
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The magnesium level of 0.864 mmol/L converts to approximately 2.10 mg/dL, which falls in the mild deficiency range (1.5-1.9 mg/dL is stated as mild, but 2.10 is borderline and the agent's conversion appears incorrect). More critically, the agent's conclusion that 'result is not low' contradicts the task requirement to order replacement if magnesium is low. A level of 0.864 mmol/L (normal is ~0.85-1.05 mmol/L or 2.1-2.55 mg/dL) is actually at the lower end of normal/borderline low and warrants clinical review, but the agent should have either ordered replacement per protocol or explicitly justified why this specific value does not meet the 'low' threshold.",
+   "cost": 0.002301,
+   "tokens_in": 1186,
+   "tokens_out": 223,
+   "latency_s": 4.2904675006866455
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Correct patient and time window; magnesium within last 24 hours is 0.864 mmol/L, which converts to ~2.10 mg/dL and is not low per provided thresholds. Appropriately no medication was ordered.",
+   "cost": 0.00181625,
+   "tokens_in": 909,
+   "tokens_out": 68,
+   "latency_s": 2.3033580780029297
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The magnesium level of 0.864 mmol/L converts to approximately 2.10 mg/dL, which is NOT low according to the dosing instructions (mild deficiency starts at ≤1.9 mg/dL). However, the proposed answer incorrectly states the result is 'not low' when 2.10 mg/dL is actually above the deficiency threshold, making the clinical conclusion correct but the reasoning unclear. More critically, the task requires checking if magnesium is 'low' and ordering replacement only if low—the agent correctly did not order, but the FINISH message should clearly state the level is normal/adequate, not ambiguously 'not low.'",
+   "cost": 0.002037,
+   "tokens_in": 1087,
+   "tokens_out": 190,
+   "latency_s": 3.616814374923706
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The latest serum magnesium is 0.864 mmol/L (~2.10 mg/dL) within 24 hours, which is not low per typical thresholds; no IV magnesium replacement is warranted. The proposed finish text states no order needed, which is correct. Ensure the system records the observation and confirms no action taken.",
+   "cost": 8.595e-05,
+   "tokens_in": 991,
+   "tokens_out": 91,
+   "latency_s": 1.7510313987731934
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 50,
+   "justification": "{\"decision\": \"approve\", \"confidence\": 92, \"justification\": \"The single magnesium",
+   "parse_error": true,
+   "cost": 0.006909,
+   "tokens_in": 1564,
+   "tokens_out": 300,
+   "latency_s": 4.812492370605469
+  }
+ }
+}

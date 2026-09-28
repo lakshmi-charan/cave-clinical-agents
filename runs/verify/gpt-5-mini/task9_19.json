@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "GET returned no serum potassium observations, so not ordering replacement is appropriate; the recommendation to obtain a BMP now and schedule a morning potassium for 2023-11-14T08:00:00+00:00 is reasonable and no dosing/order was placed without a lab value as required.",
+   "cost": 0.0004005,
+   "tokens_in": 954,
+   "tokens_out": 81,
+   "latency_s": 2.1001973152160645
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "Action assumes no LOINC 2823-3 result exists; however, the prior step reported 0 results but did not verify whether a more recent observation might exist under a different date. Before finishing, confirm and retrieve the most recent potassium Observation (LOINC 2823-3) for patient S6329254, then proceed accordingly with dosing if low and schedule the next-day 8am BMP/PO potassium.",
+   "cost": 9.290000000000001e-05,
+   "tokens_in": 954,
+   "tokens_out": 113,
+   "latency_s": 2.443631172180176
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. The task explicitly asks to check the potassium level and order replacement if low, AND to pair it with a morning serum potassium level the next day. The agent should have at minimum created a ServiceRequest for the serum potassium draw at 2023-11-14T08:00:00+00:00 (which was mentioned as 'recommended' but never actually ordered), rather than finishing with only recommendations. Additionally, the agent should clarify with the clinician whether to proceed empirically or wait for results before finishing.",
+   "cost": 0.001953,
+   "tokens_in": 1133,
+   "tokens_out": 164,
+   "latency_s": 3.2265849113464355
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "GET returned no serum potassium (LOINC 2823-3) for patient S6329254, so no replacement can be safely ordered; recommendation to obtain BMP and to place morning potassium at 2023-11-14T08:00:00+00:00 is appropriate—action is conservative and requests confirmation before empiric replacement.",
+   "cost": 0.00040475,
+   "tokens_in": 883,
+   "tokens_out": 92,
+   "latency_s": 1.6278748512268066
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete. The task explicitly requires ordering a morning serum potassium level for the next day at 8am as a paired order, but the agent only 'recommended' this without actually creating the ServiceRequest. Additionally, the agent should have attempted to retrieve recent potassium labs with a date filter (e.g., last 7-30 days) rather than accepting zero results without qualification, since the query may have been too restrictive.",
+   "cost": 0.001712,
+   "tokens_in": 1047,
+   "tokens_out": 133,
+   "latency_s": 3.296604871749878
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The task required: check most recent K; if low, order potassium repletion per dosing; and place a morning serum potassium order for next day at 8am. The agent neither ordered the follow-up lab nor attempted to obtain K via alternative code “K,” and finished without placing the required ServiceRequest. The FINISH statement is incomplete and not compliant with instructions.",
+   "cost": 0.0021525,
+   "tokens_in": 954,
+   "tokens_out": 96,
+   "latency_s": 2.389860153198242
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 90, \"justification\": \"The agent only searched using LOINC code 2823-3, but the context specifies the lab code for potassium is \\\"K\\\"; it should have retried the search with code=K before concluding no data exists, and it failed to place the",
+   "parse_error": true,
+   "cost": 0.0067465,
+   "tokens_in": 1499,
+   "tokens_out": 300,
+   "latency_s": 5.473146200180054
+  }
+ }
+}

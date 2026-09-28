@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The last 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) contains no CBG observations; the most recent is 2023-11-12T13:00:00Z, which is within the window, so there is data. However, the agent averaged a single value but selected 127 mg/dL from 13:00Z; this is within window, so average should be 127, but the instruction says return -1 only if no measurement. The finish is acceptable numerically, but we must ensure units mg/dL. Values already in mg/dL. Still, to be safe: approve. Wait: need to re-evaluate—actually the value is within 24h so average 127 is correct. However, need to ensure time now 2023-11-13T10:15:00Z; 2023-11-12T13:00:00Z is 21h15m prior, so included. The decision should be approve.",
+   "cost": 0.0044075,
+   "tokens_in": 1550,
+   "tokens_out": 247,
+   "latency_s": 2.947493553161621
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "The only GLU observation within the last 24 hours is 2023-11-12T13:00:00+00:00 (127 mg/dL); average of single value is 127 mg/dL, matches requested unit and timeframe.",
+   "cost": 0.0005355,
+   "tokens_in": 1550,
+   "tokens_out": 74,
+   "latency_s": 1.695190668106079
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's filtering is incorrect. Only one observation (323611 from 2023-11-12T13:00:00) falls within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00), but the agent should verify this is the only qualifying measurement. More critically, the agent returned 127 as the average, which happens to equal that single value, but the methodology is flawed—averaging a single value is trivial and the agent should explicitly confirm no other measurements exist in the 24-hour window before reporting this answer.",
+   "cost": 0.002626,
+   "tokens_in": 1781,
+   "tokens_out": 169,
+   "latency_s": 2.7949750423431396
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The last 24 hours from 2023-11-13T10:15:00+00:00 includes observations since 2023-11-12T10:15:00+00:00. Available GLU entries are 2023-11-12T13:00 (127 mg/dL) and 2023-11-11T13:43 (117 mg/dL), but the latter is outside the 24-hour window. Therefore the average should be 127, but the FINISH action must show the calculation basis. Approving only if it confirms the time window and that 127 is the sole in-window value.",
+   "cost": 0.00339375,
+   "tokens_in": 1467,
+   "tokens_out": 156,
+   "latency_s": 2.0200448036193848
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 127 mg/dL is incorrect. Only one CBG measurement (Observation 323611 from 2023-11-12T13:00:00) falls within the last 24 hours from the current time (2023-11-13T10:15:00). The correct average for a single measurement is 127.0 mg/dL, but the agent should verify this is the only measurement in the 24-hour window and report it as such, not as an average of multiple values.",
+   "cost": 0.002442,
+   "tokens_in": 1692,
+   "tokens_out": 150,
+   "latency_s": 3.1578869819641113
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 60, \"justification\": \"The proposed action relies on a single GLU observation within the last 24 hours (127.0 mg/dL at 2023-11-12T13:00:00Z) which may be outside the exact 24-hour window relative to 2023-11-13T10:15:00+00:00. Also, the instruction requires computi",
+   "parse_error": true,
+   "cost": 0.0001339,
+   "tokens_in": 1550,
+   "tokens_out": 141,
+   "latency_s": 1.6180965900421143
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Only observation 323611 at 2023-11-12T13:00:00Z falls within the last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15), and its value 127 mg/dL is correctly reported as the average.",
+   "cost": 0.006509,
+   "tokens_in": 2184,
+   "tokens_out": 105,
+   "latency_s": 2.34322452545166
+  }
+ }
+}

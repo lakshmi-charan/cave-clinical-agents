@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the 4 CBG measurements within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 259, 274, 269, and 283 mg/dL. The arithmetic is correct: (259 + 274 + 269 + 283) / 4 = 1085 / 4 = 271.25 mg/dL. The answer is properly formatted as a single number in mg/dL.",
+   "cost": 0.002878,
+   "tokens_in": 2083,
+   "tokens_out": 159,
+   "latency_s": 2.345426082611084
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The four observations within the 24-hour window (259, 274, 269, 283) were correctly identified and averaged to 271.25, matching the query results and date filter.",
+   "cost": 0.007029,
+   "tokens_in": 2512,
+   "tokens_out": 75,
+   "latency_s": 2.072221279144287
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly filtered observations within 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z (259, 283 on 11-12 and 274, 269 on 11-13) and correctly computed the average (1085/4 = 271.25 mg/dL).",
+   "cost": 0.0006535,
+   "tokens_in": 1830,
+   "tokens_out": 98,
+   "latency_s": 1.630845308303833
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 271.25 mg/dL is incorrect. Only 8 observations fall within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 259.0, 283.0, 255.0, 238.0, 223.0, 274.0, 269.0, and 213.0 mg/dL. The correct average is (259+283+255+238+223+274+269+213)/8 = 1914/8 = 239.25 mg/dL, not 271.25.",
+   "cost": 0.002658,
+   "tokens_in": 1728,
+   "tokens_out": 186,
+   "latency_s": 3.3517777919769287
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "Calculation incorrect: only observations within 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z should be used. Relevant values are 259.0 (2023-11-12T20:39), 283.0 (2023-11-12T22:25), 274.0 (2023-11-13T05:09), and 269.0 (2023-11-13T06:06). Their average is (259+283+274+269)/4 = 276.25 mg/dL, not 271.25.",
+   "cost": 0.00068975,
+   "tokens_in": 1503,
+   "tokens_out": 157,
+   "latency_s": 2.0999321937561035
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action calculates an average from a subset of observations but includes an incorrect time window: 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z. The listed qualifying observations also omit others within that window (e.g., 2023-11-12T20:39:00Z, 2023-11-12T22:25:00Z, 2023-11-13T05:09:00Z, 2023-11-13T06:06:00Z are included but ensure all within window). Need to recalculate with precise window and confirm all values; also ensure units mg/dL as single number.",
+   "cost": 0.0001635,
+   "tokens_in": 1830,
+   "tokens_out": 180,
+   "latency_s": 2.1508264541625977
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The agent correctly filtered CBG observations for patient S2402518 within 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z and computed the average (259, 274, 269, 283) as 271.25 mg/dL. All units already in mg/dL and within 24h; no omissions.",
+   "cost": 0.0033475,
+   "tokens_in": 1830,
+   "tokens_out": 106,
+   "latency_s": 2.36446213722229
+  }
+ }
+}

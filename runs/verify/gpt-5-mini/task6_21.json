@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No GLU observations are timestamped within the 24-hour window (2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00), so returning -1 per instructions is correct and safe.",
+   "cost": 0.00055525,
+   "tokens_in": 1565,
+   "tokens_out": 82,
+   "latency_s": 1.8771324157714844
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 65.0,
+   "justification": "The provided data dump shows GLU observations, and none fall within the last 24 hours relative to 2023-11-13T10:15:00+00:00. The proposed FINISH with -1 matches the requirement when no measurement in last 24 hours is available.",
+   "cost": 0.00011265,
+   "tokens_in": 1565,
+   "tokens_out": 86,
+   "latency_s": 1.5195608139038086
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that no glucose observations exist within the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00). The most recent measurement is from 2023-11-10T01:55:00, which is more than 2 days old. Returning -1 per the specified protocol is correct.",
+   "cost": 0.002405,
+   "tokens_in": 1800,
+   "tokens_out": 121,
+   "latency_s": 2.1855201721191406
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH([-1]) is incorrect: there are GLU observations within last 24 hours of current time (2023-11-13T10:15:00Z) — none of the listed observations are dated within 24 hours, but we must verify timeframe: latest observation is 2023-11-10 and 2023-11-08, so actually no measurements in the last 24 hours; however the FINISH payload should return a single number (mg/dL) and -1 only if a measurement within last 24 hours is not available — that condition is true, but the action should report -1 as the answer (not as an array). The FINISH proposal uses an array [-1], wrong format.",
+   "cost": 0.00071475,
+   "tokens_in": 1467,
+   "tokens_out": 174,
+   "latency_s": 3.2417826652526855
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed action correctly returns -1 because there are no CBG (GLU) measurements within the last 24 hours. The current time is 2023-11-13T10:15:00+00:00, so the 24-hour window is 2023-11-12T10:15:00+00:00 onwards. The most recent measurement in the data is from 2023-11-10T01:55:00+00:00 (119.0 mg/dL), which is more than 24 hours old.",
+   "cost": 0.002483,
+   "tokens_in": 1693,
+   "tokens_out": 158,
+   "latency_s": 2.5375747680664062
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "All listed GLU observations are outside the last 24 hours relative to 2023-11-13T10:15:00+00:00, so returning -1 matches the protocol. The patient ID is correct and units are already mg/dL.",
+   "cost": 0.00270625,
+   "tokens_in": 1565,
+   "tokens_out": 75,
+   "latency_s": 1.8535492420196533
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The retrieved GLU observations show no measurements between 2023-11-12T10:15Z and 2023-11-13T10:15Z, so returning -1 is correct per the instructions.",
+   "cost": 0.0070115,
+   "tokens_in": 2205,
+   "tokens_out": 150,
+   "latency_s": 3.1903562545776367
+  }
+ }
+}

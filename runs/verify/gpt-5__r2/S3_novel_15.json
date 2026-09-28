@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The instruction requires pairing a next‑day 8:00 AM potassium lab with the order only if repletion is needed. However, it also asks to check the most recent level and order replacement only if low. The K is 3.7 (not low), so no repletion is correct, but the FINISH text incorrectly claims the paired lab is only needed if repletion was ordered; this matches the instruction, but it fails to explicitly confirm no orders were placed via FHIR. A FINISH action should only be approved if all requested orders have been correctly placed or appropriately omitted and clearly documented; the response lacks confirmation of no FHIR orders placed.",
+   "cost": 0.002655,
+   "tokens_in": 884,
+   "tokens_out": 155,
+   "latency_s": 4.285499334335327
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent K is 3.7 mmol/L (above 3.5), so no replacement or paired 8:00am lab is indicated; the summary correctly states no orders placed.",
+   "cost": 0.000343,
+   "tokens_in": 884,
+   "tokens_out": 61,
+   "latency_s": 4.217039585113525
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The patient's most recent potassium level is 3.7 mmol/L, which is above the threshold of 3.5 mmol/L. Per the dosing instructions, replacement potassium is only ordered when levels are low (below threshold), so no repletion order or paired follow-up lab is indicated. The FINISH action correctly reports the findings and appropriately concludes that no orders are needed.",
+   "cost": 0.001666,
+   "tokens_in": 1041,
+   "tokens_out": 125,
+   "latency_s": 2.2319140434265137
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The most recent potassium is 3.7 mmol/L, which is above the 3.5 threshold, so no repletion is needed. However, the task explicitly requires pairing a next-day 8:00 AM serum potassium level with the repletion order; if no repletion is ordered, the instruction does not say to skip the lab. Additionally, no orders were actually placed, so a FINISH is premature.",
+   "cost": 0.00210625,
+   "tokens_in": 829,
+   "tokens_out": 107,
+   "latency_s": 2.6377243995666504
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 3.7 mmol/L, which is above the 3.5 threshold, so no repletion is needed. The proposed action correctly identifies that no orders should be placed since the potassium is not low.",
+   "cost": 0.001429,
+   "tokens_in": 974,
+   "tokens_out": 91,
+   "latency_s": 2.621509552001953
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Patient's most recent potassium is 3.7 mmol/L, which is above the 3.5 threshold; no potassium repletion or paired next-day lab order is required per instructions.",
+   "cost": 7.02e-05,
+   "tokens_in": 884,
+   "tokens_out": 65,
+   "latency_s": 1.3971540927886963
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent CBG observation for patient S1374652. Among all 18 observations returned, Observation 329768 from 2023-11-12T11:48:00+00:00 with a value of 110.0 mg/dL is indeed the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), and the FINISH action accurately reports this data.",
+   "cost": 0.002427,
+   "tokens_in": 1742,
+   "tokens_out": 137,
+   "latency_s": 2.005014181137085
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "Among all 18 GLU observations, 2023-11-12T11:48:00+00:00 with value 110.0 mg/dL is indeed the most recent timestamp, correctly identified for the right patient.",
+   "cost": 0.006279,
+   "tokens_in": 2148,
+   "tokens_out": 91,
+   "latency_s": 2.4051032066345215
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The bundle shows an observation dated 2023-11-12T11:48:00+00:00 but there is an observation dated 2023-11-10T13:46:00 and 2023-11-12 is not the latest compared to 2023-11-12 vs 2023-11-04 etc; however the list includes 2023-11-12 as the most recent but the bundle also contains 2023-11-04.. wait — there is an observation dated 2023-10-30T20:08 and 2023-11-12 is the latest date shown, but current time is 2023-11-13T10:15:00 so a 2023-11-12 result is valid. The proposed FINISH omits the true most recent observation if any entry after 2023-11-12 exists; scanning the returned list, 2023-11-12T11:48:00 is the newest (no 2023-11-13 entries). However the FINISH payload uses status \"final\" though the original bundle did not state status; decision: reject because the FINISH action should reference the Observation resource id and original status rather than inventing status and must report the exact resource (Observation/329768).",
+   "cost": 0.0009685,
+   "tokens_in": 1522,
+   "tokens_out": 294,
+   "latency_s": 3.0270042419433594
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed action correctly identifies the most recent CBG for patient S1374652. Among all 18 observations with code GLU, Observation 329768 dated 2023-11-12T11:48:00+00:00 is the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), with a value of 110.0 mg/dL. The FINISH action accurately reports this data.",
+   "cost": 0.002292,
+   "tokens_in": 1597,
+   "tokens_out": 139,
+   "latency_s": 2.1056056022644043
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent GLU observation in the returned bundle is 2023-11-12T11:48:00+00:00 with value 110.0 mg/dL, matching the proposed FINISH data exactly.",
+   "cost": 0.000195,
+   "tokens_in": 1388,
+   "tokens_out": 68,
+   "latency_s": 1.8157074451446533
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action uses the most recent Observation entry (2023-11-12T11:48:00+00:00) with GLU code and 110.0 mg/dL, matching the data shown in the context.",
+   "cost": 0.00010690000000000001,
+   "tokens_in": 1522,
+   "tokens_out": 77,
+   "latency_s": 1.5627553462982178
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The most recent GLU observation for patient S1374652 is dated 2023-11-12T11:48:00+00:00 with 110.0 mg/dL; no later entries are present as of the provided now (2023-11-13T10:15:00+00:00). The FINISH output correctly reflects date, value, unit, and final status.",
+   "cost": 0.0029625,
+   "tokens_in": 1522,
+   "tokens_out": 106,
+   "latency_s": 2.8435018062591553
+  }
+ }
+}

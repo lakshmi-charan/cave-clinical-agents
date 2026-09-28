@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The claimed 24-hour window is from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00, but the observation at 2023-11-12T12:02:00+00:00 falls within that window — however the agent used the wrong window start (should be 2023-11-12T10:15:00, not 2023-11-12T10:15:00 stated correctly but agent logic matched). Despite that, the trajectory shows no observations on 2023-11-13, so returning 2.2 mg/dL is correct but the FINISH action must report a single number (2.2) as requested; rejection is only because the agent's stated window calculation was inconsistent in rationale. Recommend approving FINISH with value 2.2 mg/dL.",
+   "cost": 0.0007215,
+   "tokens_in": 1182,
+   "tokens_out": 213,
+   "latency_s": 2.8536205291748047
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The latest MG observation within 24 hours appears to be 2023-11-12T12:02:00+00:00 with 2.2 mg/dL, which is within the last 24 hours of 2023-11-13T10:15:00+00:00. Action relies on provided data; confirm 24h window boundaries.",
+   "cost": 0.00010070000000000001,
+   "tokens_in": 1182,
+   "tokens_out": 104,
+   "latency_s": 1.9386622905731201
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's time window calculation is incorrect. The current time is 2023-11-13T10:15:00+00:00, so the last 24 hours spans from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00. The observation at 2023-11-12T12:02:00 (2.2 mg/dL) falls within this window and is the most recent, but the agent stated the window as 'from 2023-11-12T10:15:00 to now' which is correct. However, reviewing all observations, 2023-11-12T12:02:00 is indeed the most recent within 24 hours, making 2.2 mg/dL the correct answer. Upon recalculation, the answer appears correct.",
+   "cost": 0.002886,
+   "tokens_in": 1386,
+   "tokens_out": 300,
+   "latency_s": 3.810356855392456
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Most recent MG observations list includes 2023-11-12T12:02:00+00:00 = 2.2 mg/dL, which is within 24h of 2023-11-13T10:15:00+00:00? Actually 22 hours 13 minutes — so 2.2 mg/dL is correct.",
+   "cost": 0.0004675,
+   "tokens_in": 1086,
+   "tokens_out": 98,
+   "latency_s": 2.434173107147217
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 2.2 mg/dL is incorrect. The most recent magnesium level within the last 24 hours (from 2023-11-13T10:15:00 back to 2023-11-12T10:15:00) is Observation 319982 at 2023-11-12T12:02:00 with a value of 2.2 mg/dL, which is correct. However, there is a more recent measurement: Observation 319982 at 2023-11-12T12:02:00 is the most recent within 24 hours, so 2.2 is actually correct. Upon review, the answer 2.2 is appropriate and should be approved.",
+   "cost": 0.002774,
+   "tokens_in": 1274,
+   "tokens_out": 300,
+   "latency_s": 3.6445505619049072
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The agent correctly identified the most recent MG within the last 24 hours (2023-11-12T12:02:00Z) for patient S3114648 and returned 2.2 mg/dL as a single number. No newer value exists in the data.",
+   "cost": 0.0022675,
+   "tokens_in": 1182,
+   "tokens_out": 79,
+   "latency_s": 2.3265178203582764
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The most recent MG observation at 2023-11-12T12:02:00 (2.2 mg/dL) falls within the last 24 hours (since 2023-11-12T10:15:00), and no later measurement exists in the returned data.",
+   "cost": 0.0053165,
+   "tokens_in": 1731,
+   "tokens_out": 99,
+   "latency_s": 2.678464651107788
+  }
+ }
+}

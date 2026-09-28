@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation bundle shows the most recent GLU entry is 2023-11-11T17:37:00+00:00 with value 110 mg/dL for patient S1698248, matching the proposed FINISH statement.",
+   "cost": 0.0005275,
+   "tokens_in": 1542,
+   "tokens_out": 71,
+   "latency_s": 2.116426467895508
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The most recent GLU observation for S1698248 is 2023-11-11T17:37:00+00:00 with value 110.0 mg/dL in the provided bundle, matching the requested format. The proposed FINISH action uses that data and reports the correct date and value.",
+   "cost": 0.0001135,
+   "tokens_in": 1542,
+   "tokens_out": 91,
+   "latency_s": 1.7700650691986084
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent incorrectly identified the most recent CBG. While Observation 77040 from 2023-11-11T17:37:00+00:00 with 110 mg/dL is more recent than most others, Observation 77023 from 2023-11-10T12:48:00+00:00 with 101 mg/dL is actually closer to the current time (2023-11-13T10:15:00+00:00) and should be verified as the true most recent. The agent appears to have selected based on the order in the bundle rather than systematically comparing all timestamps to identify the absolute maximum date.",
+   "cost": 0.002687,
+   "tokens_in": 1777,
+   "tokens_out": 182,
+   "latency_s": 3.522852897644043
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation bundle shows the latest GLU entry is 2023-11-11T17:37:00+00:00 with value 110 mg/dL, which is the most recent prior to current time 2023-11-13T10:15:00+00:00; the proposed FINISH statement is correct.",
+   "cost": 0.0005505,
+   "tokens_in": 1466,
+   "tokens_out": 92,
+   "latency_s": 1.9778335094451904
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer is incorrect. Reviewing the observation timestamps, the most recent CBG is Observation 77023 with a value of 101.0 mg/dL at 2023-11-10T12:48:00+00:00, which is more recent than the reported 2023-11-11T17:37:00+00:00 (Observation 77040 at 110 mg/dL). The agent selected an older result.",
+   "cost": 0.002379,
+   "tokens_in": 1689,
+   "tokens_out": 138,
+   "latency_s": 2.6448419094085693
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The most recent CBG in the provided results is on 2023-11-10T12:48:00+00:00 (Observation 77023) dated later than many earlier ones, but 2023-11-11T17:37:00+00:00 (Observation 77040) is actually more recent; however, the agent overlooked that the current date is 2023-11-13, and there is no CBG after 2023-11-11, so 110 mg/dL on 2023-11-11 is indeed most recent. Wait—rechecking: 2023-11-11 is after 2023-11-10, so the agent’s selection is correct. But the justification text here must be concise; final decision: approve.",
+   "cost": 0.0038075,
+   "tokens_in": 1542,
+   "tokens_out": 188,
+   "latency_s": 3.1418347358703613
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "Scanning all returned GLU observations, the latest timestamp is 2023-11-11T17:37:00 with value 110 mg/dL, which matches the proposed answer for patient S1698248.",
+   "cost": 0.007854,
+   "tokens_in": 2186,
+   "tokens_out": 239,
+   "latency_s": 4.175887107849121
+  }
+ }
+}

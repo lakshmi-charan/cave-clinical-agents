@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search for Observation code=MG for patient S6315806 since 2023-11-12T10:15:00Z returned zero results, so per instructions no replacement should be ordered; the proposed FINISH correctly reports no recent magnesium and that no IV magnesium was placed.",
+   "cost": 0.0003735,
+   "tokens_in": 862,
+   "tokens_out": 79,
+   "latency_s": 2.2606306076049805
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action asserts no magnesium result in last 24 hours, but the Trajectory indicates a search was already performed with result total=0. We should still verify if there was any magnesium observation within the exact 24-hour window and confirm the timestamp. If there is any data ambiguity, we should not finalize without rechecking data and ensuring no relevant observations exist before concluding.",
+   "cost": 8.47e-05,
+   "tokens_in": 862,
+   "tokens_out": 104,
+   "latency_s": 2.0851638317108154
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly followed the conditional logic: it searched for serum magnesium levels within the last 24 hours (using appropriate date filter ge2023-11-12T10:15:00Z for the 24-hour window before 2023-11-13T10:15:00Z), found zero results, and appropriately did not place an order per the explicit instruction 'If no magnesium level has been recorded in the last 24 hours, don't order anything.' The FINISH action accurately reports both findings.",
+   "cost": 0.001782,
+   "tokens_in": 1037,
+   "tokens_out": 149,
+   "latency_s": 2.880479335784912
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Observation search returned 0 results for MG within the specified 24-hour window, so withholding an IV magnesium order matches the instructions to order only if a recent low value is present.",
+   "cost": 0.00031625,
+   "tokens_in": 801,
+   "tokens_out": 58,
+   "latency_s": 2.007861375808716
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for serum magnesium levels within the last 24 hours (from 2023-11-12T10:15:00Z to present) and found no results. Per the explicit instruction 'If no magnesium level has been recorded in the last 24 hours, don't order anything,' the appropriate action is to not place an order and finish with this explanation.",
+   "cost": 0.001558,
+   "tokens_in": 963,
+   "tokens_out": 119,
+   "latency_s": 2.5077075958251953
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The lab search correctly queried MG for the last 24 hours and returned no results, so no order should be placed per instructions. The FINISH message accurately reports no recent result and that no IV magnesium was ordered.",
+   "cost": 0.0017275,
+   "tokens_in": 862,
+   "tokens_out": 65,
+   "latency_s": 2.3221824169158936
+  }
+ }
+}

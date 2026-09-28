@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The Observation search returned 20 vitals all coded as BP with no GLU entries; finishing with a recommendation to query Observation with code=GLU or use $lab-trend is appropriate and safe.",
+   "cost": 0.00050625,
+   "tokens_in": 1521,
+   "tokens_out": 63,
+   "latency_s": 1.6309723854064941
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action asserts no GLU observations exist and suggests steps, but the correct action is to verify if GLU code appears in any Observation as category vitals or via lab trend; the latest data shows only BP in the provided bundle and does not conclusively prove absence across all data sources. A more cautious finish should state that no GLU observations were found in the retrieved vital-signs bundle and recommend checking $lab-trend or expanding search rather than concluding absence.",
+   "cost": 0.00012525,
+   "tokens_in": 1521,
+   "tokens_out": 123,
+   "latency_s": 2.0201869010925293
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent has not exhausted available search methods. The initial query returned only BP observations, but the agent should retry with code=GLU parameter or use the $lab-trend function (which is specifically designed for lab code time series) before concluding that no CBG exists. Finishing prematurely without attempting these targeted searches is incomplete.",
+   "cost": 0.002249,
+   "tokens_in": 1729,
+   "tokens_out": 104,
+   "latency_s": 2.67610764503479
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The returned Observation bundle (category vital-signs) contains no GLU-coded entries; the assistant's summary correctly states no CBGs found and recommends querying with code=GLU or using $lab-trend—appropriate and safe.",
+   "cost": 0.0005005,
+   "tokens_in": 1450,
+   "tokens_out": 69,
+   "latency_s": 1.7022154331207275
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action is incomplete. The agent searched only for vital-signs category observations, which returned only BP readings. To properly answer the question about the most recent CBG (code GLU), the agent must execute an additional query using either Observation.Search with code=GLU parameter or the $lab-trend service with code=GLU to actually retrieve glucose observations before finishing.",
+   "cost": 0.00221,
+   "tokens_in": 1650,
+   "tokens_out": 112,
+   "latency_s": 3.0140936374664307
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The task asks for the most recent CBG (code GLU). The agent only searched by category and did not filter by code=GLU or use the lab-trend function, so it cannot conclude none exist. FINISH is premature because the requested answer (most recent CBG value/time) was not obtained nor definitively ruled out.",
+   "cost": 0.00281125,
+   "tokens_in": 1521,
+   "tokens_out": 91,
+   "latency_s": 1.9944863319396973
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The agent only searched vital-signs Observations without filtering by GLU code and did not try the $lab-trend endpoint (available specifically for lab codes like GLU) before concluding no CBG data exists; it should query further before finishing.",
+   "cost": 0.0063465,
+   "tokens_in": 2143,
+   "tokens_out": 99,
+   "latency_s": 3.1369168758392334
+  }
+ }
+}

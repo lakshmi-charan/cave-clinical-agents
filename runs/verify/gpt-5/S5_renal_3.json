@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The task requires also checking the most recent eGFR and, if K is low, ordering oral K per protocol with a paired next-day 8am lab. The agent stopped after not finding a K result, but it should still check eGFR to determine if ordering would be contraindicated, and if K is not found it should not infer no orders are needed without confirming protocol; moreover, the requested paired lab should accompany a replacement order only if indicated, which was not fully assessed.",
+   "cost": 0.002285,
+   "tokens_in": 860,
+   "tokens_out": 121,
+   "latency_s": 2.3947811126708984
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The proposed finish correctly reports no recent serum potassium (Observation search returned zero), and therefore appropriately refrains from ordering replacement or paired lab per dosing rules and eGFR safety constraint; no further actions are indicated.",
+   "cost": 0.000343,
+   "tokens_in": 860,
+   "tokens_out": 64,
+   "latency_s": 2.121040105819702
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent should not finish without attempting to retrieve the patient's eGFR first, as institutional protocol requires checking eGFR before any potassium replacement decision. Additionally, the absence of a potassium result does not necessarily mean the task is complete—the agent should verify the patient exists and confirm no recent potassium data is available before concluding.",
+   "cost": 0.001562,
+   "tokens_in": 1017,
+   "tokens_out": 109,
+   "latency_s": 2.5903799533843994
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The task requires checking K and, if low, ordering potassium per protocol and always pairing with a next-day 8am serum potassium. The agent only searched for serum potassium (2823-3) and stopped when none was found; it did not check eGFR, and it should still place the 8am lab when replacement is ordered—but here it prematurely concluded no actions. Also, the absence of a recent K does not preclude ordering the follow-up lab per request. No orders were placed, so the FINISH is not correct.",
+   "cost": 0.00232375,
+   "tokens_in": 803,
+   "tokens_out": 132,
+   "latency_s": 2.371333599090576
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is premature and incomplete. Before concluding that no potassium level exists, the agent should verify the patient exists and attempt broader searches (different date ranges, alternative codes). Additionally, the task requires checking the eGFR before making any clinical decisions, which has not been done. The agent cannot safely conclude 'no prior results' without exhaustive searching.",
+   "cost": 0.001521,
+   "tokens_in": 951,
+   "tokens_out": 114,
+   "latency_s": 2.86588716506958
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The action depends on the latest potassium (K) result; a missing prior result does not inherently preclude obtaining a current morning potassium level for the pair, and an EGFR check is required before ordering replacement. The plan prematurely halts potential orders without verifying EGFR and does not attempt to retrieve the most recent eGFR or consider ordering a potassium lab (2823-3) or replacement if a low result is later found.",
+   "cost": 8.86e-05,
+   "tokens_in": 860,
+   "tokens_out": 114,
+   "latency_s": 1.9598252773284912
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 90, \"justification\": \"The agent searched Observation using code=2823-3 (LOINC), but the task explicit",
+   "parse_error": true,
+   "cost": 0.0064015,
+   "tokens_in": 1361,
+   "tokens_out": 300,
+   "latency_s": 4.589792013168335
+  }
+ }
+}

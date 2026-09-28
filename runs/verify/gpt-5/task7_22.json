@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The agent correctly searched Observations for code GLU for patient S6474456 and identified the latest timestamp (2023-11-12T14:07:00+00:00) with value 111 mg/dL. This matches the most recent CBG prior to the current time.",
+   "cost": 0.00187875,
+   "tokens_in": 847,
+   "tokens_out": 82,
+   "latency_s": 1.7455742359161377
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The GET returned four GLU observations; the most recent effectiveDateTime is 2023-11-12T14:07:00+00:00 with value 111 mg/dL, matching the proposed FINISH result and within context time.",
+   "cost": 0.00035775,
+   "tokens_in": 847,
+   "tokens_out": 73,
+   "latency_s": 2.1971335411071777
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried the Observation resource for patient S6474456 with code GLU (glucose/CBG). Among the 4 results returned, the observation with effectiveDateTime 2023-11-12T14:07:00+00:00 is indeed the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), with a value of 111.0 mg/dL. The FINISH action accurately reports this most recent CBG.",
+   "cost": 0.001718,
+   "tokens_in": 978,
+   "tokens_out": 148,
+   "latency_s": 2.4517486095428467
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The most recent GLU (CBG) for patient S6474456 is 111 mg/dL on 2023-11-12T14:07:00+00:00, which is the latest timestamp among the retrieved observations. No further orders required.",
+   "cost": 0.00176125,
+   "tokens_in": 793,
+   "tokens_out": 77,
+   "latency_s": 1.4966716766357422
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed action correctly identifies the most recent CBG for patient S6474456. Among the four GLU observations returned, Observation 342372 with a timestamp of 2023-11-12T14:07:00+00:00 (most recent before the current time of 2023-11-13T10:15:00+00:00) has a value of 111.0 mg/dL, which matches the FINISH response exactly.",
+   "cost": 0.001595,
+   "tokens_in": 920,
+   "tokens_out": 135,
+   "latency_s": 2.2211368083953857
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action selects 111 mg/dL on 2023-11-12T14:07:00+00:00 as the most recent, but there is another GLU observation at 2023-11-12T02:28:00+00:00 and 113 mg/dL at 2023-11-11T19:06:00+00:00, and 123 mg/dL at 2023-11-11T19:17:00+00:00. The most recent timestamp among the four is 2023-11-12T14:07:00+00:00, which corresponds to 111 mg/dL, so the value itself is correct, but the instruction requires verifying no newer data exists. Based on provided data, the choice is correct; however, I cannot confirm no additional observations beyond the four returned. If the patient ID is correct and the value matches the most recent timestamp, then proceed; otherwise adjust if a newer entry exists.",
+   "cost": 0.00013715,
+   "tokens_in": 847,
+   "tokens_out": 237,
+   "latency_s": 2.8582632541656494
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "Among the four returned GLU observations, 2023-11-12T14:07:00Z with value 111 mg/dL is the most recent timestamp, correctly identified.",
+   "cost": 0.0040365,
+   "tokens_in": 1303,
+   "tokens_out": 78,
+   "latency_s": 2.718667984008789
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Three GLU observations within last 24 hours were retrieved and converted correctly (7.44, 11.38, 12.88 mmol/L ×18 → 133.92, 204.84, 231.84 mg/dL; average = (133.92+204.84+231.84)/3 = 190.2 mg/dL).",
+   "cost": 0.00041125,
+   "tokens_in": 861,
+   "tokens_out": 98,
+   "latency_s": 2.1170129776000977
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action FINISH([190.2]) relies on converting mmol/L to mg/dL and averaging three values, but the data includes a measurement outside the last 24 hours (2023-11-12T14:15:00) and one measurement 2023-11-13T01:15:00, 2023-11-13T05:15:00 are within last 24h. However, the instruction requires only last 24h data; need to recalculate using only last 24h measurements and ensure units are mg/dL. Also ensure the correct patient and data context.",
+   "cost": 0.00010465000000000001,
+   "tokens_in": 861,
+   "tokens_out": 154,
+   "latency_s": 2.148167848587036
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The conversion and calculation are incorrect. The three values in mg/dL are: 7.44×18=133.92, 11.38×18=204.84, and 12.88×18=231.84. The average is (133.92+204.84+231.84)/3 = 190.2, which matches the proposed answer numerically. However, the agent's rationale states they will 'finish with the numeric result' but the FINISH action should report the calculated average, not just state it will finish—the value 190.2 appears correct mathematically, but verification of the exact calculation: (133.92+204.84+231.84)/3 = 570.6/3 = 190.2 mg/dL is correct. Upon recalculation, this answer is actually correct.",
+   "cost": 0.0025,
+   "tokens_in": 1000,
+   "tokens_out": 300,
+   "latency_s": 4.1736369132995605
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Three GLU observations within the last 24 hours converted from mmol/L to mg/dL (7.44→134.0, 11.38→205.1, 12.88→232.5) average ≈190.2 mg/dL; matches requested single-number answer and timeframe.",
+   "cost": 0.000368,
+   "tokens_in": 792,
+   "tokens_out": 85,
+   "latency_s": 2.2451400756835938
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 190.2 mg/dL is incorrect. The three CBG measurements are in mmol/L (7.44, 11.38, 12.88), which must be converted to mg/dL by multiplying by 18.018. The correct average is (7.44 + 11.38 + 12.88) / 3 × 18.018 = 31.7 / 3 × 18.018 ≈ 190.2 mg/dL appears correct arithmetically, but verification shows: (7.44×18.018 + 11.38×18.018 + 12.88×18.018) / 3 = (134.05 + 205.08 + 232.07) / 3 = 571.2 / 3 ≈ 190.4 mg/dL. The minor rounding difference is acceptable, but the answer should be verified as approximately 190.4 mg/dL, not 190.2 mg/dL.",
+   "cost": 0.002316,
+   "tokens_in": 921,
+   "tokens_out": 279,
+   "latency_s": 3.735187292098999
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The average was computed from all three values, but the 2023-11-12T14:15:00Z measurement is outside the last 24 hours from 2023-11-13T10:15:00Z. Only the 01:15 and 05:15 values should be averaged after converting mmol/L to mg/dL.",
+   "cost": 0.00202625,
+   "tokens_in": 861,
+   "tokens_out": 95,
+   "latency_s": 2.5435400009155273
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "All three GLU observations fall within the 24-hour window, and the mmol/L to mg/dL conversion (×18) and averaging are correctly computed to 190.2 mg/dL.",
+   "cost": 0.0055265,
+   "tokens_in": 1331,
+   "tokens_out": 220,
+   "latency_s": 4.052165746688843
+  }
+ }
+}

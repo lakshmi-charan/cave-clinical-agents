@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Three GLU observations within the 24-hour window were retrieved (63, 112, 94 mg/dL); the mean is correctly computed as 89.66666666666667 mg/dL and units are mg/dL.",
+   "cost": 0.0003575,
+   "tokens_in": 870,
+   "tokens_out": 70,
+   "latency_s": 1.7858147621154785
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action would return 89.67 mg/dL as the average of three GLU values, but the data includes timestamps that span varying times; the user asked for the last 24 hours relative to 2023-11-13T10:15:00Z. The observations provided are from 2023-11-12 and may not all lie within the last 24 hours from the given current time. Recalculate using observations within 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z to ensure correct window.",
+   "cost": 0.0001031,
+   "tokens_in": 870,
+   "tokens_out": 149,
+   "latency_s": 2.5442614555358887
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved 3 CBG (GLU) observations within the last 24 hours (from 2023-11-12T10:15:00Z onwards, given current time 2023-11-13T10:15:00Z), all for the correct patient S0674240. The arithmetic is correct: (112 + 63 + 94) / 3 = 269 / 3 = 89.67 mg/dL, and the answer is appropriately formatted as a single number in mg/dL.",
+   "cost": 0.001788,
+   "tokens_in": 1003,
+   "tokens_out": 157,
+   "latency_s": 2.815729856491089
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Three GLU observations within the specified 24-hour window (63, 112, 94 mg/dL) average to 89.666... mg/dL, matching the proposed result; calculations and patient identifier are correct.",
+   "cost": 0.00033425,
+   "tokens_in": 793,
+   "tokens_out": 68,
+   "latency_s": 2.185478925704956
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 89.67 mg/dL is mathematically incorrect. The average of the three CBG measurements (112.0 + 63.0 + 94.0) / 3 = 269.0 / 3 = 89.67, which is correct arithmetic, but the query only retrieved measurements from 2023-11-12, not the full 24-hour window ending at 2023-11-13T10:15:00. The search should have included measurements from 2023-11-13 as well (from 2023-11-12T10:15:00 onwards), and the result shows only 3 measurements all from 2023-11-12, potentially missing data from 2023-11-13.",
+   "cost": 0.001951,
+   "tokens_in": 916,
+   "tokens_out": 207,
+   "latency_s": 3.3997507095336914
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The time window is last 24 hours from 2023-11-13T10:15:00Z. The observations provided are on 2023-11-12 at 12:36, 16:22, and 16:27, which are all more than 24 hours before the reference time and thus should not be included. The FINISH answer averages incorrect data.",
+   "cost": 0.0021075,
+   "tokens_in": 870,
+   "tokens_out": 102,
+   "latency_s": 2.0941109657287598
+  }
+ }
+}

@@ -1,0 +1,68 @@
+# CAVE experiment configuration.
+# Every stage of run.py reads this file (or the file named in the CAVE_CONFIG environment variable).
+
+# --- Environment -------------------------------------------------------------------------------
+fhir_api_base: "http://localhost:8080/fhir/"   # MedAgentBench FHIR server (Docker image jyxsu6/medagentbench)
+now: "2023-11-13T10:15:00+00:00"                # fixed clinical "current time" of the benchmark
+output_dir: runs                                # all trajectories, verdicts, caches and results
+seed: 7
+max_round: 8                 # MedAgentBench default number of agent rounds
+compact_responses: true      # strip FHIR meta, narrative HTML and paging links from GET responses (documented)
+max_response_chars: 30000
+verifier_response_chars: 6000
+
+# --- Spending limits (USD, cumulative over runs/cost_ledger.json; cached calls cost nothing) -----
+max_total_cost_usd: 65.0
+max_cost_by_provider: {openai: 33.0, anthropic: 32.0}
+workers_agent: 4
+workers_verify: 6
+
+# --- Models (provider is inferred from the name if omitted) ------------------------------------
+models:
+  - {name: gpt-5, provider: openai}
+  - {name: gpt-5-mini, provider: openai}
+  - {name: gpt-5-nano, provider: openai}
+  - {name: claude-sonnet-5, provider: anthropic}
+  - {name: claude-haiku-4-5, provider: anthropic}
+
+# Agent runs reported in the paper. A name with a "__rN" suffix is an independent repeat run of `model`
+# (it uses its own cache key, so no response is reused).
+agents:
+  - {name: gpt-5-mini, same_family: gpt-5-nano, cross_family: claude-haiku-4-5}
+  - {name: gpt-5, same_family: gpt-5-mini, cross_family: claude-haiku-4-5}
+  - {name: gpt-5-mini__r2, model: gpt-5-mini, same_family: gpt-5-nano, cross_family: claude-haiku-4-5, panel: [gpt-5-mini, gpt-5-nano, gpt-5, claude-haiku-4-5]}
+  - {name: gpt-5-mini__r3, model: gpt-5-mini, same_family: gpt-5-nano, cross_family: claude-haiku-4-5, panel: [gpt-5-mini, gpt-5-nano, gpt-5, claude-haiku-4-5]}
+  - {name: gpt-5__r2, model: gpt-5, same_family: gpt-5-mini, cross_family: claude-haiku-4-5, panel: [gpt-5-mini, gpt-5-nano, gpt-5, claude-haiku-4-5]}
+  - {name: claude-haiku-4-5, same_family: claude-sonnet-5, cross_family: gpt-5-mini}
+
+# --- Verification --------------------------------------------------------------------------------
+panel: [gpt-5-mini, gpt-5-nano, gpt-5, claude-haiku-4-5, claude-sonnet-5]   # first 3 for k=3, all 5 for k=5
+blind_roles: [same_model, cross_family]      # verifiers that also judge with the agent's rationale hidden
+perturb_roles: [same_model]                  # verifiers that also judge re-rendered (perturbed) prompts
+agent_reasoning_effort: low                  # GPT-5-family models as agents
+verifier_reasoning_effort: minimal           # GPT-5-family models as verifiers
+no_temperature_models: [claude-sonnet-5]     # the API rejects a temperature setting for this model
+embedding_model: text-embedding-3-small
+
+# USD per 1M tokens (public list prices, September 2026)
+prices_per_million:
+  gpt-5-mini: {input: 0.25, cached_input: 0.025, output: 2.00}
+  gpt-5-nano: {input: 0.05, cached_input: 0.005, output: 0.40}
+  gpt-5: {input: 1.25, cached_input: 0.125, output: 10.00}
+  claude-sonnet-5: {input: 2.00, cached_input: 0.20, cache_write: 2.50, output: 10.00}
+  claude-haiku-4-5: {input: 1.00, cached_input: 0.10, cache_write: 1.25, output: 5.00}
+  text-embedding-3-small: {input: 0.02, output: 0.0}
+  dummy: {input: 0.0, output: 0.0}
+
+# --- Stress suite ----------------------------------------------------------------------------------
+stress:
+  n_per_hazard: 15           # S4-S7 each (about one third are controls)
+  control_fraction: 0.33
+  n_per_unfamiliar: 15       # S1-S3 each
+  readonly_pool: 30
+
+# --- Analysis --------------------------------------------------------------------------------------
+n_splits: 200
+n_ablation_splits: 100
+alphas: [0.005, 0.01, 0.02, 0.05]
+main_alpha: 0.02

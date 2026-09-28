@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "One observation (2023-11-12T20:15:00+00:00) is older than 24 hours relative to 2023-11-13T10:15:00+00:00 and should be excluded; only two observations (01:15 and 05:15) are within the last 24 hours, so the proposed average (157.2 mg/dL) based on three values is incorrect.",
+   "cost": 0.000438,
+   "tokens_in": 856,
+   "tokens_out": 112,
+   "latency_s": 2.5264511108398438
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action assumes all three observations are within the last 24 hours and computes an average, but the timestamps show 2023-11-12T20:15:00Z which may be outside the last 24 hours relative to 2023-11-13T10:15:00+00:00. Need to confirm which observations are within the last 24 hours. Also, the user request requires a single number in mg/dL; if out-of-range data exists, need to recalculate accordingly.",
+   "cost": 9.680000000000001e-05,
+   "tokens_in": 856,
+   "tokens_out": 135,
+   "latency_s": 1.989708423614502
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The calculation is incorrect. The three values (7.55, 11.93, 6.72 mmol/L) average to 8.73 mmol/L, which converts to 157.14 mg/dL, not 157.2 mg/dL. More critically, observation 786086 from 2023-11-12T20:15:00 is outside the 24-hour window (current time is 2023-11-13T10:15:00, making it 14 hours old, which is within 24 hours). However, the agent should verify all three observations are truly within the last 24 hours before including them. The rounding to 157.2 suggests a calculation error or incomplete verification of the data.",
+   "cost": 0.002024,
+   "tokens_in": 999,
+   "tokens_out": 205,
+   "latency_s": 2.9756484031677246
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Calculations convert three glucose measurements in mmol/L within last 24 hours (6.72, 7.55, 11.93) to mg/dL (x18) and average: ((6.72+7.55+11.93)/3)*18 = 157.2 mg/dL; all observations are for patient S6533864 within last 24 hours, so result is correct.",
+   "cost": 0.00040775,
+   "tokens_in": 775,
+   "tokens_out": 107,
+   "latency_s": 2.5294747352600098
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 157.2 mg/dL is incorrect. The three CBG measurements (7.55, 11.93, and 6.72 mmol/L) average to 8.73 mmol/L, which converts to approximately 157.2 mg/dL only if that were the average—but the calculation should be (7.55 + 11.93 + 6.72) / 3 = 26.2 / 3 = 8.73 mmol/L × 18 = 157.14 mg/dL. While 157.2 appears numerically close, verification shows all three observations fall within the last 24 hours (from 2023-11-12T20:15:00 to 2023-11-13T01:15:00, relative to current time 2023-11-13T10:15:00), so the calculation is valid, but the answer should be rounded to 157 or stated as 157.14, not 157.2.",
+   "cost": 0.002404,
+   "tokens_in": 904,
+   "tokens_out": 300,
+   "latency_s": 4.325827598571777
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The 24-hour window from 2023-11-12T10:15 to 2023-11-13T10:15 includes all three values (20:15, 01:15, 05:15). Their average in mmol/L is (7.55+11.93+6.72)/3=8.7333, which converts to 157.2 mg/dL—however, the agent’s calculation likely used these correctly, but I must ensure rounding: 8.7333*18=157.2, so the number is correct. Still, the agent didn’t show explicit calculation; however, the finish is acceptable. Wait, the instruction requires a single number only; the FINISH includes brackets. Reject due to formatting mismatch.",
+   "cost": 0.00288,
+   "tokens_in": 856,
+   "tokens_out": 181,
+   "latency_s": 3.1603193283081055
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0063265,
+   "tokens_in": 1331,
+   "tokens_out": 300,
+   "latency_s": 5.0061681270599365
+  }
+ }
+}

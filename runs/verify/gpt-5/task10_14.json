@@ -1,0 +1,151 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The order content is appropriate (correct patient and LOINC 4548-4; last A1C 2022-05-18 is >1 year old). However, the ServiceRequest.note field should be an array of Annotation objects, not a single object with only text. This could cause a schema error. Re-submit with note as an array (e.g., \"note\": [{\"text\": \"...\"}]).",
+   "cost": 0.00235375,
+   "tokens_in": 1003,
+   "tokens_out": 110,
+   "latency_s": 2.047123432159424
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The GET returned two A1C observations with the latest on 2022-05-18 (4.8%), which is >1 year before 2023-11-13, and the ServiceRequest correctly uses LOINC 4548-4, references Patient/S6541609, authoredOn/occurrence set to current time, intent/status/priority appropriate, and includes a reason note.",
+   "cost": 0.00045875,
+   "tokens_in": 1003,
+   "tokens_out": 104,
+   "latency_s": 1.8766803741455078
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The action correctly identifies that the most recent HbA1C (2022-05-18) is greater than 1 year old from the current date (2023-11-13), and appropriately orders a new HbA1C lab test using the correct LOINC code (4548-4) for the correct patient (S6541609) with proper ServiceRequest parameters.",
+   "cost": 0.001739,
+   "tokens_in": 1149,
+   "tokens_out": 118,
+   "latency_s": 2.035085439682007
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "Correct patient and appropriate to order since last A1C (2022-05-18) is >1 year old, and correct LOINC used. However, ServiceRequest.note must be an array of Annotation objects, not a single object; using priority 'stat' wasn’t specified by the task; and occurrenceDateTime may be unnecessary. Also ensure the latest value/date (2022-05-18, 4.8%) is reported before finishing.",
+   "cost": 0.00232375,
+   "tokens_in": 931,
+   "tokens_out": 116,
+   "latency_s": 2.1481282711029053
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The last HbA1C value is from 2022-05-18 (4.8%), which is >1 year old from the current date of 2023-11-13. The ServiceRequest is correctly configured with the proper LOINC code (4548-4), correct patient reference (S6541609), appropriate status/intent, and includes a clear clinical note explaining the rationale.",
+   "cost": 0.00168,
+   "tokens_in": 1070,
+   "tokens_out": 122,
+   "latency_s": 2.3202812671661377
+  },
+  "p1|gpt-5": {
+   "decision": "reject",
+   "confidence": 89.0,
+   "justification": "Correct patient and >1 year criterion met, but the ServiceRequest body uses a single note object instead of an array (note should be an array of Annotation). Also priority is set to stat without instruction; default/unspecified priority would be safer.",
+   "cost": 0.0020125,
+   "tokens_in": 1034,
+   "tokens_out": 72,
+   "latency_s": 2.3987064361572266
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "ServiceRequest.note is not an array per FHIR spec and priority “stat” was not requested; use routine. Otherwise patient, code 4548-4, dates, and rationale are correct as last A1C (4.8% on 2022-05-18) is >1 year old.",
+   "cost": 0.0020925,
+   "tokens_in": 986,
+   "tokens_out": 86,
+   "latency_s": 2.3489670753479004
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "Action aligns with policy: HbA1C last measurement is 2022-05-18 (>1 year old as of 2023-11-13); ordering a new HbA1C lab is appropriate. Ensure patient S6541609 is the correct patient and the code 4548-4 is used.",
+   "cost": 8.695000000000001e-05,
+   "tokens_in": 1003,
+   "tokens_out": 92,
+   "latency_s": 1.7281219959259033
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.006744,
+   "tokens_in": 1498,
+   "tokens_out": 300,
+   "latency_s": 5.193235874176025
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The latest A1C (4.8% on 2022-05-18) was correctly identified and is >1 year old as of 2023-11-13. A new HbA1C ServiceRequest with correct LOINC 4548-4 was placed for the correct patient with appropriate intent/status; finish summary matches actions.",
+   "cost": 0.00233,
+   "tokens_in": 1112,
+   "tokens_out": 94,
+   "latency_s": 2.301563262939453
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observed most recent A1C is 4.8% on 2022-05-18T22:03:00+00:00 (from returned bundle) which is >1 year before 2023-11-13, and a ServiceRequest for LOINC 4548-4 was created with correct patient, date, and intent. All requested steps were followed.",
+   "cost": 0.00048,
+   "tokens_in": 1112,
+   "tokens_out": 101,
+   "latency_s": 2.1226844787597656
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent HbA1C value (4.8% from 2022-05-18T22:03:00+00:00), verified it is >1 year old from the current date (2023-11-13), placed an appropriate ServiceRequest order with correct LOINC code 4548-4, and is now providing the complete answer with all requested information.",
+   "cost": 0.001878,
+   "tokens_in": 1268,
+   "tokens_out": 122,
+   "latency_s": 2.235069513320923
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The latest A1C is 4.8% on 2022-05-18, which is >1 year before 2023-11-13. A new HbA1C ServiceRequest with LOINC 4548-4 was correctly placed for Patient/S6541609. The final answer reports the correct value/date and confirms the order.",
+   "cost": 0.00221125,
+   "tokens_in": 1001,
+   "tokens_out": 96,
+   "latency_s": 1.7541630268096924
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The action correctly identifies the last HbA1C value (4.8% from 2022-05-18T22:03:00+00:00), accurately determines it is >1 year old from the current date (2023-11-13), and appropriately orders a new HbA1C lab test with correct LOINC code and patient reference. All task requirements have been fulfilled.",
+   "cost": 0.001756,
+   "tokens_in": 1146,
+   "tokens_out": 122,
+   "latency_s": 3.0787858963012695
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action includes results that may not reflect the actual latest observation date formatting; the latest HbA1C before the new order is 2022-05-18 with 4.8%, but there is a 2022-02-26 entry 5.6% which is earlier. The instruction requires that the reported answer be correct and every requested order placed correctly. We should verify that the new order was placed and that the latest value is indeed 2022-05-18 22:03:00+00:00; if not certain, the finish should not finalize.",
+   "cost": 0.00011559999999999999,
+   "tokens_in": 1112,
+   "tokens_out": 150,
+   "latency_s": 2.209965229034424
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The agent correctly identified the most recent HbA1C (4.8% on 2022-05-18), correctly determined it was over a year old, placed a properly coded ServiceRequest for a new HbA1C, and the FINISH summary accurately reflects these actions.",
+   "cost": 0.0065365,
+   "tokens_in": 1639,
+   "tokens_out": 244,
+   "latency_s": 4.570995330810547
+  }
+ }
+}

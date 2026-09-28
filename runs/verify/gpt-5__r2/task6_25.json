@@ -1,0 +1,59 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The search correctly queried GLU observations for patient S1754095 within the last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15). All returned observations are outside this window, so returning -1 matches the instructions.",
+   "cost": 0.002765,
+   "tokens_in": 1564,
+   "tokens_out": 81,
+   "latency_s": 3.1831796169281006
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The GET returned 20 observations, none within 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00, so returning -1 for no measurements in last 24 hours is correct.",
+   "cost": 0.000555,
+   "tokens_in": 1564,
+   "tokens_out": 82,
+   "latency_s": 1.859910011291504
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly searched for GLU observations within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00). Examining the results, only one observation falls within this window: Observation 305504 from 2023-11-11T02:52:00+00:00, which is outside the 24-hour range. Since no measurements exist within the last 24 hours, returning -1 is correct per the task specification.",
+   "cost": 0.002541,
+   "tokens_in": 1796,
+   "tokens_out": 149,
+   "latency_s": 2.539052963256836
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 96.0,
+   "justification": "The search retrieved GLU observations but none fall within the last 24 hours window (2023-11-12T10:15 to 2023-11-13T10:15) despite the bundle claiming total=20; listed entries are outside the window except 2023-11-11 and earlier. However, because the returned list appears incomplete/inconsistent with the stated date filter, we cannot be fully confident no values exist in the last 24 hours. The FINISH answer might be correct, but the data shown are not sufficient to confirm -1 conclusively.",
+   "cost": 0.00328375,
+   "tokens_in": 1507,
+   "tokens_out": 140,
+   "latency_s": 3.619818687438965
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query returned 20 observations, and at least one falls within the last 24 hours: Observation 305504 from 2023-11-11T02:52:00+00:00 is within the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00). The correct average should be calculated from all observations within this timeframe, not returned as -1.",
+   "cost": 0.002468,
+   "tokens_in": 1733,
+   "tokens_out": 147,
+   "latency_s": 2.360297918319702
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 40, \"justification\": \"The provided data set includes observations from 2023-11-11 and earlier within last 24 hours relative to 2023-11-13 10:15 UTC? Actually last 24h would be 2023-11-12 10:15 to 2023-11-13 10:15. The results show entries on 2023-11-11 and 2023-1",
+   "parse_error": true,
+   "cost": 0.0002146,
+   "tokens_in": 1564,
+   "tokens_out": 341,
+   "latency_s": 3.9592435359954834
+  }
+ }
+}

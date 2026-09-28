@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The request was for the average CBG (code GLU) over last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); two valid observations in that window (2023-11-12T13:17:00 82 mg/dL and 2023-11-13T04:51:00 134 mg/dL) were averaged correctly: (82+134)/2 = 108 mg/dL.",
+   "cost": 0.0006485,
+   "tokens_in": 1546,
+   "tokens_out": 131,
+   "latency_s": 2.406548261642456
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action relies on only two GLU observations within the last 24 hours (82 mg/dL at 2023-11-12T13:17:00Z and 134 mg/dL at 2023-11-13T04:51:00Z). However, there are multiple GLU observations within the window; the assistant did not verify all measurements and may have miscounted. A correct finish requires computing the true average of all GLU observations in the last 24 hours for patient S6542579 and ensuring the value is returned as a single mg/dL number or -1 if none exist.",
+   "cost": 0.0001405,
+   "tokens_in": 1546,
+   "tokens_out": 158,
+   "latency_s": 2.487408399581909
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the two glucose observations within the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): Observation 338772 at 82.0 mg/dL and Observation 338760 at 134.0 mg/dL. The average calculation (82 + 134) / 2 = 108 mg/dL is correct and properly formatted as a single number in mg/dL as requested.",
+   "cost": 0.002538,
+   "tokens_in": 1778,
+   "tokens_out": 152,
+   "latency_s": 3.048218250274658
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The FINISH action is not approved because the task asked for the average CBG over the last 24 hours; the available Observations within the requested window are three: 2023-11-13T04:51 (134 mg/dL), 2023-11-12T13:17 (82 mg/dL) — wait 13:17 on 11-12 is within 21 hours  - and 2023-11-12T00:15 (96 mg/dL) is older than 24h; correct 24-hour window is 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z, which includes only 2023-11-13T04:51 (134) and 2023-11-12T13:17 (82). The FINISH provided no calculated single-number answer; therefore action should be rejected.",
+   "cost": 0.000799,
+   "tokens_in": 1460,
+   "tokens_out": 217,
+   "latency_s": 2.7446765899658203
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 108 mg/dL is incorrect. Only 3 measurements fall within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z): 96.0, 82.0, and 134.0 mg/dL, which average to 104.0 mg/dL, not 108.",
+   "cost": 0.002324,
+   "tokens_in": 1679,
+   "tokens_out": 129,
+   "latency_s": 2.3299288749694824
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "Within the last 24 hours (2023-11-12T10:15Z to 2023-11-13T10:15Z), the observations are at 2023-11-12T13:17 (82 mg/dL) and 2023-11-13T04:51 (134 mg/dL). The average is (82+134)/2 = 108 mg/dL, but there is also an observation at 2023-11-12T00:15 (96 mg/dL) which is outside the 24-hour window and should not be included. Although the computed average 108 is correct, the agent’s rationale incorrectly stated there were only two values; that part is correct, but we must ensure the FINISH includes clear confirmation. To be safe, re-calculate and then finish with 108 only.",
+   "cost": 0.0039225,
+   "tokens_in": 1546,
+   "tokens_out": 199,
+   "latency_s": 3.1155283451080322
+  }
+ }
+}

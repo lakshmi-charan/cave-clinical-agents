@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent HbA1C value (5.4% from 2023-08-01), but the FINISH action is incomplete. The task requires ordering a new HbA1C lab test if the last result is >1 year old. While the agent correctly determined no order is needed (3.5 months < 1 year), a FINISH action should only be approved after all requested actions are completed. The agent should explicitly confirm the decision not to order rather than simply reporting the historical value.",
+   "cost": 0.001885,
+   "tokens_in": 1150,
+   "tokens_out": 147,
+   "latency_s": 3.0789356231689453
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 98.0,
+   "justification": "The latest HbA1C (5.4% on 2023-08-01) is correctly identified as the most recent among the four results, is less than 1 year old relative to 2023-11-13, so no new order is needed, and the FINISH answer correctly reports the value and date.",
+   "cost": 0.004744,
+   "tokens_in": 1466,
+   "tokens_out": 108,
+   "latency_s": 2.642625093460083
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent A1C in the bundle is 2023-08-01T20:29:00+00:00 with value 5.4%, which is ~3.5 months before the current date (2023-11-13), so no new lab order is needed and the reported answer is correct.",
+   "cost": 0.00042875,
+   "tokens_in": 1003,
+   "tokens_out": 89,
+   "latency_s": 1.8817312717437744
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action is incomplete. The last HbA1C value (5.4% from 2023-08-01) is 104 days old as of 2023-11-13, which exceeds the 1-year threshold, so a new HbA1C lab order must be placed before finishing. The task requires both answering the question AND ordering the lab test if the value is >1 year old.",
+   "cost": 0.001632,
+   "tokens_in": 997,
+   "tokens_out": 127,
+   "latency_s": 2.133427381515503
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Most recent A1C in the chart is 5.4% on 2023-08-01T20:29:00+00:00 which is within one year of current date 2023-11-13, so no new lab order is needed and the reported answer is correct.",
+   "cost": 0.00038425,
+   "tokens_in": 865,
+   "tokens_out": 84,
+   "latency_s": 2.0447616577148438
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed action assumes the last HbA1C date is 2023-08-01 and within 1 year, but the current date provided is 2023-11-13; verify that a new test is not required based on 1-year threshold rather than a real date check.",
+   "cost": 8.295000000000001e-05,
+   "tokens_in": 1003,
+   "tokens_out": 82,
+   "latency_s": 1.7464470863342285
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Latest A1C is 5.4% on 2023-08-01, which is within 1 year of 2023-11-13, so no new order is needed. The final answer correctly reports the last value and date without unnecessary orders.",
+   "cost": 0.00202375,
+   "tokens_in": 1003,
+   "tokens_out": 77,
+   "latency_s": 2.1120059490203857
+  }
+ }
+}

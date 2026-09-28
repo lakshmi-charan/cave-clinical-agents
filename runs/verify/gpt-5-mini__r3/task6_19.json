@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Single GLU observation for patient S2197736 within past 24 hours (2023-11-13T01:45:00+00:00) is 87 mg/dL, so average = 87 mg/dL; action matches request and no missing data.",
+   "cost": 0.00035125,
+   "tokens_in": 773,
+   "tokens_out": 79,
+   "latency_s": 2.252692699432373
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The requested FINISH action assumes a single GLU observation within last 24 hours and returns 87 mg/dL as the average. However, the history shows only one observation in the result, but we must ensure the time window truly covers last 24 hours relative to 2023-11-13T10:15:00+00:00. The data retrieval step reports 2023-11-13T01:45:00+00:00, which is within 24 hours, but we cannot assume no other observations exist outside the provided bundle. To safely finish, we should compute the average from all GLU observations in the last 24 hours, and since only one was returned, we cannot confirm there are no others without a complete fetch. Therefore, need to verify broader data before concluding.",
+   "cost": 0.00011545000000000001,
+   "tokens_in": 773,
+   "tokens_out": 192,
+   "latency_s": 2.109163284301758
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved GLU observations for patient S2197736 and found one measurement at 2023-11-13T01:45:00+00:00 with value 87.0 mg/dL, which falls within the last 24 hours from the current time (2023-11-13T10:15:00+00:00). With a single measurement, the average is correctly calculated as 87 mg/dL.",
+   "cost": 0.00156,
+   "tokens_in": 895,
+   "tokens_out": 133,
+   "latency_s": 2.340904951095581
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Single GLU observation within last 24 hours is 87 mg/dL; average of one value is 87 mg/dL and matches requested unit and timeframe.",
+   "cost": 0.000282,
+   "tokens_in": 688,
+   "tokens_out": 55,
+   "latency_s": 1.5981338024139404
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved CBG (GLU) observations for patient S2197736 within the last 24 hours (from 2023-11-13T10:15:00 back to 2023-11-12T10:15:00). One measurement was found at 2023-11-13T01:45:00 with a value of 87.0 mg/dL, which is already in the requested mg/dL unit. The average of a single value is that value itself (87), making the FINISH action correct.",
+   "cost": 0.001579,
+   "tokens_in": 799,
+   "tokens_out": 156,
+   "latency_s": 2.8223986625671387
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The single GLU observation for patient S2197736 at 2023-11-13T01:45:00+00:00 is within the last 24 hours from 2023-11-13T10:15:00+00:00 and already in mg/dL (87), so the average is correctly 87.",
+   "cost": 0.00189625,
+   "tokens_in": 773,
+   "tokens_out": 93,
+   "latency_s": 2.4373068809509277
+  }
+ }
+}

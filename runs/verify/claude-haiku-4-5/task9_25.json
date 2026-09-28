@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent failed to identify the actual most recent potassium level. While 2023-10-27 at 4.0 mmol/L was selected, observation 335863 from that date is not the most recent in the dataset—the current date is 2023-11-13, making the 2023-10-27 value over 2 weeks old. More critically, the agent did not complete the full task: even if potassium were normal, the task explicitly requests pairing any potassium order with a follow-up serum potassium level at 8am the next day. The agent should have either ordered replacement potassium with a follow-up lab (if low) or at minimum clarified why no follow-up lab was ordered when the task structure implies one should be placed.",
+   "cost": 0.003155,
+   "tokens_in": 2105,
+   "tokens_out": 210,
+   "latency_s": 3.7032690048217773
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The most recent potassium result by date is 2023-10-27 at 4.0 mmol/L, which is above the 3.5 mEq/L threshold, so correctly no replacement or follow-up lab is needed, and the FINISH summary accurately reflects this.",
+   "cost": 0.0074715,
+   "tokens_in": 2553,
+   "tokens_out": 109,
+   "latency_s": 2.4810001850128174
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\":\"reject\",\"confidence\":85,\"justification\":\"The agent used observations through 2023-10-27 as most recent but there are multiple observations on 2023-10-06 and 2023-10-14 later in list; also current time is 2023-11-13 so data may be outdated—must confirm the actual most recent observation ",
+   "parse_error": true,
+   "cost": 0.000784,
+   "tokens_in": 1784,
+   "tokens_out": 169,
+   "latency_s": 2.1080985069274902
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 4.0 mmol/L from 2023-10-27, which is NOT low (it is above the 3.5 threshold), so no replacement potassium order should be placed. However, the FINISH action correctly identifies this and appropriately concludes no treatment is needed. The issue is that the task has been completed correctly—the potassium is not low, so the conditional order should not be placed. The proposed FINISH statement is accurate and appropriate.",
+   "cost": 0.003365,
+   "tokens_in": 1865,
+   "tokens_out": 300,
+   "latency_s": 3.9102303981781006
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent K observation is 4.0 mmol/L on 2023-10-27, which is >3.5, so no replacement or follow-up lab order is indicated per instructions; the proposed FINISH statement correctly reports this and requests no orders.",
+   "cost": 0.000547,
+   "tokens_in": 1580,
+   "tokens_out": 76,
+   "latency_s": 1.7672224044799805
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action asserts the most recent potassium is 4.0 mmol/L on 2023-10-27 and that no action is needed. However, the trajectory shows many potassium observations with dates, and we must confirm the most recent date is indeed 2023-10-27 and that 4.0 is above threshold. If a more recent value exists or if the patient is at 4.0 but the protocol requires action at a lower threshold or if data integrity is uncertain, we should verify before concluding.",
+   "cost": 0.00014319999999999998,
+   "tokens_in": 1784,
+   "tokens_out": 135,
+   "latency_s": 2.1827313899993896
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The instruction requires placing a next-day 8am serum potassium lab order regardless of whether repletion is needed. The FINISH claims no follow-up lab is required, which omits a required order. The patient and most recent value identification are correct, and no potassium repletion is needed, but the lab order must still be placed.",
+   "cost": 0.00312,
+   "tokens_in": 1784,
+   "tokens_out": 89,
+   "latency_s": 2.40230131149292
+  }
+ }
+}

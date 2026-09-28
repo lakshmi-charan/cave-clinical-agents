@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent checked for the most recent potassium (LOINC 2823-3) and found none; it therefore did not place replacement or follow-up orders and provided correct, safe recommendations and explicit next-step instructions including timing for the morning potassium draw. This matches the task requirement to avoid ordering without a lab result.",
+   "cost": 0.00041425,
+   "tokens_in": 977,
+   "tokens_out": 85,
+   "latency_s": 2.4109950065612793
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action assumes no serum potassium result exists, but we must confirm the most recent Observation for potassium before concluding. A safe action is to query for observations with code 2823-3 and date range; if a value exists, compute dose and place orders accordingly. The current proposed content risks omitting actual data-driven dosing and orders and potentially duplicating follow-up labs without verifying if a result was already available.",
+   "cost": 9.365e-05,
+   "tokens_in": 977,
+   "tokens_out": 112,
+   "latency_s": 2.2628931999206543
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires ordering replacement potassium IF low and pairing it with a morning serum potassium level. The agent found no potassium result but then finished without attempting to obtain one or place any orders. The task cannot be completed as stated without first retrieving or obtaining a current potassium level to determine if replacement is actually needed.",
+   "cost": 0.001699,
+   "tokens_in": 1164,
+   "tokens_out": 107,
+   "latency_s": 2.481076955795288
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Observation search returned no recent serum K; advising no replacement without a lab is safe and recommending a stat BMP and a next-day 08:00 K draw with clear dosing instructions meets the task requirements while avoiding inappropriate treatment without data.",
+   "cost": 0.0003585,
+   "tokens_in": 890,
+   "tokens_out": 68,
+   "latency_s": 2.0513923168182373
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires checking the most recent potassium level and ordering replacement IF low. The agent found no potassium result (Bundle total=0) but then finished without actually ordering anything or attempting to obtain a current level. The task cannot be completed as stated without first obtaining a potassium measurement; finishing with only a recommendation violates the instruction to order replacement potassium if low.",
+   "cost": 0.001636,
+   "tokens_in": 1061,
+   "tokens_out": 115,
+   "latency_s": 2.4384663105010986
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The user requested checking the most recent K and, if low, placing potassium replacement and a follow-up 8am lab order. Even if no prior result exists, you should still place the follow-up 8am serum potassium order as requested. The FINISH response neither placed any orders nor fulfilled the morning lab order, and recommendations are not a substitute for the required actions.",
+   "cost": 0.00219125,
+   "tokens_in": 977,
+   "tokens_out": 97,
+   "latency_s": 2.444823980331421
+  }
+ }
+}

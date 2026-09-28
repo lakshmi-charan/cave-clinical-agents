@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The search returned no potassium results so no dosing can be safely calculated; recommending a stat potassium now and scheduling the morning lab for 2023-11-14T08:00:00+00:00 is appropriate and avoids unsafe empirical ordering.",
+   "cost": 0.00036825,
+   "tokens_in": 897,
+   "tokens_out": 72,
+   "latency_s": 1.800642490386963
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "Action attempted relies on data (recent potassium) that is not found; however, the proposed finish assumes completion of tasks (stat potassium and morning lab) without placing any orders or verifying patient safety.",
+   "cost": 7.125e-05,
+   "tokens_in": 897,
+   "tokens_out": 66,
+   "latency_s": 2.104113817214966
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task explicitly requires ordering replacement potassium IF low, and pairing it with a morning serum potassium level. The agent should have proactively ordered the morning serum potassium lab (via ServiceRequest.Create for 2023-11-14T08:00:00+00:00) as this was requested regardless of current potassium status, and should have obtained a stat potassium now before concluding. The FINISH action reports only recommendations rather than executing the ordered morning lab draw that was explicitly requested.",
+   "cost": 0.001802,
+   "tokens_in": 1067,
+   "tokens_out": 147,
+   "latency_s": 2.5101540088653564
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Search returned no potassium lab results, so withholding replacement is correct; recommending a stat potassium and scheduling the morning K for 2023-11-14T08:00:00+00:00 is appropriate and follows the task's safety requirement to avoid dosing without a value.",
+   "cost": 0.00035725,
+   "tokens_in": 805,
+   "tokens_out": 78,
+   "latency_s": 1.4652295112609863
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. The task asks to check the most recent potassium level and, if low, order replacement potassium paired with a follow-up morning lab. The agent found no potassium results but then stopped without attempting to obtain a current potassium level or placing any orders. The agent should have either: (1) ordered a stat serum potassium observation to establish a baseline, or (2) escalated to the clinician for guidance on how to proceed. Simply recommending action without executing it does not complete the requested task.",
+   "cost": 0.001755,
+   "tokens_in": 955,
+   "tokens_out": 160,
+   "latency_s": 2.8574678897857666
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task requires ordering potassium repletion if low and scheduling a morning potassium lab for tomorrow at 8am. The agent stopped after not finding a result and neither placed the next-morning lab order nor attempted to obtain a current level. They also did not ensure the order pairing as requested. This omits required actions.",
+   "cost": 0.00198125,
+   "tokens_in": 897,
+   "tokens_out": 86,
+   "latency_s": 2.192096710205078
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Query correctly limited to last 24 hours and returned no observations within that window. Per instructions, returning -1 is appropriate.",
+   "cost": 0.00241625,
+   "tokens_in": 1557,
+   "tokens_out": 47,
+   "latency_s": 3.4269258975982666
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search returned 20 GLU observations; none are within 2023-11-12T10:15:00Z–2023-11-13T10:15:00Z, so returning -1 per instruction is correct and safe.",
+   "cost": 0.00053525,
+   "tokens_in": 1557,
+   "tokens_out": 73,
+   "latency_s": 2.338545083999634
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly searched for GLU observations within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). All 20 returned observations have timestamps from October or early November (before 2023-11-12), meaning none fall within the requested 24-hour window. Returning -1 per protocol is correct.",
+   "cost": 0.002411,
+   "tokens_in": 1791,
+   "tokens_out": 124,
+   "latency_s": 2.467407703399658
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "The query correctly searched for GLU observations in the exact last 24-hour window and returned no results in that period. Therefore, per instructions, the correct answer is -1.",
+   "cost": 0.00245625,
+   "tokens_in": 1501,
+   "tokens_out": 58,
+   "latency_s": 2.102081298828125
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The query results contain NO observations within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). All 20 returned observations are from October and early November, with the most recent being 2023-11-09T11:21:00Z, which is more than 3 days before the query cutoff. The correct answer should be -1 per the task instructions, but the proposed action FINISH([-1]) uses an array instead of a single number as specified.",
+   "cost": 0.002517,
+   "tokens_in": 1727,
+   "tokens_out": 158,
+   "latency_s": 2.4005141258239746
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 75.0,
+   "justification": "The proposed FINISH action returns -1 because no GLU observations exist in the last 24 hours, aligning with the data retrieved. The instruction requires -1 when no measurement within last 24 hours is available.",
+   "cost": 0.00010585000000000001,
+   "tokens_in": 1557,
+   "tokens_out": 70,
+   "latency_s": 1.5931928157806396
+  }
+ }
+}

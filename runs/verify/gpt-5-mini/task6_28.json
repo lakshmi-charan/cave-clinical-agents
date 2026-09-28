@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The current time is 2023-11-13T10:15:00+00:00; observations within prior 24 hours are 2023-11-13T04:51:00 (134 mg/dL) and 2023-11-12T13:17:00 (82 mg/dL) — both are within 24 hours? Note: 2023-11-12T13:17 is 20 hours 58 minutes before current time, so both are within 24h; mean = (134 + 82) / 2 = 108 mg/dL, matching the agent's computation.",
+   "cost": 0.00069875,
+   "tokens_in": 1491,
+   "tokens_out": 163,
+   "latency_s": 2.890152931213379
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed calculation cites observations 134 mg/dL (2023-11-13T04:51:00) and 82 mg/dL (2023-11-12T13:17:00) as within last 24 hours, but the 24-hour window relative to current time 2023-11-13T10:15:00+00:00 would include 2023-11-12T10:15:00+00:00 onwards. The 13:17 observation is within that window, but 04:51 is also within. However, the assistant did not verify all eligible observations in the 24h window (e.g., 2023-11-12T00:15 present earlier). There are multiple observations in the last 24 hours (at least two), but the calculation and justification omit confirming all eligible data points and correctly compute the mean. Additionally, the window end time should be current time, and the two values alone may be insufficient if there are more within window.",
+   "cost": 0.00016975,
+   "tokens_in": 1491,
+   "tokens_out": 238,
+   "latency_s": 2.421065092086792
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent only identified 2 observations within the last 24 hours (from 2023-11-12T00:15:00 to 2023-11-13T10:15:00), but missed observation 338760 from 2023-11-13T04:51:00+00:00 with value 134.0 mg/dL. The correct average should be (96.0 + 82.0 + 134.0) / 3 = 104.0 mg/dL, not 108.",
+   "cost": 0.002516,
+   "tokens_in": 1721,
+   "tokens_out": 159,
+   "latency_s": 2.5683882236480713
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observations include two within last 24 hours from now (2023-11-13T10:15:00+00:00): 2023-11-13T04:51:00 (134 mg/dL) and 2023-11-12T13:17:00 (82 mg/dL) and 2023-11-12T00:15:00 (96 mg/dL). Actually three within prior 24h window (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00) are 134 and 96 and 82 → average = (134+96+82)/3 = 104.0 mg/dL; response is a single number in mg/dL and no orders required.",
+   "cost": 0.0007385,
+   "tokens_in": 1426,
+   "tokens_out": 191,
+   "latency_s": 2.403141975402832
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 108 mg/dL is incorrect. Within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00), only 3 measurements exist: 134.0 (2023-11-13T04:51:00), 96.0 (2023-11-12T00:15:00), and 82.0 (2023-11-12T13:17:00). The correct average is (134.0 + 96.0 + 82.0) / 3 = 104.0 mg/dL, not 108.",
+   "cost": 0.0026,
+   "tokens_in": 1645,
+   "tokens_out": 191,
+   "latency_s": 2.6950929164886475
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The last 24 hours from 2023-11-13T10:15:00 include only the 2023-11-13T04:51:00 value (134 mg/dL). The 82 mg/dL at 2023-11-12T13:17:00 is 20h58m earlier than 10:15? Actually it is 21h - wait, it is within 24h but the agent excluded 96 mg/dL at 2023-11-12T00:15 which is outside; however the window is 2023-11-12T10:15 to 2023-11-13T10:15, so 13:17 is within and 04:51 is within. The average should be (134+82)/2=108. But also 2023-11-12T00:15 is outside. Wait, need re-evaluate: 13:17 on 11-12 is within 24h of 10:15 on 11-13 (difference 20h58m). Yes it is within. So the agent’s average 108 is correct. However, ensure units already mg/dL. Approve.",
+   "cost": 0.00461375,
+   "tokens_in": 1491,
+   "tokens_out": 275,
+   "latency_s": 3.7447328567504883
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 50,
+   "justification": "{\"decision\": \"approve\", \"",
+   "parse_error": true,
+   "cost": 0.008309,
+   "tokens_in": 2124,
+   "tokens_out": 300,
+   "latency_s": 4.397286653518677
+  }
+ }
+}

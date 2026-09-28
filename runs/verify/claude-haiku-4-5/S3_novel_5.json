@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved CBG data using the lab-trend service with the right patient ID (S6543355) and code (GLU). The most recent value is indeed 185.0 mg/dL at unix timestamp 1699863300, which converts to 2023-11-12T14:15:00 UTC. The answer is accurate and directly addresses the clinician's request.",
+   "cost": 0.001572,
+   "tokens_in": 972,
+   "tokens_out": 120,
+   "latency_s": 1.8989989757537842
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.006299,
+   "tokens_in": 1320,
+   "tokens_out": 300,
+   "latency_s": 4.065581321716309
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab-trend returned three points; the latest timestamp 1699863300 corresponds to 2023-11-12T14:15:00Z and value 185.0 mg/dL, so the reported most recent CBG is correct and the action matches the request.",
+   "cost": 0.00037275,
+   "tokens_in": 859,
+   "tokens_out": 79,
+   "latency_s": 1.8570377826690674
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The timestamp conversion is incorrect. The unix timestamp 1699863300 converts to 2023-11-12T15:15:00 UTC, not 2023-11-12T14:15:00 UTC. The glucose value of 185.0 is correct as the most recent CBG, but the reported timestamp has a one-hour error.",
+   "cost": 0.001383,
+   "tokens_in": 818,
+   "tokens_out": 113,
+   "latency_s": 2.026541233062744
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "Lab-trend returned three points with most recent timestamp 1699863300 = 2023-11-12T14:15:00Z and value 185.0, so the statement is correct and matches the data.",
+   "cost": 0.0003165,
+   "tokens_in": 714,
+   "tokens_out": 69,
+   "latency_s": 1.6500155925750732
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The most recent data point should be determined from the provided points, but the proposed timestamp 2023-11-12T14:15:00Z and value 185.0 mg/dL do not align with the last UNIX epoch 1699863300 corresponds to 2023-11-12T15:15:00Z UTC, not 14:15. The value 185.0 mg/dL matches the last point, but the timestamp conversion is incorrect. The action also assumes a specific formatting that wasn’t verified.",
+   "cost": 9.775e-05,
+   "tokens_in": 859,
+   "tokens_out": 137,
+   "latency_s": 1.9222934246063232
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend data for subject S6543355 with code GLU shows the latest point [1699863300, 185.0]. Converted from unix-seconds UTC, that is 2023-11-12T14:15:00Z, and reporting 185.0 mg/dL matches the data.",
+   "cost": 0.00196375,
+   "tokens_in": 859,
+   "tokens_out": 89,
+   "latency_s": 2.393077850341797
+  }
+ }
+}

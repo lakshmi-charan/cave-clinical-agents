@@ -1,0 +1,59 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Three GLU observations from 2023-11-12T18:16, 20:58, and 22:45 (all within last 24 hours from 2023-11-13T10:15:00Z) average to 123.0 mg/dL, matching the proposed result.",
+   "cost": 0.000392,
+   "tokens_in": 872,
+   "tokens_out": 87,
+   "latency_s": 1.708177089691162
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action would return a numeric average without confirming the patient and data integrity; also the value 123.0 mg/dL does not match the computed mean (131, 121, 117 -> mean 123.0 mg/dL is correct) but the action must ensure the 24h window aligns with current time 2023-11-13T10:15:00+00:00; The last 24h window includes times >= 2023-11-12T10:15:00+00:00, which matches the retrieved observations, but to be safe, explicitly recompute and confirm the exact mean before finishing.",
+   "cost": 0.0001084,
+   "tokens_in": 872,
+   "tokens_out": 162,
+   "latency_s": 2.402552604675293
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "```json\n{\n  \"decision\": \"reject\",\n  \"confidence\": 95,\n  \"justification\": \"The arithmetic is incorrect. The average of 131, 121, and 117 is (131+121+117)/3 = 369/3 = 123.0, which matches the proposed answer. However, upon verification: 131+121+117 = 369, and 369÷3 = 123.0. The calculation is actually",
+   "parse_error": true,
+   "cost": 0.002367,
+   "tokens_in": 1007,
+   "tokens_out": 272,
+   "latency_s": 3.6819355487823486
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The three GLU observations within the last 24 hours are 131, 121, and 117 mg/dL; their average is (131+121+117)/3 = 369/3 = 123.0 mg/dL, matching the proposed result.",
+   "cost": 0.000352,
+   "tokens_in": 792,
+   "tokens_out": 77,
+   "latency_s": 1.3661208152770996
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 123.0 mg/dL is incorrect. The three CBG measurements retrieved are 131.0, 121.0, and 117.0 mg/dL, which average to (131.0 + 121.0 + 117.0) / 3 = 369.0 / 3 = 123.0 mg/dL. While the calculation is correct, the action should report 123.0 as the final answer, but the verification shows this is actually correct—however, upon recalculation: (131+121+117)/3 = 123.0 is accurate. The answer 123.0 is correct.",
+   "cost": 0.002415,
+   "tokens_in": 915,
+   "tokens_out": 300,
+   "latency_s": 3.541393995285034
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "Three GLU observations within the last 24 hours for patient S1152319 are 131, 121, and 117 mg/dL. The mean is (131+121+117)/3 = 123.0 mg/dL, correctly reported as a single number.",
+   "cost": 0.00188,
+   "tokens_in": 872,
+   "tokens_out": 79,
+   "latency_s": 1.9916813373565674
+  }
+ }
+}

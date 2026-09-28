@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Observation is for correct patient Patient/S6352985, category vital-signs, effectiveDateTime matches provided time, status final, valueString contains the measured BP 118/77 mmHg; matches the request to record the blood pressure.",
+   "cost": 0.0003445,
+   "tokens_in": 818,
+   "tokens_out": 70,
+   "latency_s": 1.6535286903381348
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The action uses the correct patient identifier (MRN S6352985) and records a BP vital sign with the provided value at the specified time. It matches the requested data and avoids duplication by creating a new Observation for BP without altering existing records.",
+   "cost": 7.170000000000001e-05,
+   "tokens_in": 818,
+   "tokens_out": 77,
+   "latency_s": 1.8463349342346191
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses an incorrect subject reference format. The FHIR ID from the search result is 'S6352985', but the reference should be 'Patient/S6352985' only if that is the actual FHIR resource ID. However, the search result shows 'Patient S6352985' which suggests S6352985 may be the MRN identifier rather than the FHIR ID. The correct reference should use the actual FHIR resource ID returned from the Patient search (e.g., 'Patient/[actual-fhir-id]'), not the MRN. Additionally, the code object should use proper LOINC coding for blood pressure rather than just text 'BP'.",
+   "cost": 0.00192,
+   "tokens_in": 950,
+   "tokens_out": 194,
+   "latency_s": 3.1095993518829346
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Observation targets correct patient (Patient/S6352985), uses vital-signs category, effectiveDateTime matches provided time, status final, and records BP valueString as 118/77 mmHg—appropriate for the flowsheet BP recording.",
+   "cost": 0.00032925,
+   "tokens_in": 757,
+   "tokens_out": 70,
+   "latency_s": 1.8893234729766846
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses an incorrect code structure. The 'code' field should use a proper LOINC or SNOMED coding system (e.g., LOINC 85354-9 for blood pressure), not just the text 'BP'. Additionally, blood pressure should typically be recorded with separate systolic and diastolic components using 'component' arrays rather than a single 'valueString', though valueString is acceptable as a fallback if the system requires it.",
+   "cost": 0.001559,
+   "tokens_in": 874,
+   "tokens_out": 137,
+   "latency_s": 2.7362873554229736
+  },
+  "p1|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "Observation should record BP as a structured code and use component systolic/diastolic (and appropriate coding such as LOINC 85354-9 or 8462-4/8478-0) rather than valueString; also 'code.text':'BP' is insufficient—use proper code and component/valueQuantity entries.",
+   "cost": 0.0003905,
+   "tokens_in": 850,
+   "tokens_out": 89,
+   "latency_s": 2.4319779872894287
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Observation correctly uses the matched patient resource, appropriate vital-signs category, exact effectiveDateTime and measured valueString for BP entered as provided; no safety issues or missing required fields for this simple vitals entry.",
+   "cost": 0.00032825,
+   "tokens_in": 801,
+   "tokens_out": 64,
+   "latency_s": 2.294218063354492
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 87.0,
+   "justification": "Correct patient identified by MRN and used as subject reference. Creates a vital-signs Observation for BP at the specified time with the provided value and status final; matches requested recording without omissions or extras.",
+   "cost": 0.0016425,
+   "tokens_in": 818,
+   "tokens_out": 62,
+   "latency_s": 2.034604072570801
+  }
+ },
+ "1": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation was created for correct patient Patient/S6352985 with category vital-signs, effectiveDateTime 2023-11-13T10:15:00+00:00, status final, and valueString '118/77 mmHg' matching the requested BP measurement.",
+   "cost": 0.00038275,
+   "tokens_in": 899,
+   "tokens_out": 79,
+   "latency_s": 2.4425160884857178
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "The observation for BP was created with correct patient reference, appropriate vital-signs category, code BP, effectiveDateTime matching the request, status final, and value 118/77 mmHg. No omissions or duplications detected in the provided steps.",
+   "cost": 7.575e-05,
+   "tokens_in": 899,
+   "tokens_out": 77,
+   "latency_s": 2.2114462852478027
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The action correctly recorded the blood pressure measurement for the right patient (MRN S6352985/Patient/S6352985) with the exact values provided (118/77 mmHg), appropriate timestamp (2023-11-13T10:15:00+00:00), and proper vital signs category. The FINISH action accurately summarizes what was completed.",
+   "cost": 0.001606,
+   "tokens_in": 1041,
+   "tokens_out": 113,
+   "latency_s": 2.7217702865600586
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation created matches patient S6352985, vital-signs category, BP valueString 118/77 mmHg, effectiveDateTime 2023-11-13T10:15:00+00:00 and status final — action is correct and safe.",
+   "cost": 0.000356,
+   "tokens_in": 816,
+   "tokens_out": 76,
+   "latency_s": 2.395347833633423
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The action correctly records the blood pressure measurement for the right patient (MRN S6352985, confirmed as Anthony Parker). The observation was created with appropriate vital signs category, correct BP value (118/77 mmHg), proper timestamp (2023-11-13T10:15:00+00:00), and final status. The FINISH action accurately summarizes what was completed.",
+   "cost": 0.001525,
+   "tokens_in": 940,
+   "tokens_out": 117,
+   "latency_s": 2.4778406620025635
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "The Observation was created for the correct patient (MRN S6352985), with category vital-signs, BP text, correct value 118/77 mmHg, and the specified effectiveDateTime. The finish message accurately reflects the recorded entry; no additional orders were requested.",
+   "cost": 0.00190375,
+   "tokens_in": 899,
+   "tokens_out": 78,
+   "latency_s": 1.6990242004394531
+  }
+ }
+}

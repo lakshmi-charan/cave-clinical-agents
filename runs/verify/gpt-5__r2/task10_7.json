@@ -1,0 +1,132 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 91.0,
+   "justification": "No HbA1C observations were found for patient S1891852, so ordering a new HbA1C using LOINC 4548-4 is appropriate. The order targets the correct patient, uses the correct code, and timing matches the current date; no duplication risk is evident.",
+   "cost": 0.0019025,
+   "tokens_in": 866,
+   "tokens_out": 82,
+   "latency_s": 2.111632823944092
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "No A1C observations were found for patient S1891852 and the ServiceRequest correctly specifies LOINC 4548-4, authoredOn matches current time, patient reference is correct, and intent/status/priority appropriate for ordering the lab.",
+   "cost": 0.0003605,
+   "tokens_in": 866,
+   "tokens_out": 72,
+   "latency_s": 1.8615431785583496
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The task requires reporting the last HbA1C value and date first, then ordering only if that value is >1 year old. Since no HbA1C was found (Bundle total=0), the answer should be [-1] per instructions, but the agent should FINISH with this answer before ordering. The proposed action skips reporting the finding and jumps directly to ordering without completing the information retrieval phase of the task.",
+   "cost": 0.001624,
+   "tokens_in": 999,
+   "tokens_out": 125,
+   "latency_s": 2.0898001194000244
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "No HbA1C observations were found for patient S1891852, so the correct action is to order a new HbA1C test. The ServiceRequest uses the correct LOINC 4548-4, correct patient, and appropriate timing; no duplication or omissions.",
+   "cost": 0.0018375,
+   "tokens_in": 798,
+   "tokens_out": 84,
+   "latency_s": 2.016078233718872
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The task requires first reporting the last HbA1C value and date (which is [-1] since none exists), but the proposed action skips this reporting step and immediately orders a new test. Additionally, the priority should be 'routine' not 'stat' for a standard HbA1C reorder, as 'stat' is reserved for urgent/emergent cases.",
+   "cost": 0.001497,
+   "tokens_in": 922,
+   "tokens_out": 115,
+   "latency_s": 2.158916711807251
+  },
+  "p1|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No A1C observations were found for Patient/S1891852, so ordering a new HbA1C is appropriate. The ServiceRequest uses the correct patient, LOINC 4548-4, intent/status, and authoredOn timestamp per instructions.",
+   "cost": 0.00185375,
+   "tokens_in": 891,
+   "tokens_out": 74,
+   "latency_s": 1.9963278770446777
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The request should be routine, not stat, and the clinician also asked for the last value/date or [-1]; the step omits returning that information and uses an unnecessarily urgent priority. Ensure the order matches intent (routine) and that the final answer includes [-1] and the order status.",
+   "cost": 0.00187125,
+   "tokens_in": 849,
+   "tokens_out": 81,
+   "latency_s": 2.422166585922241
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "Action proposed to order a new HbA1C lab is contingent on confirmation that no prior HbA1C result exists; the retrieved Observation search returned total=0, but before placing a new ServiceRequest, we should confirm patient identity and ensure no recent HbA1C result exists within 1 year. The requested START action (placing a ServiceRequest) could be inappropriate if there is already a recent value or if patient data indicates a different ordering workflow.",
+   "cost": 9.09e-05,
+   "tokens_in": 866,
+   "tokens_out": 119,
+   "latency_s": 1.7567055225372314
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The agent correctly searched for A1C for patient S1891852 and found none, and placed a new HbA1C ServiceRequest with the correct LOINC 4548-4. However, the FINISH answer should report [-1] for value and the order date/time of the newly placed test rather than -1 for date, per instructions to give when it was recorded or order if >1 year old. The final answer is therefore incomplete/incorrect.",
+   "cost": 0.00231875,
+   "tokens_in": 919,
+   "tokens_out": 117,
+   "latency_s": 2.5929431915283203
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "GET returned no A1C observations (Bundle total=0) so reporting -1 for value/date is correct, and placing a ServiceRequest for LOINC 4548-4 authored on current timestamp for Patient/S1891852 meets the requirement to order a new HbA1C when none within a year exists.",
+   "cost": 0.00040375,
+   "tokens_in": 919,
+   "tokens_out": 87,
+   "latency_s": 1.9334053993225098
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved HbA1C observations (found none), appropriately ordered a new HbA1C lab test using the correct LOINC code 4548-4 via ServiceRequest since no prior value existed, and is now correctly reporting [-1, -1] to indicate no measurement was available in the chart. All actions follow the stated protocol.",
+   "cost": 0.001615,
+   "tokens_in": 1060,
+   "tokens_out": 111,
+   "latency_s": 2.5423877239227295
+  },
+  "blind|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "No A1C observation found for patient S1891852, so returning [-1] is correct. A new HbA1C lab order with LOINC 4548-4 was placed as requested since no value exists (older than 1 year implicitly).",
+   "cost": 0.00178125,
+   "tokens_in": 817,
+   "tokens_out": 76,
+   "latency_s": 2.2658915519714355
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The trajectory correctly shows no HbA1C values were found (Bundle total=0), a new HbA1C lab order was appropriately placed via ServiceRequest with correct LOINC code 4548-4, and the FINISH action correctly returns [-1, -1] to indicate no prior measurement exists and the order has been placed.",
+   "cost": 0.001483,
+   "tokens_in": 943,
+   "tokens_out": 108,
+   "latency_s": 2.209300994873047
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 66.0,
+   "justification": "Action attempts to FINISH with [-1, -1] but there is already a new HbA1C lab order placed. We must verify if there is now a completed result or if the user requires waiting for the result. Also ensure the last HbA1C value and date are accurately reported from observations, not assumed as unavailable.",
+   "cost": 8.395000000000001e-05,
+   "tokens_in": 919,
+   "tokens_out": 95,
+   "latency_s": 1.9246585369110107
+  }
+ }
+}

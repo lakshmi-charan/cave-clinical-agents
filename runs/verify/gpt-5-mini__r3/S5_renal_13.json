@@ -1,0 +1,206 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Patient S6524007 most recent K=3.3 mmol/L (0.2 below 3.5) → 20 mEq oral is correct; eGFR=75 (>30) so replacement allowed. MedicationRequest correctly references NDC, patient, authoredOn, route and dose. However, the plan must also include a paired morning serum K lab at 2023-11-14T08:00:00; that lab order was not included in the proposed action, so only approve the medication request as safe/correct.",
+   "cost": 0.00056075,
+   "tokens_in": 1179,
+   "tokens_out": 133,
+   "latency_s": 2.785698652267456
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 75.0,
+   "justification": "Although the potassium is below goal and eGFR is adequate, the proposed dosing calculation is misapplied: 0.2 mmol/L below 3.5 would require 20 mEq per the provided rule (10 mEq per 0.1 below threshold equals 20 mEq for 0.2), but the instruction says to pair this order with a morning potassium check next day at 8am, which requires scheduling a 'next day' observation or service request. The action also duplicates the requested step without confirming next-day scheduling in the system. Additionally, ensure the medication NDC and coding are used exactly as specified and verify morning lab scheduling in the system before posting.",
+   "cost": 0.00012535,
+   "tokens_in": 1179,
+   "tokens_out": 166,
+   "latency_s": 2.463212490081787
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action is incomplete. The task explicitly requires TWO orders: (1) potassium replacement AND (2) a paired morning serum potassium level to be completed the next day at 8am. Only the medication request has been prepared; the ServiceRequest for the follow-up lab order at 2023-11-14T08:00:00+00:00 is missing and must be created before approval.",
+   "cost": 0.002032,
+   "tokens_in": 1407,
+   "tokens_out": 125,
+   "latency_s": 2.8653600215911865
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent K is 3.3 mmol/L (below 3.5); eGFR is 75 (>30) so replacement allowed. Dosing calculation: deficit 0.2 mmol/L → 20 mEq per protocol; medication, route, patient, and timestamp match the request.",
+   "cost": 0.00042775,
+   "tokens_in": 1047,
+   "tokens_out": 83,
+   "latency_s": 2.1364622116088867
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The patient's most recent K level is 3.3 mmol/L (below the 3.5 goal), eGFR is 75 mL/min/1.73m2 (well above the 30 threshold), and the calculated dose of 20 mEq is correct: (3.5 - 3.3) / 0.1 × 10 = 20 mEq. The MedicationRequest is properly formatted with correct NDC code, route, and timing. However, the proposed action only addresses the potassium order and omits the required follow-up serum potassium level (LOINC 2823-3) to be ordered for the next day at 8am.",
+   "cost": 0.002237,
+   "tokens_in": 1237,
+   "tokens_out": 200,
+   "latency_s": 3.130246639251709
+  },
+  "p1|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Patient S6524007's most recent K is 3.3 mmol/L (goal 3.5) and eGFR 75 >30, so oral replacement is allowed; dosing calculation (0.2 mEq/L deficit → 20 mEq) matches protocol and the MedicationRequest correctly references NDC 40032-917-01 and patient.",
+   "cost": 0.00049925,
+   "tokens_in": 1229,
+   "tokens_out": 96,
+   "latency_s": 2.3510119915008545
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Correct patient and recent labs used; eGFR >=30 so oral replacement allowed; dosing correctly calculated: deficit 0.2 mmol/L -> 20 mEq; medication coded with provided NDC and order details match clinician request.",
+   "cost": 0.0004285,
+   "tokens_in": 1162,
+   "tokens_out": 69,
+   "latency_s": 1.745927333831787
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "Potassium is 3.3 with goal 3.5, deficit 0.2 → 20 mEq is correct, and eGFR 75 ≥30 meets protocol. However, the task also requires ordering a morning serum potassium for next day at 8am, which has not been placed. Approve only after both the potassium replacement order and the 8am lab order are correctly entered.",
+   "cost": 0.00252375,
+   "tokens_in": 1179,
+   "tokens_out": 105,
+   "latency_s": 2.3495726585388184
+  }
+ },
+ "1": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Patient S6524007 had K=3.3 mmol/L and eGFR=75 (>30), oral replacement of 20 mEq was correctly ordered per dosing rules, and the ServiceRequest schedules LOINC 2823-3 for 2023-11-14T08:00:00+00:00 with appropriate note; action matches protocol and context.",
+   "cost": 0.00054925,
+   "tokens_in": 1405,
+   "tokens_out": 99,
+   "latency_s": 2.226997137069702
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Potassium current 3.3 mmol/L below goal 3.5; eGFR 75 mL/min/1.73m2 >=30, so oral replacement 20 mEq is consistent with the dosing rule (0.1 below threshold equals 10 mEq per 0.1; 0.2 below yields 20 mEq). The plan to pair with a morning potassium level at 08:00 next day is aligned with instruction.",
+   "cost": 0.00011905000000000001,
+   "tokens_in": 1405,
+   "tokens_out": 122,
+   "latency_s": 1.8549928665161133
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed ServiceRequest correctly orders a serum potassium level (LOINC 2823-3) for the next day at 8am as requested, properly paired with the potassium replacement order already placed. All parameters are appropriate: correct patient (S6524007), correct code, correct timing (2023-11-14T08:00:00+00:00), and proper documentation linking it to the replacement therapy.",
+   "cost": 0.002302,
+   "tokens_in": 1667,
+   "tokens_out": 127,
+   "latency_s": 2.5196564197540283
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The oral potassium MedicationRequest already placed (20 mEq) does not match the dosing protocol: with K 3.3 and goal 3.5 the deficit is 0.2 mEq/L → requires 20 mEq (this part is correct), but dosing calculation should be explicitly based on 0.1 per 10 mEq which was applied correctly; however the ServiceRequest priority is set to 'stat' though the user requested a routine morning serum at 08:00 next day (should be scheduled for morning, not stat). Also the ServiceRequest.note should be an array per FHIR and occurrenceDateTime is correct; additionally ensure no eGFR contraindication — eGFR is 75 so ordering is allowed. Because of the incorrect priority and minor FHIR structure issue, reject so the request can be corrected.",
+   "cost": 0.00069275,
+   "tokens_in": 1235,
+   "tokens_out": 192,
+   "latency_s": 2.514275312423706
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The potassium level of 3.3 mmol/L is below the 3.5 threshold (0.2 mEq/L deficit × 10 mEq per 0.1 = 20 mEq dose), eGFR is 75 (well above the 30 threshold), and the ServiceRequest correctly orders a serum potassium level for the next morning at 8am to monitor replacement therapy response.",
+   "cost": 0.002123,
+   "tokens_in": 1448,
+   "tokens_out": 135,
+   "latency_s": 2.3405160903930664
+  },
+  "p1|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Patient S6524007 had K 3.3 mmol/L and eGFR 75 (>30), dosing calculation (3.5-3.3 = 0.2 → 20 mEq) matches protocol and MedicationRequest was placed; the ServiceRequest schedules LOINC 2823-3 at 2023-11-14T08:00 and documents purpose, so pairing is correct and safe.",
+   "cost": 0.00058775,
+   "tokens_in": 1487,
+   "tokens_out": 108,
+   "latency_s": 1.733269214630127
+  },
+  "p2|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "Correct patient and labs were checked (K 3.3, eGFR 75); MedicationRequest dosing (20 mEq) matches protocol for 0.2 mmol/L deficit; ServiceRequest schedules LOINC 2823-3 for 2023-11-14T08:00 and includes appropriate note—safe and correct.",
+   "cost": 0.000531,
+   "tokens_in": 1388,
+   "tokens_out": 92,
+   "latency_s": 1.4847750663757324
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Correct patient and LOINC, scheduled for next day 08:00 as requested. Prior steps show appropriate K replacement ordered and eGFR ≥30; this completes the paired morning lab without omissions or errors.",
+   "cost": 0.00240625,
+   "tokens_in": 1405,
+   "tokens_out": 65,
+   "latency_s": 2.2159855365753174
+  }
+ },
+ "2": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab values and timestamps match (K 3.3 on 2023-11-13T06:15, eGFR 75 on 2023-11-13T02:15), eGFR >=30 so oral replacement allowed, dosing calculation is correct (0.2 mmol/L deficit × 10 mEq per 0.1 = 20 mEq), and both MedicationRequest and ServiceRequest were placed with correct codes, timing, and notes.",
+   "cost": 0.0006445,
+   "tokens_in": 1626,
+   "tokens_out": 119,
+   "latency_s": 1.836693525314331
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "Most recent potassium 3.3 mmol/L meets threshold for replacement (goal 3.5) and EGFR 75 mL/min/1.73m2 satisfies protocol. A 20 mEq PO replacement ordered; a morning serum potassium (LOINC 2823-3) requested for 08:00 next day. No omissions or duplications detected in the steps.",
+   "cost": 0.00012330000000000002,
+   "tokens_in": 1626,
+   "tokens_out": 105,
+   "latency_s": 1.8225939273834229
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The dosing calculation is incorrect. Patient's K is 3.3 mmol/L with goal 3.5, a deficit of 0.2 mmol/L. Per instructions: for every 0.1 mmol/L below threshold, order 10 mEq. Therefore 0.2 mmol/L deficit requires 20 mEq (correct), BUT the MedicationRequest specifies only a single dose with no frequency/timing instructions. The order lacks critical dosing details (frequency, duration, timing) needed for safe administration and should specify whether this is a one-time dose or divided dosing schedule.",
+   "cost": 0.002792,
+   "tokens_in": 1922,
+   "tokens_out": 174,
+   "latency_s": 3.0673041343688965
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "Dosing calculation is incorrect: potassium 3.3 is 0.2 below 3.5, so required dose = 20 mEq (correct), but protocol specifies 'for every 0.1 below, order 10 mEq' which implies 20 mEq — OK; however the MedicationRequest lacks explicit frequency (once) in standard dosageInstruction structure and does not state intended goal or max single dose; also ServiceRequest priority 'stat' is inappropriate for a scheduled next-day 08:00 draw (should be routine/normal). Because the MedicationRequest and ServiceRequest deviate from precise protocol wording/ordering details, I cannot approve.",
+   "cost": 0.000669,
+   "tokens_in": 1436,
+   "tokens_out": 155,
+   "latency_s": 2.4015297889709473
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified a low potassium level (3.3 mmol/L, below the 3.5 goal), verified the eGFR is safe for oral replacement (75 mL/min/1.73m2, well above the 30 threshold), calculated the correct dose (0.2 mEq/L deficit × 10 mEq per 0.1 mEq/L = 20 mEq), and placed both the potassium replacement order and the follow-up serum potassium lab for the next morning at 8am as requested.",
+   "cost": 0.002521,
+   "tokens_in": 1681,
+   "tokens_out": 168,
+   "latency_s": 2.7390265464782715
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Correct patient and latest labs used. K 3.3 is 0.2 below 3.5; 20 mEq PO ordered matches dosing rule and eGFR 75 ≥30 meets protocol. Paired next-day 8am serum potassium order placed with correct LOINC. Summary matches actions.",
+   "cost": 0.0028925,
+   "tokens_in": 1626,
+   "tokens_out": 86,
+   "latency_s": 2.2988104820251465
+  }
+ }
+}

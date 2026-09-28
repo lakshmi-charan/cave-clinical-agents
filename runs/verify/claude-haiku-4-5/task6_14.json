@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent's time window calculation is incorrect. The last 24 hours from 2023-11-13T10:15:00+00:00 should be from 2023-11-12T10:15:00+00:00 onwards, but the agent included measurements from 2023-11-12T00:54:00 and 2023-11-12T02:25:00, which are before 2023-11-12T10:15:00. Only the measurement at 2023-11-12T09:48:00 falls within the correct 24-hour window, making the correct answer 163.0 mg/dL, not 144.0 mg/dL.",
+   "cost": 0.002696,
+   "tokens_in": 1716,
+   "tokens_out": 196,
+   "latency_s": 2.572847366333008
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "{\"decision\": \"reject\", \"confidence\": 95, \"justification\": \"None of the retrieved observations actually fall within the exact 24-hour window (2023-11-12T10:15 ",
+   "parse_error": true,
+   "cost": 0.0082765,
+   "tokens_in": 2111,
+   "tokens_out": 300,
+   "latency_s": 4.372677564620972
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent included observations outside the requested 24-hour window: the window is 2023-11-12T10:15:00 to 2023-11-13T10:15:00, but the selected times (00:54 and 02:25 on 2023-11-12) are earlier than 10:15 and thus outside the range; correct filtering must include only observations with effectiveDateTime >= 2023-11-12T10:15:00+00:00 and <= 2023-11-13T10:15:00+00:00.",
+   "cost": 0.00067625,
+   "tokens_in": 1521,
+   "tokens_out": 148,
+   "latency_s": 2.6074962615966797
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 144.0 mg/dL is incorrect. Only 4 observations fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): 118.0, 151.0, 163.0, and 109.48 mg/dL, which average to 137.75 mg/dL, not 144.0. Additionally, the query returned data outside the 24-hour window that should not be included in the calculation.",
+   "cost": 0.002114,
+   "tokens_in": 1319,
+   "tokens_out": 159,
+   "latency_s": 2.787332773208618
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observations returned for patient S3032536 within 2023-11-12T10:15:00+00:00 back 24 hours include three GLU values at 2023-11-12T00:54 (118), 2023-11-12T02:25 (151), and 2023-11-12T09:48 (163); their average is (118+151+163)/3 = 432/3 = 144 mg/dL, matching the proposed result.",
+   "cost": 0.00054875,
+   "tokens_in": 1155,
+   "tokens_out": 130,
+   "latency_s": 2.3059821128845215
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed action assumes finishing with a computed average without verifying that the 24-hour window is correct relative to current time and that all qualifying observations are captured. The listed last-24h observations include times outside the exact window (00:54, 02:25, 09:48 on 2023-11-12) but exclude a 10:15-10:15 window; need to confirm timestamps fall within 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00 and recalculate accordingly.",
+   "cost": 0.00013725,
+   "tokens_in": 1521,
+   "tokens_out": 153,
+   "latency_s": 2.072049617767334
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The agent included values at 00:54 and 02:25 on 2023-11-12, which are outside the last 24 hours window starting at 2023-11-12T10:15:00+00:00. Only 2023-11-12T09:48:00+00:00 is within 24 hours, so the average should be 163.0, not 144.0; thus the FINISH answer is incorrect.",
+   "cost": 0.00312125,
+   "tokens_in": 1521,
+   "tokens_out": 122,
+   "latency_s": 2.9951510429382324
+  }
+ }
+}

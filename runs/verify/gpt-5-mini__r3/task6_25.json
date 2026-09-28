@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observed GLU timestamps show latest entries on 2023-11-11 and 2023-11-06, none within 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00, so returning -1 is correct per instructions.",
+   "cost": 0.00057775,
+   "tokens_in": 1567,
+   "tokens_out": 93,
+   "latency_s": 2.2996175289154053
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action uses the correct data scope (last 24 hours) and logic (-1 if none). However, there is a potential nuance: the provided dataset shows observations up to 2023-11-11 and 2023-11-06 but none within 2023-11-12 to 2023-11-13 10:15 UTC. If the last 24 hours window is indeed 2023-11-12 10:15 to 2023-11-13 10:15, then -1 is correct. Risk of incorrect cutoff interpretation remains.",
+   "cost": 0.00013835000000000003,
+   "tokens_in": 1567,
+   "tokens_out": 150,
+   "latency_s": 2.3575353622436523
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that the current time is 2023-11-13T10:15:00+00:00, making the 24-hour window 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00. Reviewing all 20 observations, only Observation 305504 (2023-11-11T02:52:00+00:00) falls within this window, but it is outside the 24-hour cutoff. The most recent observation is from 2023-11-11, which is more than 24 hours ago. Therefore, returning -1 is correct per the stated instructions.",
+   "cost": 0.002764,
+   "tokens_in": 1804,
+   "tokens_out": 192,
+   "latency_s": 3.044379234313965
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "No GLU observations fall within the 24-hour window (2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00); returning -1 is correct.",
+   "cost": 0.00051675,
+   "tokens_in": 1467,
+   "tokens_out": 75,
+   "latency_s": 1.619882345199585
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. There are CBG measurements within the last 24 hours: Observation 305504 from 2023-11-11T02:52:00+00:00 (89.0 mg/dL) falls within the 24-hour window from the current time 2023-11-13T10:15:00+00:00. The correct answer should be 89.0 mg/dL, not -1.",
+   "cost": 0.002333,
+   "tokens_in": 1693,
+   "tokens_out": 128,
+   "latency_s": 4.373660564422607
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 94.0,
+   "justification": "All retrieved GLU observations are outside the last 24 hours relative to 2023-11-13T10:15:00+00:00, so returning -1 matches the instructions. The patient ID and code are correct, and unit conversion is not needed.",
+   "cost": 0.00272875,
+   "tokens_in": 1567,
+   "tokens_out": 77,
+   "latency_s": 2.0453999042510986
+  }
+ }
+}

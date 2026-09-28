@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "No serum potassium (LOINC 2823-3) was returned (total=0), so withholding replacement is correct and safer; eGFR could not be evaluated so institutional rule to avoid ordering if eGFR<30 is respected. The recommended next steps are appropriate.",
+   "cost": 0.000403,
+   "tokens_in": 988,
+   "tokens_out": 78,
+   "latency_s": 2.326246500015259
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action assumes no potassium value exists and advises not to place orders, but the request requires verifying the most recent potassium level and eGFR before deciding on replacement. The next step should be to fetch eGFR (EGFR) and a recent potassium result, or proceed with an immediate serum potassium and eGFR if no data exists, rather than concluding without data.",
+   "cost": 9.14e-05,
+   "tokens_in": 988,
+   "tokens_out": 105,
+   "latency_s": 1.6898250579833984
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly identified that no serum potassium result was found (Bundle total=0) and appropriately did not place any orders. The agent also correctly noted that the eGFR safety check could not be performed due to missing data, which aligns with institutional protocol. The proposed finish action appropriately summarizes the situation and offers reasonable next steps rather than proceeding with incomplete information.",
+   "cost": 0.001746,
+   "tokens_in": 1171,
+   "tokens_out": 115,
+   "latency_s": 2.314570903778076
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried for serum potassium (LOINC 2823-3) and found no result, appropriately refrained from placing replacement potassium given missing potassium and missing eGFR (protocol prohibits replacement if eGFR <30 and eGFR unknown), and provided safe next steps.",
+   "cost": 0.0003925,
+   "tokens_in": 930,
+   "tokens_out": 80,
+   "latency_s": 2.2833638191223145
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete because it fails to execute the task as stated. The task explicitly requires checking the patient's most recent potassium level and conditionally ordering replacement potassium with a paired morning lab—the agent should have attempted to retrieve historical potassium data with a broader date range or confirmed no data exists before concluding, and should not defer the decision to the clinician when the protocol is clear (do not order if eGFR <30, otherwise order based on potassium level). The agent also did not retrieve the eGFR value, which is a mandatory safety check before any ordering decision can be made.",
+   "cost": 0.00194,
+   "tokens_in": 1100,
+   "tokens_out": 168,
+   "latency_s": 3.1538238525390625
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The task required checking the most recent potassium and, if low, ordering oral potassium per dosing and a paired next-morning potassium lab, unless eGFR <30. The agent stopped after not finding a potassium result without attempting to retrieve eGFR or placing the next-morning lab; also, absence of K does not justify finishing the task without offering to place the morning lab when K is low (not determined). Required orders were not placed and the FINISH statement is incomplete.",
+   "cost": 0.002425,
+   "tokens_in": 988,
+   "tokens_out": 119,
+   "latency_s": 3.005680561065674
+  }
+ }
+}

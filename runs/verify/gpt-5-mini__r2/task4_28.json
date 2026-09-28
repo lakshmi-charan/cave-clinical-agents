@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 100.0,
+   "justification": "The most recent MG observations shown are up to 2023-11-11T16:09:00+00:00; none fall within the 24‑hour window from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00, so returning -1 is correct and safe.",
+   "cost": 0.0005915,
+   "tokens_in": 1534,
+   "tokens_out": 104,
+   "latency_s": 2.0462851524353027
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The last magnesium observations are 2023-11-11 and earlier; none within the last 24 hours from 2023-11-13 10:15 UTC. Returning -1 is correct per instruction.",
+   "cost": 0.00010510000000000001,
+   "tokens_in": 1534,
+   "tokens_out": 71,
+   "latency_s": 2.1510062217712402
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that the most recent magnesium observation (Observation 308931 from 2023-11-11T16:09:00+00:00) falls outside the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00), and appropriately returns -1 as specified in the task instructions.",
+   "cost": 0.002414,
+   "tokens_in": 1799,
+   "tokens_out": 123,
+   "latency_s": 3.0777671337127686
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "There is a magnesium observation within the last 24 hours: 2023-11-13T10:15:00 now, observations show latest on 2023-11-11T16:09:00 and 2023-11-09 etc — none within last 24 hours, so -1 would be correct only if no observation after 2023-11-12T10:15:00 exists. However the bundle includes an observation on 2023-11-07, 11-08, 11-05, 11-09, 11-11; none are within last 24 hours, so the proposed FINISH value should be -1 but the decision process must verify timestamps precisely; given the agent did not show any observation after 2023-11-12T10:15:00, I am confident the answer -1 is appropriate but the FINISH action should state the single numeric result rather than FINISH([-1]).",
+   "cost": 0.000803,
+   "tokens_in": 1444,
+   "tokens_out": 221,
+   "latency_s": 2.4111878871917725
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. Observation 308925 from 2023-11-09T12:13:00+00:00 falls within the last 24 hours (current time is 2023-11-13T10:15:00+00:00), with a magnesium level of 1.8 mg/dL. The correct answer should be 1.8, not -1.",
+   "cost": 0.002346,
+   "tokens_in": 1696,
+   "tokens_out": 130,
+   "latency_s": 3.1551706790924072
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "All listed magnesium observations are older than 24 hours before 2023-11-13T10:15:00+00:00. Returning -1 matches the instruction to indicate no value within the last 24 hours.",
+   "cost": 0.0025975,
+   "tokens_in": 1534,
+   "tokens_out": 68,
+   "latency_s": 2.060692071914673
+  }
+ }
+}

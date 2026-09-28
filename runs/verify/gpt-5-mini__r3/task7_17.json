@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation bundle shows the latest GLU entry is 2023-11-12T13:35:00+00:00 with value 107 mg/dL, which matches the proposed finish; patient ID and code are correct.",
+   "cost": 0.00040425,
+   "tokens_in": 1057,
+   "tokens_out": 70,
+   "latency_s": 1.7514820098876953
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The most recent GLU observation is 2023-11-12T13:35:00+00:00 with value 107.0 mg/dL, but the proposed finish includes an effectiveDateTime of 2023-11-12T13:35:00+00:00 and an issued time of 2023-11-12T15:14:00+00:00 which is not clearly supported by the data provided. The finish should reflect the exact latest observation data without asserting an issued time not present in the data.",
+   "cost": 0.00010884999999999999,
+   "tokens_in": 1057,
+   "tokens_out": 140,
+   "latency_s": 1.8448429107666016
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent CBG value by sorting all 8 GLU observations by effectiveDateTime. Observation 296338 with value 107.0 mg/dL at 2023-11-12T13:35:00+00:00 is indeed the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), and the answer is accurate and complete.",
+   "cost": 0.001877,
+   "tokens_in": 1217,
+   "tokens_out": 132,
+   "latency_s": 2.838434934616089
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "The most recent GLU observation in the returned bundle is 2023-11-12T13:35:00+00:00 with value 107 mg/dL, but there is no issued timestamp 2023-11-12T15:14:00+00:00 in the results; the proposed FINISH includes an unverified issued time, so do not approve as-is.",
+   "cost": 0.000454,
+   "tokens_in": 992,
+   "tokens_out": 103,
+   "latency_s": 2.3250269889831543
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The proposed answer correctly identifies the most recent CBG (capillary blood glucose) for patient S1353305. Among all 8 observations with code GLU, Observation 296338 dated 2023-11-12T13:35:00+00:00 with value 107.0 mg/dL is the most recent (closest to the current time of 2023-11-13T10:15:00+00:00), and the FINISH action accurately reports this result.",
+   "cost": 0.001864,
+   "tokens_in": 1144,
+   "tokens_out": 144,
+   "latency_s": 2.970698833465576
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 86.0,
+   "justification": "The finish statement adds an issued timestamp not present in the retrieved data. While 107 mg/dL on 2023-11-12T13:35:00+00:00 appears to be the most recent GLU, the answer must rely only on available data and avoid unsupported details.",
+   "cost": 0.00214125,
+   "tokens_in": 1057,
+   "tokens_out": 82,
+   "latency_s": 2.3685038089752197
+  }
+ }
+}

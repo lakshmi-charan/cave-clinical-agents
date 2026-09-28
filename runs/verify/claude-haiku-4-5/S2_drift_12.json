@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly identified the two CBG observations within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): observations from 2023-11-13T07:56:00 (7.55 mmol/L) and 2023-11-12T21:26:00 (7.05 mmol/L). The conversion from mmol/L to mg/dL using the factor 18.018 is correct, and the average calculation (136.04 + 127.03) / 2 = 131.54 mg/dL is accurate.",
+   "cost": 0.003313,
+   "tokens_in": 2388,
+   "tokens_out": 185,
+   "latency_s": 2.176281452178955
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The two observations within the last 24 hours (7.55 and 7.05 mmol/L) are correctly identified and converted to mg/dL using the standard factor 18.018, yielding an average of ~131.54 mg/dL, which matches the proposed answer.",
+   "cost": 0.0082465,
+   "tokens_in": 2867,
+   "tokens_out": 108,
+   "latency_s": 2.5525012016296387
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The two observations (2023-11-13T07:56 and 2023-11-12T21:26) fall within 2023-11-12T10:15 to 2023-11-13T10:15; unit conversion 7.55 and 7.05 mmol/L ×18.018 gives ~136.04 and ~127.03 mg/dL, average ≈131.54 mg/dL, matching the proposed result.",
+   "cost": 0.00075825,
+   "tokens_in": 2065,
+   "tokens_out": 121,
+   "latency_s": 1.9888739585876465
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of 131.54 mg/dL is incorrect. Only 2 observations fall within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): Observation 270654 (7.55 mmol/L on 2023-11-13T07:56:00) and Observation 270665 (7.05 mmol/L on 2023-11-12T21:26:00). Converting to mg/dL: (7.55 + 7.05) / 2 = 7.30 mmol/L × 18 = 131.4 mg/dL, which rounds to 131.4, not 131.54. Additionally, the calculation appears to have a minor rounding discrepancy.",
+   "cost": 0.003088,
+   "tokens_in": 1943,
+   "tokens_out": 229,
+   "latency_s": 2.8647468090057373
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The bundle shows two observations within last 24 hours (2023-11-12T10:15 to 2023-11-13T10:15): only 2023-11-13T07:56 and 2023-11-12T21:26 fall in that window; both values are in mmol/L (7.55 and 7.05 mmol/L). The proposed single number 131.54 mg/dL does not match the correct average conversion: mean mmol/L = (7.55+7.05)/2 = 7.30 mmol/L -> 7.30 * 18 = 131.4 mg/dL, so rounding/precision error and also the agent included only one value in earlier step; reported value 131.54 is inconsistent.",
+   "cost": 0.00078875,
+   "tokens_in": 1667,
+   "tokens_out": 186,
+   "latency_s": 2.0672833919525146
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The FINISH action would compute an average from observations; however, the proposed data extraction appears to include 2023-11-12T21:26:00+00:00 which is within last 24h, but the user-provided conversion and averaging steps need verification against exact dataset and timezone. Also ensure only last 24h window is used per current time 2023-11-13T10:15:00+00:00.",
+   "cost": 0.00014925,
+   "tokens_in": 2065,
+   "tokens_out": 115,
+   "latency_s": 1.916163444519043
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly identified two CBG observations within the last 24 hours (2023-11-12T21:26Z and 2023-11-13T07:56Z), converted mmol/L to mg/dL using 18.018, and averaged them to 131.54 mg/dL. No other qualifying measurements were missed.",
+   "cost": 0.00352125,
+   "tokens_in": 2065,
+   "tokens_out": 94,
+   "latency_s": 2.2934730052948
+  }
+ }
+}

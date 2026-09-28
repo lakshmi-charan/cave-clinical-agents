@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Correct patient and code; only one GLU observation falls within 24 hours (2023-11-12T13:40:00+00:00 to 2023-11-13T10:15:00+00:00), value 97 mg/dL, so average = 97 mg/dL.",
+   "cost": 0.0005165,
+   "tokens_in": 1354,
+   "tokens_out": 89,
+   "latency_s": 1.7606885433197021
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The last 24h GLU observation is 2023-11-12T13:40:00+00:00 with value 97 mg/dL, which appears within 24h of 2023-11-13T10:15:00+00:00. The average would be 97 mg/dL if there is only one measurement in the window, matching the requested output as a single number in mg/dL.",
+   "cost": 0.0001149,
+   "tokens_in": 1354,
+   "tokens_out": 118,
+   "latency_s": 1.909353256225586
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent incorrectly identified only one measurement within the last 24 hours. The current time is 2023-11-13T10:15:00+00:00, so the 24-hour window is 2023-11-12T10:15:00+00:00 onwards. This includes both 2023-11-12T13:40:00 (97 mg/dL) AND 2023-11-13T10:15:00 is after the query time, but checking the data: only the 2023-11-12T13:40:00 observation falls within the last 24 hours. However, the agent should report this single value as 97, not as an average of multiple values. The proposed answer of [97] appears correct for a single measurement, but the agent's rationale is misleading about computing an 'average' when only one data point exists within the window.",
+   "cost": 0.003059,
+   "tokens_in": 1559,
+   "tokens_out": 300,
+   "latency_s": 4.377385854721069
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH value [97] is incorrect: only one observation (2023-11-12T13:40:00+00:00, 97 mg/dL) falls within the last 24 hours from 2023-11-13T10:15:00+00:00? Actually 2023-11-12T13:40 is 20 hours 35 minutes before 2023-11-13T10:15 so it is within 24h; however the bundle shows no other observations in that window, so the average should be 97 (single value) but the FINISH payload format should be a single number, not an array. Therefore action should be corrected to return 97 as a single number.",
+   "cost": 0.0006695,
+   "tokens_in": 1262,
+   "tokens_out": 177,
+   "latency_s": 4.096179008483887
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of [97] is incorrect. Only one CBG measurement (97.0 mg/dL on 2023-11-12T13:40:00) falls within the last 24 hours from the current time (2023-11-13T10:15:00). Since there is only one measurement, the average is 97.0, but the agent should return this as a single number, not in brackets. More critically, the agent has not verified that this single measurement is sufficient to answer the query or considered whether additional data retrieval is needed.",
+   "cost": 0.002242,
+   "tokens_in": 1457,
+   "tokens_out": 157,
+   "latency_s": 2.8897383213043213
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The current time is 2023-11-13T10:15:00+00:00, so the last 24 hours window starts at 2023-11-12T10:15:00+00:00. The only GLU observation listed within that window is at 2023-11-12T13:40:00+00:00 with 97 mg/dL, which makes the average 97. However, the agent did not confirm units conversion necessity nor double-check for any additional measurements in the window via a date-filtered query. The final value is likely correct but the verification is insufficient for a finish approval.",
+   "cost": 0.0032525,
+   "tokens_in": 1354,
+   "tokens_out": 156,
+   "latency_s": 3.5051488876342773
+  }
+ }
+}

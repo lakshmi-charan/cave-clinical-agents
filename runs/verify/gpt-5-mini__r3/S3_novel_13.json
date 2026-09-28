@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Search for Observation code=MG for patient S2718465 within the specified 24-hour window returned zero results; reporting -1 correctly reflects no measurement available.",
+   "cost": 0.00034525,
+   "tokens_in": 949,
+   "tokens_out": 54,
+   "latency_s": 1.6395761966705322
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The agent proposes finishing with -1 due to no MG observations in last 24 hours; however, we did not verify a successful retrieval of data in the last step. If -1 is correct per requirement when no measurement is available, confirm the data retrieval to ensure no overlooked data.",
+   "cost": 8.105e-05,
+   "tokens_in": 949,
+   "tokens_out": 84,
+   "latency_s": 1.7569706439971924
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "Before finishing with -1, the agent should attempt the $lab-trend service which is specifically designed for retrieving lab value time series. The Observation.Search with code=MG may have failed due to parameter formatting or data structure issues, but $lab-trend with subject=S2718465, code=MG, window_h=24 is the appropriate alternative that hasn't been tried yet.",
+   "cost": 0.001688,
+   "tokens_in": 1093,
+   "tokens_out": 119,
+   "latency_s": 2.2914774417877197
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Search for Observation code MG in the prior 24 hours returned no results; returning -1 is correct given no magnesium measurement found within the specified window.",
+   "cost": 0.00031325,
+   "tokens_in": 837,
+   "tokens_out": 52,
+   "latency_s": 1.7170605659484863
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The agent correctly searched for magnesium (MG) observations within the 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z) for patient S2718465 and received a result of 0 observations. Returning -1 as specified in the task instructions when no measurement is available within the last 24 hours is the correct response.",
+   "cost": 0.001603,
+   "tokens_in": 958,
+   "tokens_out": 129,
+   "latency_s": 1.9781465530395508
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 86.0,
+   "justification": "The agent queried magnesium (code MG) observations for patient S2718465 within the last 24 hours and found none (Bundle total=0). Per instructions, returning -1 is correct.",
+   "cost": 0.00179625,
+   "tokens_in": 949,
+   "tokens_out": 61,
+   "latency_s": 1.8733110427856445
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. The task explicitly states to order a morning serum potassium level to be completed the next day at 8am if potassium replacement is ordered. However, the agent correctly determined that no replacement is needed (most recent K is 3.9 mmol/L, above the 3.5 threshold), so the FINISH is appropriate in not ordering replacement. The issue is that the agent should have explicitly confirmed this decision is correct before finishing, and the rationale contains some confusion about which potassium value is most recent. The most recent potassium is indeed 3.9 mmol/L from 2023-11-10, which is above 3.5, so no orders are warranted—this conclusion is correct.",
+   "cost": 0.004729,
+   "tokens_in": 3694,
+   "tokens_out": 207,
+   "latency_s": 3.519007444381714
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The most recent potassium observation (2023-11-10T13:42) is 3.9 mmol/L, above the 3.5 goal threshold, so no replacement or repeat lab is warranted per protocol, and the FINISH summary accurately reflects this and the eGFR check.",
+   "cost": 0.0118465,
+   "tokens_in": 4283,
+   "tokens_out": 114,
+   "latency_s": 2.440718173980713
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Review of observations shows the most recent K is 3.9 mmol/L on 2023-11-10 (above 3.5) and latest eGFR 88 on 2023-11-08 (above 30); no replacement or follow-up lab orders were required per protocol, so finishing with no orders is correct and safe.",
+   "cost": 0.000965,
+   "tokens_in": 3108,
+   "tokens_out": 94,
+   "latency_s": 1.5975065231323242
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified the most recent potassium level (3.9 mmol/L on 2023-11-10), correctly determined it is above the goal threshold of 3.5 mmol/L, and appropriately concluded that no replacement is needed. The eGFR check (88.0 mL/min/1.73m2, well above 30) was also correctly performed. The task logic has been properly executed: since potassium is not low, no orders should be placed, which is what was done.",
+   "cost": 0.003992,
+   "tokens_in": 3232,
+   "tokens_out": 152,
+   "latency_s": 2.4052634239196777
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent K is 3.9 mmol/L (2023-11-10 13:42) which is >= goal 3.5 so no replacement needed; latest eGFR 88 on 2023-11-08 >30 so protocol permitting is satisfied. The proposed finish correctly reports data and places no orders.",
+   "cost": 0.00086125,
+   "tokens_in": 2717,
+   "tokens_out": 91,
+   "latency_s": 1.6340527534484863
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Most recent potassium value is 3.9 mmol/L (2023-11-10 13:42 UTC), which is above the 3.5 goal; thus no replacement order is indicated. eGFR is 88.0, so oral replacement would be permissible if needed, but not required given current level.",
+   "cost": 0.00019260000000000002,
+   "tokens_in": 3108,
+   "tokens_out": 93,
+   "latency_s": 1.9615631103515625
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "While identifying the most recent K (3.9 mmol/L on 2023-11-10) and noting eGFR was correct, the task also required placing a paired morning serum potassium lab for the next day at 8:00 AM. No ServiceRequest for a potassium lab was placed, so the requested order set is incomplete.",
+   "cost": 0.004795,
+   "tokens_in": 3108,
+   "tokens_out": 91,
+   "latency_s": 2.974576950073242
+  }
+ }
+}

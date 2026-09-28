@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly queried LOINC 2823-3 for patient S2704870 and found no results, so it appropriately did not place replacement or monitoring orders and provided safe next-step recommendations rather than guessing therapy.",
+   "cost": 0.00038125,
+   "tokens_in": 997,
+   "tokens_out": 66,
+   "latency_s": 1.9818055629730225
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action asserts no potassium data exist and withholds orders, but the instruction requires action only after verifying the most recent potassium level. Without confirming or obtaining a current potassium result, we cannot safely place replacement orders or schedule the morning lab. We should first retrieve the most recent potassium observation (LOINC 2823-3) and proceed based on the actual value.",
+   "cost": 9.105000000000002e-05,
+   "tokens_in": 997,
+   "tokens_out": 103,
+   "latency_s": 1.9683282375335693
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete because the task explicitly requires checking the most recent potassium level and ordering replacement if low. The agent should have attempted to retrieve potassium labs with a broader search strategy (e.g., without date restrictions, or using a larger date range) before concluding no data exists. Finishing without attempting adequate retrieval fails to complete the requested task.",
+   "cost": 0.001745,
+   "tokens_in": 1180,
+   "tokens_out": 113,
+   "latency_s": 2.8634047508239746
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly searched for the specified LOINC (2823-3) and found no observations; it did not inappropriately place replacement potassium without a lab and provided appropriate next-step recommendations including ordering a future 8:00am potassium when directed—this matches the task constraints and safety requirements.",
+   "cost": 0.00039875,
+   "tokens_in": 931,
+   "tokens_out": 83,
+   "latency_s": 1.984302043914795
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is incomplete and does not fulfill the task requirements. The task explicitly states 'If low, then order replacement potassium' — this is a conditional instruction that requires first obtaining the potassium level. While the agent correctly identified that no prior potassium result exists, the appropriate next step is to order a stat serum potassium lab immediately to determine the current level, not to finish without completing the clinical assessment and orders. The task cannot be properly completed without this critical data point.",
+   "cost": 0.0018,
+   "tokens_in": 1100,
+   "tokens_out": 140,
+   "latency_s": 3.096517324447632
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The task required placing a paired morning potassium lab order regardless of whether replacement was needed. The agent neither ordered the follow-up lab nor confirmed that all requested orders were placed. A FINISH is premature because not all requested actions were completed.",
+   "cost": 0.00193625,
+   "tokens_in": 997,
+   "tokens_out": 69,
+   "latency_s": 2.245488405227661
+  }
+ }
+}

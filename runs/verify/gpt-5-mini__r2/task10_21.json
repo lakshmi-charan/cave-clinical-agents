@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "GET returned zero HbA1C observations, so reporting [-1] and ordering a new HbA1C (LOINC 4548-4) is appropriate given no prior result; recommendation to order stat is reasonable.",
+   "cost": 0.00032775,
+   "tokens_in": 775,
+   "tokens_out": 67,
+   "latency_s": 2.0179708003997803
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "No HbA1C observation found for patient S0789363 in the provided query result; however, data retrieval shows zero results, but there is a possibility of non-matching codes or data latency. A new HbA1C lab order is appropriate if no measurement is available within a reasonable timeframe.",
+   "cost": 7.395000000000001e-05,
+   "tokens_in": 775,
+   "tokens_out": 88,
+   "latency_s": 1.6938488483428955
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent found no HbA1C values (correctly returning [-1]), but failed to actually place the required ServiceRequest order for the new HbA1C lab test before finishing. The task explicitly requires ordering a new HbA1C when the last value is >1 year old or unavailable; this must be completed via POST /ServiceRequest before the FINISH action.",
+   "cost": 0.001467,
+   "tokens_in": 897,
+   "tokens_out": 114,
+   "latency_s": 2.7134926319122314
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search returned no A1C results (total=0) so reporting [-1] and ordering a new HbA1C (LOINC 4548-4) is correct; prioritizing stat matches the instruction to order if >1 year or missing.",
+   "cost": 0.0003285,
+   "tokens_in": 714,
+   "tokens_out": 75,
+   "latency_s": 2.0949511528015137
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete and contradictory. The task requires ordering a new HbA1C lab test since no prior value exists (result=[-1]), but the FINISH action reports the order should be placed without actually executing the ServiceRequest.Create action to place it. The action must be executed before finishing.",
+   "cost": 0.001337,
+   "tokens_in": 827,
+   "tokens_out": 102,
+   "latency_s": 2.547994375228882
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The FINISH answer includes an extra ‘-1’ field and adds ‘priority: stat’ which was not requested. It also did not actually place a ServiceRequest for HbA1C (LOINC 4548-4) despite the >1 year criterion and missing result; all requested orders must be placed before finishing.",
+   "cost": 0.00184875,
+   "tokens_in": 775,
+   "tokens_out": 88,
+   "latency_s": 1.9958977699279785
+  }
+ }
+}

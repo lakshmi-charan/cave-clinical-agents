@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The last 24-hour window from 2023-11-13T10:15:00Z is 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z. The result list includes an observation at 2023-11-12T11:55:00Z (2.2 mg/dL) and a later one at 2023-11-12T23:31:00Z (2.2 mg/dL). The proposed FINISH statement cites only the 23:31 result, but that is fine; however, the search result also shows an observation at 2023-11-12T06:21:00Z which is outside the window, suggesting potential mismatch in filtering. Before finishing, the agent should explicitly confirm the windowed results and ensure the chosen value is indeed the most recent within 24 hours. As-is, the reasoning is likely correct (2.2 mg/dL, no order), but the verification is incomplete.",
+   "cost": 0.00388,
+   "tokens_in": 1208,
+   "tokens_out": 237,
+   "latency_s": 2.9791862964630127
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Most recent MG in the 24-hour window is 2023-11-12T23:31:00+00:00 with value 2.2 mg/dL (not low), so withholding IV magnesium and placing no order matches the protocol and task instructions.",
+   "cost": 0.000456,
+   "tokens_in": 1208,
+   "tokens_out": 77,
+   "latency_s": 1.8507969379425049
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved magnesium levels from the last 24 hours and identified the most recent value as 2.2 mg/dL at 2023-11-12T23:31:00Z, which is normal (not in any deficiency range per the dosing instructions). The decision to not order IV magnesium is correct and follows the task instructions.",
+   "cost": 0.002009,
+   "tokens_in": 1439,
+   "tokens_out": 114,
+   "latency_s": 2.0067965984344482
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The last 24 hours from 2023-11-13T10:15:00Z begins at 2023-11-12T10:15:00Z. The lab at 2023-11-12T23:31:00Z (2.2 mg/dL) is within 24 hours and is not low, so no order is appropriate. However, the search results also include an earlier value at 2023-11-12T06:21:00Z which is outside the 24-hour window, indicating the query may not have been filtered correctly. Confirm the time window and ensure the identified 23:31 result is truly the most recent within 24 hours before finishing.",
+   "cost": 0.0031175,
+   "tokens_in": 1142,
+   "tokens_out": 169,
+   "latency_s": 2.3158907890319824
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved magnesium levels from the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z). The most recent result is 2.2 mg/dL at 2023-11-12T23:31:00Z, which is normal (not low per the dosing criteria that define low as <1.9 mg/dL for mild deficiency). Therefore, no IV magnesium replacement is indicated, and the FINISH action correctly reports this decision.",
+   "cost": 0.002153,
+   "tokens_in": 1358,
+   "tokens_out": 159,
+   "latency_s": 2.3421714305877686
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "Last magnesium 2.2 mg/dL within 24h is normal; no replacement ordered per protocol. FINISH action would be correct if the reported answer matches observed data.",
+   "cost": 8.560000000000001e-05,
+   "tokens_in": 1208,
+   "tokens_out": 63,
+   "latency_s": 2.0151824951171875
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0075715,
+   "tokens_in": 1829,
+   "tokens_out": 300,
+   "latency_s": 4.4180848598480225
+  }
+ }
+}

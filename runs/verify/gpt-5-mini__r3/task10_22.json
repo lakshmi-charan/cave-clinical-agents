@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "GET returned no A1C observations (Bundle total=0), so reporting -1 for value and date is correct; ordering a new HbA1C (LOINC 4548-4) is appropriate because no prior result exists within chart.",
+   "cost": 0.000345,
+   "tokens_in": 804,
+   "tokens_out": 72,
+   "latency_s": 1.4715888500213623
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed action assumes no HbA1C data found (value -1), but the prior step returned zero results; however, before ordering a new test, we must confirm whether there is an HbA1C observation with a different code or a recent entry that wasn't captured by code=A1C. The instruction requires verifying the right data source and confirming the absence before ordering.",
+   "cost": 8.14e-05,
+   "tokens_in": 804,
+   "tokens_out": 103,
+   "latency_s": 1.7858033180236816
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action is incomplete. While correctly reporting the missing HbA1C value as [-1], it fails to actually place the ordered lab test via ServiceRequest.Create before finishing. The task requires ordering a new HbA1C lab test when no prior result exists, but no POST action was executed to create this order.",
+   "cost": 0.001448,
+   "tokens_in": 928,
+   "tokens_out": 104,
+   "latency_s": 2.1925697326660156
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation search for code A1C returned no results (Bundle total=0), so reporting -1 for value and date is correct; ordering a new HbA1C (LOINC 4548-4) is appropriate per task since no prior result exists and current date is 2023-11-13.",
+   "cost": 0.00035325,
+   "tokens_in": 725,
+   "tokens_out": 86,
+   "latency_s": 1.7740037441253662
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH action is incomplete. While it correctly identifies that no HbA1C value exists (returning -1), it states an intention to order a new lab but does not actually execute the ServiceRequest.Create action to place the order. The task requires ordering the lab if no recent result exists; this must be done before finishing.",
+   "cost": 0.00136,
+   "tokens_in": 840,
+   "tokens_out": 104,
+   "latency_s": 2.0774362087249756
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "Reporting -1 for value/date is correct since no A1C result was found, and a new HbA1C is indeed indicated. However, no ServiceRequest was actually placed; merely recommending an order does not fulfill the instruction to order the test.",
+   "cost": 0.001735,
+   "tokens_in": 804,
+   "tokens_out": 73,
+   "latency_s": 2.4936978816986084
+  }
+ }
+}

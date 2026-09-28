@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The most recent GLU/CBG in the list is 99 mg/dL on 2023-11-12T01:06:00+00:00 versus 85 mg/dL at 2023-11-12T12:28:00+00:00 appears later in the day and thus is actually more recent. However, there is also 79 mg/dL at 2023-11-12T12:15:00+00:00; the most recent is 85 mg/dL at 12:28 on 2023-11-12, which matches the proposed value and time. Wait re-evaluating: 2023-11-12 12:28 is indeed later than all others listed. The proposed answer is correct; but they formatted without unit in list? They included 85 mg/dL and correct timestamp. Approve.",
+   "cost": 0.00404125,
+   "tokens_in": 1585,
+   "tokens_out": 206,
+   "latency_s": 2.7160427570343018
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed most recent CBG is incorrect: there are GLU observations at 2023-11-12T12:15:00+00:00 (79.0 mg/dL) and 2023-11-12T12:28:00+00:00 (85.0 mg/dL); the 12:28 value is later than 12:15 but the bundle includes another at 2023-11-12T01:06:00 and others—however the latest timestamp in the list is 2023-11-12T12:28:00 (85 mg/dL), so the agent’s selection is correct but the agent omitted mentioning the 12:15 result; due to potential ambiguity in ordering and to ensure accuracy, reject so the agent can confirm sorting by timestamp and return the single most recent observation (85 mg/dL at 2023-11-12T12:28:00+00:00).",
+   "cost": 0.00083625,
+   "tokens_in": 1585,
+   "tokens_out": 220,
+   "latency_s": 3.120986223220825
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified patient S2380121, queried for GLU (glucose/CBG) observations, and accurately determined the most recent CBG value. Observation 307411 with timestamp 2023-11-12T12:28:00+00:00 is indeed the most recent among all 20 results (latest date and time before the current timestamp of 2023-11-13T10:15:00+00:00), with a value of 85 mg/dL.",
+   "cost": 0.002547,
+   "tokens_in": 1827,
+   "tokens_out": 144,
+   "latency_s": 2.6442313194274902
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 93.0,
+   "justification": "The most recent GLU/CBG in the list is 99 mg/dL on 2023-11-12T01:06:00+00:00? Wait, there is a later one: 85 mg/dL at 2023-11-12T12:28:00+00:00, but also 79 mg/dL at 12:15 the same day. However, both are on 2023-11-12; there are no observations on 2023-11-13. The latest timestamp shown is 2023-11-12T12:28:00+00:00 with 85 mg/dL, which matches the proposed answer, but there is also 2023-11-12T12:15:00 and T01:06:00 earlier. Wait, check entire list: yes, 12:28 is the latest. But Observation 307400 is 2023-11-12T01:06, earlier. The proposed answer is correct. However, ensure no later on 2023-11-12 beyond 12:28. Yes. Approve.",
+   "cost": 0.004465,
+   "tokens_in": 1500,
+   "tokens_out": 259,
+   "latency_s": 2.9049055576324463
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent CBG is incorrect. Observation 307407 has a timestamp of 2023-11-12T12:15:00+00:00 with a value of 79.0 mg/dL, which is more recent than the proposed answer of 2023-11-12T12:28:00+00:00 with 85 mg/dL. The correct most recent CBG is 79.0 mg/dL on 2023-11-12T12:15:00+00:00.",
+   "cost": 0.002506,
+   "tokens_in": 1731,
+   "tokens_out": 155,
+   "latency_s": 2.4077847003936768
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 85.0,
+   "justification": "The most recent GLU observation for patient S2380121 is 2023-11-12T12:28:00+00:00 with value 85.0 mg/dL; action finishes by reporting 85 mg/dL on that timestamp as requested.",
+   "cost": 0.00011205000000000001,
+   "tokens_in": 1585,
+   "tokens_out": 82,
+   "latency_s": 1.848794937133789
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 97.0,
+   "justification": "The observation at 2023-11-12T12:28:00 is the latest timestamp among all retrieved GLU results, correctly identified as 85 mg/dL.",
+   "cost": 0.0075365,
+   "tokens_in": 2255,
+   "tokens_out": 190,
+   "latency_s": 3.273686170578003
+  }
+ }
+}

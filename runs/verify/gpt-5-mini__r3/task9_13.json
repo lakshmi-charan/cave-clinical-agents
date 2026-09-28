@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The observation search returned no potassium results, so it's correct and safe to not place replacement orders; the proposed message accurately reports findings and offers a safe next step requiring confirmation.",
+   "cost": 0.0003295,
+   "tokens_in": 870,
+   "tokens_out": 56,
+   "latency_s": 1.488602876663208
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action concludes no potassium data exists and suggests not placing orders, but the task requires checking the most recent potassium level and, if low, placing replacement and scheduling a morning draw. Without verifying current data or placing orders if thresholds are met, the action is incomplete.",
+   "cost": 7.670000000000001e-05,
+   "tokens_in": 870,
+   "tokens_out": 83,
+   "latency_s": 1.6929986476898193
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The agent correctly identified that no serum potassium observation exists for this patient (Bundle total=0), which means the prerequisite condition ('if low') cannot be evaluated. The FINISH action appropriately reports this finding and declines to place orders without the required baseline data, while offering a reasonable next step for clinician confirmation.",
+   "cost": 0.001544,
+   "tokens_in": 1034,
+   "tokens_out": 102,
+   "latency_s": 2.2910573482513428
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The check found no recent serum potassium observation (LOINC 2823-3) for patient S3057899, so withholding replacement is appropriate; the suggested next steps (offer to place medication and schedule lab) match the user request and require confirmation before action.",
+   "cost": 0.00035125,
+   "tokens_in": 805,
+   "tokens_out": 75,
+   "latency_s": 1.59071946144104
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task explicitly requires checking the most recent potassium level and ordering replacement if low, but the agent has not exhausted search options. The Observation.Search with only code and patient parameters may not retrieve historical results; the agent should retry with a date range parameter to find the most recent potassium level before concluding none exists and finishing without attempting the core task.",
+   "cost": 0.001505,
+   "tokens_in": 955,
+   "tokens_out": 110,
+   "latency_s": 2.2016820907592773
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task requires ordering replacement potassium if low and pairing with a morning potassium lab for tomorrow at 08:00. The agent did not search for most recent potassium by code K or other panels, made only a single query that returned none, and then finished without placing the required lab order. FINISH is premature and incomplete.",
+   "cost": 0.0019575,
+   "tokens_in": 870,
+   "tokens_out": 87,
+   "latency_s": 2.3174045085906982
+  }
+ }
+}

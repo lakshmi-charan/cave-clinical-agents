@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "The eight GLU results within the 24-hour window are all for patient S2402518 and in mg/dL; their mean is 245.0 mg/dL (sum 1960 / 8 = 245), matching the proposed result.",
+   "cost": 0.000415,
+   "tokens_in": 1068,
+   "tokens_out": 74,
+   "latency_s": 2.14023756980896
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 72.0,
+   "justification": "The proposed FINISH action would report a calculation result without confirming the data's time window alignment and units; also the requested average should be computed from observations within last 24 hours relative to current time 2023-11-13T10:15:00+00:00. Of the listed observations, several fall outside the 24-hour window. A correct action requires recomputing using only observations from 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00.",
+   "cost": 0.00011140000000000001,
+   "tokens_in": 1068,
+   "tokens_out": 145,
+   "latency_s": 2.0297298431396484
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly retrieved 8 GLU observations for patient S2402518 within the last 24 hours (from 2023-11-12T10:15:00 onwards). The average calculation is correct: (259+274+283+269+195+204+265+211)/8 = 1960/8 = 245.0 mg/dL. The answer is properly formatted as a single number in mg/dL as requested.",
+   "cost": 0.001911,
+   "tokens_in": 1231,
+   "tokens_out": 136,
+   "latency_s": 2.698514699935913
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "Computed average of the eight GLU observations within the last 24 hours equals 245.0 mg/dL (sum 1960 / 8 = 245), matches the requested unit and timeframe.",
+   "cost": 0.00037525,
+   "tokens_in": 997,
+   "tokens_out": 63,
+   "latency_s": 1.6229009628295898
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved all CBG (GLU) measurements for patient S2402518 within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The 8 values (259.0, 274.0, 283.0, 269.0, 195.0, 204.0, 265.0, 211.0) average to exactly 245.0 mg/dL, which is the correct answer.",
+   "cost": 0.001925,
+   "tokens_in": 1150,
+   "tokens_out": 155,
+   "latency_s": 2.1933679580688477
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 94.0,
+   "justification": "The average appears miscalculated. Summing the eight values (259, 274, 283, 269, 195, 204, 265, 211) gives 1960; 1960/8 = 245.0 is correct. However, the 2023-11-12T15:01:00+00:00 value is older than 24 hours from 2023-11-13T10:15:00+00:00 and should be excluded. Recompute using only results from >= 2023-11-12T10:15:00+00:00; all listed are within 24h except 15:01 is within 24h, but verify timestamps carefully before finalizing.",
+   "cost": 0.003105,
+   "tokens_in": 1068,
+   "tokens_out": 177,
+   "latency_s": 3.7140982151031494
+  }
+ }
+}

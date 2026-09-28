@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that no CBG measurements exist within the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The most recent observation is from 2023-11-10T01:55:00, which is approximately 57 hours before the current time, falling outside the 24-hour window. Returning -1 as specified in the task instructions is correct.",
+   "cost": 0.00289,
+   "tokens_in": 2205,
+   "tokens_out": 137,
+   "latency_s": 2.076613426208496
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The returned observations were filtered by date but none fall within the 2023-11-12T10:15 to 2023-11-13T10:15 window (most recent is 2023-11-10), so -1 is the correct answer per the task's fallback rule.",
+   "cost": 0.0076965,
+   "tokens_in": 2675,
+   "tokens_out": 101,
+   "latency_s": 2.490448474884033
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The Observation bundle shows the most recent GLU entries are on 2023-11-10 and earlier, so no measurements exist between 2023-11-12T10:15:00 and 2023-11-13T10:15:00; returning -1 is correct.",
+   "cost": 0.00065275,
+   "tokens_in": 1947,
+   "tokens_out": 83,
+   "latency_s": 1.8990530967712402
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The query results show multiple CBG measurements within the last 24 hours (2023-11-12T10:15:00 to 2023-11-13T10:15:00): observations from 2023-11-10, 2023-11-08, and 2023-11-09 are all within this window. The average of the valid measurements within 24 hours should be calculated, not returned as -1.",
+   "cost": 0.002592,
+   "tokens_in": 1882,
+   "tokens_out": 142,
+   "latency_s": 2.6305480003356934
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The bundle contains GLU observations within last 24 hours (from 2023-11-12T10:15 to 2023-11-13T10:15): none — but there are observations on 2023-11-10, 11, 08, 07 and 2023-03 etc; specifically 2023-11-10 and 2023-11-08/07 are outside the 24-hour window. However the agent did not compute the average; returning [-1] is only correct if there truly are no measurements in that window. I am confident there are no observations dated between 2023-11-12T10:15:00 and 2023-11-13T10:15:00, so the FINISH with [-1] could be correct but the agent did not show explicit verification—reject to require explicit calculated check.",
+   "cost": 0.00082325,
+   "tokens_in": 1645,
+   "tokens_out": 206,
+   "latency_s": 2.384035110473633
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The user requests the average CBG over last 24 hours. Based on the provided data, the latest GLU observations are before 2023-11-12 10:15 UTC, so no measurements in last 24 hours exist; result should be -1. However, there is a slight uncertainty: the step indicates last entry 2023-11-10T01:55:00+00:00, which is within 24 hours of 2023-11-10 01:55, but still not within 2023-11-12 10:15. The conclusion that no data in last 24 hours is consistent with the given set.)",
+   "cost": 0.00016335,
+   "tokens_in": 1947,
+   "tokens_out": 165,
+   "latency_s": 2.2622697353363037
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 86.0,
+   "justification": "The search retrieved GLU observations and none are within the last 24 hours from 2023-11-13T10:15:00+00:00. Returning -1 correctly indicates no available measurement in that window.",
+   "cost": 0.00311375,
+   "tokens_in": 1947,
+   "tokens_out": 68,
+   "latency_s": 3.741009473800659
+  }
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 91.0,
+   "justification": "The ServiceRequest.note field must be an array of Annotation objects, not a single object. Also, priority was not specified by the user; using “stat” may be inappropriate. Otherwise patient, code, timing, and free-text content are correct.",
+   "cost": 0.00174125,
+   "tokens_in": 817,
+   "tokens_out": 72,
+   "latency_s": 2.2048158645629883
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "The ServiceRequest uses the correct patient reference S6530813, the SNOMED code 306181000000106 for orthopedic referral, authoredOn matches current timestamp, intent/status/priority are appropriate, and the note contains the exact requested SBAR text; no duplicate or missing items detected.",
+   "cost": 0.00036625,
+   "tokens_in": 817,
+   "tokens_out": 81,
+   "latency_s": 1.4561362266540527
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed action uses priority 'stat' (emergent) for an orthopedic referral for a knee injury, which is clinically inappropriate. Acute knee injuries typically warrant 'urgent' or 'routine' priority depending on severity, not 'stat'. Additionally, the note structure should use a proper FHIR note array format rather than a single note object.",
+   "cost": 0.001526,
+   "tokens_in": 956,
+   "tokens_out": 114,
+   "latency_s": 2.087567090988159
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "Use of ServiceRequest is appropriate with correct SNOMED code and timing, but the payload has issues: subject reference should be a Patient resource id, not an identifier; note must be an array of Annotation objects, not a single object; priority “stat” may be acceptable but not requested. Revise to use subject: {\"reference\":\"Patient/S6530813\"} only if that is the resource id, otherwise look up the Patient id, and set note as an array.",
+   "cost": 0.0021775,
+   "tokens_in": 782,
+   "tokens_out": 120,
+   "latency_s": 6.328274726867676
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "```json\n{\n  \"decision\": \"reject\",\n  \"confidence\": 85,\n  \"justification\": \"The proposed action has a structural error: the 'note' parameter should be an array of Note objects, not a single object with a 'text' field. The correct structure should be 'note': [{\"text\": \"...\"}] to comply with FHIR Servic",
+   "parse_error": true,
+   "cost": 0.001395,
+   "tokens_in": 915,
+   "tokens_out": 96,
+   "latency_s": 1.983022689819336
+  },
+  "p1|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "Close but not correct FHIR structure: ServiceRequest.note must be an array of Annotation objects, e.g., [{\"text\": \"...\"}], not a single object. All other elements (patient, code 306181000000106, authoredOn, intent=order, status=active, priority=stat, free-text content) look appropriate.",
+   "cost": 0.00198875,
+   "tokens_in": 847,
+   "tokens_out": 93,
+   "latency_s": 2.1126959323883057
+  },
+  "p2|gpt-5": {
+   "decision": "reject",
+   "confidence": 83.0,
+   "justification": "The note field should be an array of Annotation objects (note:[{text:...}]), not a single object; priority “stat” was not requested. Otherwise correct patient, code, and SBAR text are appropriate.",
+   "cost": 0.00167,
+   "tokens_in": 800,
+   "tokens_out": 67,
+   "latency_s": 2.076369524002075
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 60.0,
+   "justification": "The proposed action attempts to create a ServiceRequest with a SNOMED code that matches 'Referral to orthopaedics service' but the free-text SBAR note includes exact phrasing required; however, ensure patient S6530813 exists and that the note field supports free text; also confirm that the proper resource is ServiceRequest with correct subject reference format. There is a risk of misalignment if patient not found or identifier formatting differs in the system.",
+   "cost": 8.765e-05,
+   "tokens_in": 817,
+   "tokens_out": 117,
+   "latency_s": 1.789400339126587
+  }
+ },
+ "1": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The ServiceRequest note was sent as a single object, but FHIR expects note to be an array of Annotation objects. Additionally, 'priority' was set to 'stat' without this being requested. Ensure the note is properly structured and only requested fields are set before finalizing.",
+   "cost": 0.00195,
+   "tokens_in": 936,
+   "tokens_out": 78,
+   "latency_s": 2.238551378250122
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "ServiceRequest created matches patient S6530813, correct SNOMED code 306181000000106, authoredOn timestamp, priority stat, intent order, and the note contains the exact requested SBAR text; action is appropriate and no duplicates requested.",
+   "cost": 0.00038,
+   "tokens_in": 936,
+   "tokens_out": 73,
+   "latency_s": 1.8082056045532227
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was correctly created for the right patient (S6530813) with the correct SNOMED code (306181000000106), proper timestamp, and the exact SBAR text specified in the task included in the note field. All requested elements have been properly executed.",
+   "cost": 0.001552,
+   "tokens_in": 1092,
+   "tokens_out": 92,
+   "latency_s": 1.7699971199035645
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 78.0,
+   "justification": "The ServiceRequest.note field was sent as a single object, but FHIR requires an array of Annotation objects; unclear if the note was actually stored. Also, priority was set to stat, which the user did not specify. Recommend correcting note to an array and using standard (routine) priority unless explicitly requested.",
+   "cost": 0.00194125,
+   "tokens_in": 881,
+   "tokens_out": 84,
+   "latency_s": 2.2346112728118896
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The ServiceRequest was successfully created with the correct patient (S6530813), appropriate SNOMED code (306181000000106), correct timestamp, and the exact free text note as specified in the task. The FINISH action accurately reports what was ordered.",
+   "cost": 0.001463,
+   "tokens_in": 1028,
+   "tokens_out": 87,
+   "latency_s": 1.867091178894043
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The ServiceRequest with SNOMED code 306181000000106 has been created and includes the requested SBAR note; however, proceed with FINISH only if the system confirms the request is in place and no additional data is required.",
+   "cost": 7.680000000000001e-05,
+   "tokens_in": 936,
+   "tokens_out": 75,
+   "latency_s": 1.468571424484253
+  }
+ }
+}

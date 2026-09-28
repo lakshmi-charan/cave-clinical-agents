@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that no CBG measurements exist within the last 24 hours (since 2023-11-12T10:15:00Z). The most recent observation is from 2023-11-11T17:21:00Z, which is approximately 16.9 hours before the current time but still outside the 24-hour window when accounting for the exact cutoff. Returning -1 as specified in the task instructions is correct.",
+   "cost": 0.002661,
+   "tokens_in": 1996,
+   "tokens_out": 133,
+   "latency_s": 2.554368734359741
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "The search results show no observations within the 2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z window (the date filter appears to have returned unfiltered results, but manual inspection confirms the most recent is 2023-11-11T17:21:00Z, outside the window), so returning -1 is correct.",
+   "cost": 0.007369,
+   "tokens_in": 2432,
+   "tokens_out": 129,
+   "latency_s": 3.5006301403045654
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Query returned 20 GLU observations; none have effectiveDateTime on or after 2023-11-12T10:15:00Z, so reporting -1 for no measurements in the last 24 hours is correct.",
+   "cost": 0.000576,
+   "tokens_in": 1752,
+   "tokens_out": 69,
+   "latency_s": 1.7476906776428223
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The query correctly retrieved observations within the last 24 hours (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z), but the results show NO observations actually fall within this timeframe. The most recent observation is from 2023-11-11T17:21:00+00:00 (more than 24 hours ago). Therefore, the correct answer should be -1 as specified in the instructions, but the agent should explicitly confirm this reasoning rather than just returning -1 without verification.",
+   "cost": 0.002507,
+   "tokens_in": 1727,
+   "tokens_out": 156,
+   "latency_s": 2.8845090866088867
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The bundled results include 20 observations but none fall within the requested 24-hour window (2023-11-12T10:15:00Z to 2023-11-13T10:15:00Z); returning -1 is correct only if no measurement exists in that interval, however the GET was for that interval and returned items outside it, so data inconsistency prevents approving the FINISH.",
+   "cost": 0.00058725,
+   "tokens_in": 1501,
+   "tokens_out": 106,
+   "latency_s": 2.6087262630462646
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The proposed action FINISH with answer -1 is correct given the data: no GLU observations within the last 24 hours from 2023-11-13T10:15:00Z; latest is 2023-11-11T17:21:00Z.",
+   "cost": 0.00012160000000000001,
+   "tokens_in": 1752,
+   "tokens_out": 85,
+   "latency_s": 1.8156476020812988
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 93.0,
+   "justification": "Query correctly limited to last 24 hours for patient S2450227 with code GLU; no observations fall within the window, so returning -1 matches instructions.",
+   "cost": 0.00274,
+   "tokens_in": 1752,
+   "tokens_out": 55,
+   "latency_s": 1.9540307521820068
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observations retrieved are dated 2023-01-12 and 2019-09-29, both outside the 24-hour window from 2023-11-13T10:15:00+00:00; returning -1 per instructions is correct.",
+   "cost": 0.00035425,
+   "tokens_in": 801,
+   "tokens_out": 77,
+   "latency_s": 2.197772264480591
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The proposed finish would return -1 since no GLU observations in last 24 hours based on the retrieved data; however, I cannot verify that there are truly no 24h observations without rechecking current time window.",
+   "cost": 6.845e-05,
+   "tokens_in": 801,
+   "tokens_out": 71,
+   "latency_s": 1.5807695388793945
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that neither GLU observation falls within the 24-hour window (2023-11-12T10:15:00 to 2023-11-13T10:15:00). The most recent observation is from 2023-01-12, which is nearly 10 months prior. Returning -1 per the stated protocol is correct.",
+   "cost": 0.001502,
+   "tokens_in": 927,
+   "tokens_out": 115,
+   "latency_s": 2.501552104949951
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Available GLU observations for patient S1777769 are from 2019 and 2023, none within last 24 hours of 2023-11-13T10:15:00+00:00, so returning -1 is correct.",
+   "cost": 0.00033025,
+   "tokens_in": 729,
+   "tokens_out": 74,
+   "latency_s": 2.1928954124450684
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed answer of -1 is incorrect. The task requires the average CBG over the last 24 hours (from 2023-11-12T10:15:00 to 2023-11-13T10:15:00). The search results show only 2 observations: one from 2023-01-12 (outside the 24-hour window) and one from 2019-09-29 (far outside the window). Neither observation falls within the last 24 hours, so -1 is the correct answer, but the agent should verify this is truly all available data before finishing, as the search may need date filtering parameters to ensure completeness.",
+   "cost": 0.002347,
+   "tokens_in": 847,
+   "tokens_out": 300,
+   "latency_s": 4.242298603057861
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 96.0,
+   "justification": "The agent correctly queried GLU observations for patient S1777769 and none are within the last 24 hours from 2023-11-13T10:15:00+00:00, so returning -1 follows the instructions.",
+   "cost": 0.00171125,
+   "tokens_in": 801,
+   "tokens_out": 71,
+   "latency_s": 2.340623140335083
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 90.0,
+   "justification": "Both retrieved GLU observations are far outside the last 24-hour window (2023-11-12T10:15 to 2023-11-13T10:15), so no valid measurement exists, correctly warranting -1.",
+   "cost": 0.0040215,
+   "tokens_in": 1241,
+   "tokens_out": 92,
+   "latency_s": 2.568298816680908
+  }
+ }
+}

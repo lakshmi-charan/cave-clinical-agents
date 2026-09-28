@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 90.0,
+   "justification": "Current time 2023-11-13T10:15:00Z, last 24 hours window starts 2023-11-12T10:15:00Z; the single observation at 2023-11-12T13:35:00Z (167 mg/dL) is within that window, so reporting 167 mg/dL would be correct — but the FINISH action lists [167] which appears to reference the value not an action list; also the proposer included only one observation but didn't verify no others in that 24h; due to mismatch in action formatting and incomplete verification, I cannot approve as-is.",
+   "cost": 0.000696,
+   "tokens_in": 1552,
+   "tokens_out": 154,
+   "latency_s": 2.5085952281951904
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action uses a single GLU observation within the last 24 hours to compute the average, but the 24-hour window reference (current time 2023-11-13T10:15:00+00:00) would include 2023-11-12T10:15:00+00:00 to 2023-11-13T10:15:00+00:00; only one value (2023-11-12T13:35:00+00:00) is in range, so average could be 167 mg/dL, but the trajectory notes multiple older data points and the reasoning about last 24 hours seems aligned. I cannot confirm the exact requirement for handling missing or multiple entries without re-running the query; therefore I’m cautious about approving the action as-is.",
+   "cost": 0.00015680000000000002,
+   "tokens_in": 1552,
+   "tokens_out": 198,
+   "latency_s": 2.974074125289917
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified that only one GLU observation (Observation 160859 at 2023-11-12T13:35:00+00:00 with value 167.0 mg/dL) falls within the last 24 hours from the current time of 2023-11-13T10:15:00+00:00. With a single measurement, the average is correctly calculated as 167 mg/dL, and the answer is appropriately formatted as requested.",
+   "cost": 0.0025,
+   "tokens_in": 1790,
+   "tokens_out": 142,
+   "latency_s": 2.53560733795166
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The only GLU observation within last 24 hours (2023-11-12T13:35:00+00:00 to now 2023-11-13T10:15:00+00:00) is 167 mg/dL, so returning 167 is correct and no other measurements to average.",
+   "cost": 0.00054475,
+   "tokens_in": 1467,
+   "tokens_out": 89,
+   "latency_s": 3.261690139770508
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action returns only a single value (167 mg/dL) from one observation, but the task requires calculating the AVERAGE CBG over the last 24 hours. Within the 24-hour window from 2023-11-12T10:15:00 to 2023-11-13T10:15:00, there are two measurements: Observation 160859 (2023-11-12T13:35:00, 167.0 mg/dL) and Observation 160864 (2023-11-11T02:04:00, 153.0 mg/dL is outside the window). The correct average should be (167.0 + 153.0) / 2 = 160.0 mg/dL, not 167.",
+   "cost": 0.002762,
+   "tokens_in": 1692,
+   "tokens_out": 214,
+   "latency_s": 3.4664359092712402
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The stated current time is 2023-11-13T10:15:00Z. The only recent GLU is at 2023-11-12T13:35:00Z, which is 20h40m earlier—within the last 24 hours—so including it is correct. However, the agent claims “only one” measurement without filtering by date parameter; the returned bundle might not be time-sorted, but given the list provided, there are no other values within 24 hours. The main issue: the agent’s timestamp math is correct, but they should compute the average explicitly and return a single number, not an array in FINISH. Also they didn’t ensure unit conversion if needed. Due to format/protocol concerns, reject.",
+   "cost": 0.00373,
+   "tokens_in": 1552,
+   "tokens_out": 179,
+   "latency_s": 4.239814043045044
+  },
+  "std|claude-sonnet-5": {
+   "decision": "approve",
+   "confidence": 50,
+   "justification": "{\"decision\": \"approve\", \"confidence\": 92,",
+   "parse_error": true,
+   "cost": 0.008494,
+   "tokens_in": 2198,
+   "tokens_out": 300,
+   "latency_s": 4.602163553237915
+  }
+ }
+}

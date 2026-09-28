@@ -1,0 +1,68 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The timestamp 1699852500 (unix seconds) converts to 2023-11-13T09:15:00+00:00, which is exactly 1 hour before the stated current time of 2023-11-13T10:15:00+00:00. This falls within the last 24 hours, so the data point is valid. However, the value of 1.6 mg/dL is physiologically implausible for serum magnesium (normal range ~1.7-2.2 mg/dL, and critically low values <1.0 mg/dL are life-threatening). This suggests either a data quality issue or unit conversion problem that should be verified before reporting to the clinician.",
+   "cost": 0.00195,
+   "tokens_in": 965,
+   "tokens_out": 197,
+   "latency_s": 2.6649436950683594
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 50,
+   "justification": "",
+   "parse_error": true,
+   "cost": 0.0062465,
+   "tokens_in": 1299,
+   "tokens_out": 300,
+   "latency_s": 3.6984691619873047
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Result matches lab-trend response showing one MG point (1.6) within 24 hours for patient S2718465; value provided as single number in mg/dL as requested.",
+   "cost": 0.00032875,
+   "tokens_in": 835,
+   "tokens_out": 60,
+   "latency_s": 1.5875744819641113
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The lab-trend service correctly queried magnesium (MG) for patient S2718465 within the last 24 hours (window_h=24). The result shows one data point at timestamp 1699852500 (2023-11-13T09:15:00 UTC, which is within 24 hours of the current time 2023-11-13T10:15:00 UTC) with a value of 1.6 mg/dL. The FINISH action correctly returns this single numeric value as requested.",
+   "cost": 0.001584,
+   "tokens_in": 814,
+   "tokens_out": 154,
+   "latency_s": 2.813786506652832
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Lab trend returned one MG point within 24 hours (value 1.6). The request asked for the most recent magnesium converted to mg/dL as a single number; 1.6 matches the data and no other measurements exist.",
+   "cost": 0.00031525,
+   "tokens_in": 701,
+   "tokens_out": 70,
+   "latency_s": 1.483938217163086
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The lab-trend endpoint returned a magnesium value within the last 24 hours (1.6 mg/dL). The value is already in mg/dL and matches the requested format, with no duplication or omission evident.",
+   "cost": 7.015000000000001e-05,
+   "tokens_in": 835,
+   "tokens_out": 71,
+   "latency_s": 1.5940182209014893
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent assumes the lab value is already in mg/dL without confirming units. The task requires ensuring the result is converted to mg/dL; without unit verification, providing 1.6 as-is may be incorrect.",
+   "cost": 0.00170375,
+   "tokens_in": 835,
+   "tokens_out": 66,
+   "latency_s": 2.3087995052337646
+  }
+ }
+}

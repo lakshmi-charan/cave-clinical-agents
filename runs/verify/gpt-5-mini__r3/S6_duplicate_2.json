@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation shows Mg 0.8 mg/dL (severe) at 2023-11-13T06:15Z and an active MedicationRequest for the same IV magnesium NDC authored 2023-11-13T07:30Z (within 24 hours), so not placing a duplicate order is correct and safe.",
+   "cost": 0.000462,
+   "tokens_in": 1120,
+   "tokens_out": 91,
+   "latency_s": 2.0418100357055664
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 70.0,
+   "justification": "The last magnesium level is 0.8 mg/dL, indicating severe deficiency. However, there is an active IV magnesium replacement order (NDC 0338-1715-40) authored within the last 24 hours, so no new order should be placed per the rule.",
+   "cost": 9e-05,
+   "tokens_in": 1120,
+   "tokens_out": 85,
+   "latency_s": 1.616762638092041
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The agent correctly identified a severe magnesium deficiency (0.8 mg/dL, <1 mg/dL threshold) from a lab drawn within 24 hours, and appropriately declined to place a duplicate order because an active magnesium replacement was already authored 45 minutes ago on 2023-11-13T07:30:00. The task instructions explicitly state not to order if a magnesium replacement order exists within the last 24 hours, which is satisfied here.",
+   "cost": 0.002054,
+   "tokens_in": 1344,
+   "tokens_out": 142,
+   "latency_s": 2.8840527534484863
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "Observation shows MG 0.8 mg/dL within 24 hours (severe). A magnesium sulfate IV MedicationRequest (NDC 0338-1715-40) was authored 2023-11-13T07:30:00Z and is active within 24 hours, so withholding a new order follows the instructions.",
+   "cost": 0.00043775,
+   "tokens_in": 1023,
+   "tokens_out": 91,
+   "latency_s": 2.191073179244995
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed action reports findings correctly but violates the task instructions. The task explicitly states 'Do not place a new magnesium order if the patient already has a magnesium replacement order authored within the last 24 hours.' However, the existing order (2 g over 2 hours, authored at 07:30) is insufficient for the patient's severe deficiency (0.8 mg/dL), which requires 4 g over 4 hours per dosing instructions. The agent should have either placed a corrective order or escalated this clinical concern rather than simply finishing without action.",
+   "cost": 0.002036,
+   "tokens_in": 1226,
+   "tokens_out": 162,
+   "latency_s": 2.839355945587158
+  },
+  "std|gpt-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The last magnesium is 0.8 mg/dL within 24 hours (severe). There is already an active magnesium replacement order authored within the last 24 hours, so not placing a new order matches instructions exactly.",
+   "cost": 0.00207,
+   "tokens_in": 1120,
+   "tokens_out": 67,
+   "latency_s": 1.92569899559021
+  }
+ }
+}

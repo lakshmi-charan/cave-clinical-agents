@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 92.0,
+   "justification": "No serum potassium results were found for patient S1527742, so it is correct and safe not to place replacement and to recommend obtaining serum K and eGFR first, plus scheduling the next-day 8:00 AM potassium draw.",
+   "cost": 0.00038675,
+   "tokens_in": 987,
+   "tokens_out": 70,
+   "latency_s": 1.8545541763305664
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "The proposed FINISH action acknowledges that no serum potassium result is found and appropriately advises obtaining potassium and eGFR before ordering replacement; however there is a need to verify eGFR data presence and timing, and to confirm prescription details if potassium is low and eGFR >=30 before placing orders.",
+   "cost": 8.415e-05,
+   "tokens_in": 987,
+   "tokens_out": 87,
+   "latency_s": 2.0471465587615967
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The proposed FINISH action is inappropriate because the task explicitly requires checking the patient's most recent potassium level and conditionally ordering replacement—not recommending that labs be ordered. The agent should have attempted to retrieve the potassium result (which it did), and when none was found, should either report that no labs exist or attempt to search with broader parameters. Instead of finishing with recommendations, the agent should clarify the clinical situation or indicate that the prerequisite data is unavailable to complete the requested task.",
+   "cost": 0.001878,
+   "tokens_in": 1188,
+   "tokens_out": 138,
+   "latency_s": 3.1015400886535645
+  },
+  "blind|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 88.0,
+   "justification": "The agent correctly found no recent K (LOINC 2823-3) results, followed institutional protocol to check eGFR before ordering oral potassium, and recommended appropriate immediate labs plus the paired morning K at 2023-11-14T08:00:00Z; no medication order was placed without necessary data.",
+   "cost": 0.00040625,
+   "tokens_in": 921,
+   "tokens_out": 88,
+   "latency_s": 1.9803001880645752
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The proposed FINISH action reports that no potassium level was found and recommends ordering labs, but this is incomplete task execution. The task explicitly requires checking the most recent potassium level and, if low, ordering replacement potassium paired with a follow-up morning level. The agent should have proceeded to obtain the potassium result (via stat order if needed) before concluding, and should not finish without attempting to complete the requested orders or providing a definitive clinical decision based on actual lab values.",
+   "cost": 0.001799,
+   "tokens_in": 1104,
+   "tokens_out": 139,
+   "latency_s": 3.1182243824005127
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The task required checking the most recent potassium and, if low and eGFR ≥30, placing oral potassium replacement and a paired 8am next-day potassium lab. The agent neither searched for eGFR nor placed the morning potassium lab order; it also prematurely finished without attempting to order when data missing. Not all requested orders were placed, so FINISH is incorrect.",
+   "cost": 0.00220375,
+   "tokens_in": 987,
+   "tokens_out": 97,
+   "latency_s": 2.5142910480499268
+  }
+ }
+}

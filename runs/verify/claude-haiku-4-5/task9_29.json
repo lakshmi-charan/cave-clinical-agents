@@ -1,0 +1,67 @@
+{
+ "0": {
+  "std|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The agent incorrectly identified the most recent potassium level. Observation 318730 from 2023-08-24T22:36:00 (4.0 mmol/L) is more recent than 318740 from 2023-08-25T12:45:00 (3.5 mmol/L) when sorted chronologically. However, the actual most recent level is 3.5 mmol/L from 2023-08-25T12:45:00, which equals the threshold and does not meet the criteria for replacement (must be below 3.5). The agent's conclusion is correct but the reasoning contains a date ordering error. More critically, the task requires ordering a follow-up serum potassium test for the next day at 8am regardless of whether replacement is needed—this was not completed.",
+   "cost": 0.003251,
+   "tokens_in": 2141,
+   "tokens_out": 222,
+   "latency_s": 3.5672314167022705
+  },
+  "std|claude-sonnet-5": {
+   "decision": "reject",
+   "confidence": 98.0,
+   "justification": "The most recent potassium observation by date is 2023-08-25T12:45:00 with value 3.5 mmol/L, not 4.1 mmol/L as claimed — the agent misread the data. Since 3.5 mmol/L equals the threshold (not clearly low per instructions, but at minimum the reported value/date is factually wrong), the FINISH summary is incorrect and must be corrected before finishing.",
+   "cost": 0.008114,
+   "tokens_in": 2598,
+   "tokens_out": 162,
+   "latency_s": 3.047638177871704
+  },
+  "std|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The agent's summary incorrectly identifies the most recent potassium value and timestamp: the most recent observation in the bundle is 2023-08-25 12:45 with value 3.5 mmol/L (not 4.1), and there is also a 2023-08-23 16:40 value of 3.5 and 2023-08-24 22:36 value of 4.0 and 2021-10-11 18:13 value of 4.1; because the agent misreported the latest value, the conclusion about no replacement cannot be approved without correctly identifying the true most recent potassium and confirming it is >=3.5.",
+   "cost": 0.0007795,
+   "tokens_in": 1814,
+   "tokens_out": 163,
+   "latency_s": 2.141653537750244
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "reject",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level is 4.0 mmol/L from 2023-08-24T22:36:00+00:00 (Observation 318730), not 4.1 mmol/L from 2023-08-25. More critically, the FINISH statement claims the most recent level is 4.1 mmol/L from 2023-08-25 at 12:45:00, but Observation 318740 shows 3.5 mmol/L on 2023-08-25T12:45:00, which is the actual most recent measurement. The agent has misidentified the most recent potassium value.",
+   "cost": 0.002828,
+   "tokens_in": 1883,
+   "tokens_out": 189,
+   "latency_s": 2.7186291217803955
+  },
+  "blind|gpt-5-mini": {
+   "decision": "reject",
+   "confidence": 85.0,
+   "justification": "The proposed FINISH is incorrect: the most recent K observation in the bundle is 318727 dated 2021-10-11 (4.1) but there are later entries (e.g., 318740 dated 2023-08-25 12:45 with 3.5 and 318728/318737 2023-08-23 with 3.5 and 3.5; the most recent timestamp appears to be 2023-08-25 12:45 with K=3.5 mmol/L). The statement that the most recent is 4.1 mmol/L on 2023-08-25 is therefore incorrect, so the FINISH should be rejected.",
+   "cost": 0.0007345,
+   "tokens_in": 1594,
+   "tokens_out": 168,
+   "latency_s": 6.855885982513428
+  },
+  "std|gpt-5-nano": {
+   "decision": "approve",
+   "confidence": 60.0,
+   "justification": "Most recent potassium is 4.1 mmol/L (2023-08-25 12:45 UTC), above threshold 3.5; no replacement needed per protocol. Action aligns with task, though ensure there isn't a newer result after 2023-08-25.",
+   "cost": 0.0001243,
+   "tokens_in": 1814,
+   "tokens_out": 84,
+   "latency_s": 1.6526436805725098
+  },
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 88.0,
+   "justification": "The agent misidentified the most recent potassium. The latest in the list is 2023-08-25 12:45 with value 3.5 mmol/L, not 4.1. Also, the task required pairing with a morning potassium lab for the next day at 8am regardless of replacement need; no ServiceRequest was placed. Therefore the FINISH statement is incorrect and incomplete.",
+   "cost": 0.0032975,
+   "tokens_in": 1814,
+   "tokens_out": 103,
+   "latency_s": 2.293956756591797
+  }
+ }
+}

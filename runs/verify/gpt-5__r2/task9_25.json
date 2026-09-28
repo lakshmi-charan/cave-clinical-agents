@@ -1,0 +1,58 @@
+{
+ "0": {
+  "std|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The task requires pairing the potassium replacement order with a next-day 8am potassium lab only if the level is low. However, it also requires checking the most recent level. While the agent correctly identified the latest potassium as 4.0 mmol/L (not low) and appropriately did not order replacement, it also omitted scheduling the next-day 8am serum potassium only if low; since level is normal, not ordering is correct. But the FINISH claims no paired morning potassium lab scheduled, which is appropriate; however, the instruction asked to pair the order with a morning lab if repletion is ordered. The main issue: ensure no orders were needed; that part is fine. However, the response should state explicitly that no orders were placed. To be safe, reject to prompt explicit confirmation no orders were placed and that the right logic was applied.",
+   "cost": 0.004145,
+   "tokens_in": 1772,
+   "tokens_out": 193,
+   "latency_s": 6.551854133605957
+  },
+  "std|gpt-5-mini": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent potassium observed is 4.0 mmol/L on 2023-10-27 (above the 3.5 threshold), so no replacement or follow-up 8:00am K order is indicated; the proposed FINISH accurately reports findings and no orders placed.",
+   "cost": 0.000601,
+   "tokens_in": 1772,
+   "tokens_out": 79,
+   "latency_s": 1.7778608798980713
+  },
+  "std|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level (4.0 mmol/L on 2023-10-27) is above the 3.5 mmol/L threshold, so no replacement potassium is indicated per the dosing instructions. The agent correctly identified that no orders are needed and appropriately concluded the task.",
+   "cost": 0.002609,
+   "tokens_in": 2094,
+   "tokens_out": 103,
+   "latency_s": 1.8732492923736572
+  },
+  "blind|gpt-5": {
+   "decision": "reject",
+   "confidence": 92.0,
+   "justification": "The most recent potassium (4.0 mmol/L) is normal, so no replacement is correct. However, the task also requested scheduling a morning serum potassium for the next day at 8am regardless; no ServiceRequest for LOINC 2823-3 at 2023-11-14T08:00:00+00:00 was placed.",
+   "cost": 0.0030025,
+   "tokens_in": 1634,
+   "tokens_out": 96,
+   "latency_s": 2.176332950592041
+  },
+  "blind|claude-haiku-4-5": {
+   "decision": "approve",
+   "confidence": 95.0,
+   "justification": "The most recent potassium level (4.0 mmol/L on 2023-10-27) is correctly identified and is above the 3.5 mmol/L threshold, so no replacement potassium is indicated per the dosing instructions. The decision to not order replacement potassium and not schedule a paired morning lab is correct and safe.",
+   "cost": 0.002488,
+   "tokens_in": 1928,
+   "tokens_out": 112,
+   "latency_s": 2.0487327575683594
+  },
+  "std|gpt-5-nano": {
+   "decision": "reject",
+   "confidence": 70.0,
+   "justification": "The proposed FINISH action claims a current potassium level and actions that are inconsistent with the available data: the most recent listed value is 4.0 mmol/L (normal), but the plan should include confirming the current status as of now and not prematurely finalize without aligning with patient-specific time and any new orders. A safer route would be to confirm the latest observation date-time and proceed with no replacement; no paired morning lab is needed if potassium remains within normal range.",
+   "cost": 0.0001366,
+   "tokens_in": 1772,
+   "tokens_out": 120,
+   "latency_s": 1.7962861061096191
+  }
+ }
+}
