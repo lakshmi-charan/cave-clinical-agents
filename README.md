@@ -106,6 +106,7 @@ reproducing the analysis needs no keys).
 ```bash
 git clone https://github.com/lakshmi-charan/cave-clinical-agents.git
 cd cave-clinical-agents
+python -m venv .venv && source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
@@ -117,7 +118,15 @@ python analysis/run_all.py --jobs 4
 
 This runs the pooled policy analysis for every model and evidence version, the paired bootstrap tests and the
 task-level conformal calibration, and redraws the figures. Outputs go to `runs/analysis/` (precomputed versions are
-already included). Individual steps:
+already included).
+
+This was checked from a fresh clone in a clean virtual environment (Python 3.11, packages from `requirements.txt`;
+about 11 minutes with `--jobs 2`). All CSV outputs and every number reported in the paper were reproduced exactly.
+The only numeric differences were in the third decimal of the gradient-boosted comparison estimator for gpt-5-mini,
+which depends on the scikit-learn version and is unchanged at the precision reported in the paper. Redrawn figures
+can differ at the pixel level between Matplotlib versions.
+
+Individual steps:
 
 ```bash
 python analysis/pooled.py gpt-5 v2 --alpha 0.02 --tag main   # one model, strengthened evidence
@@ -168,11 +177,18 @@ runs the full pipeline against a mock FHIR server with scripted models (no netwo
 | `runs/analysis/` | pooled results, statistical tests, policy tables and figures |
 | `runs/cost_ledger.json` | token usage and cost of all model calls |
 
-The raw response cache (`runs/cache/`) is not included. All patient data is synthetic and comes from MedAgentBench.
+**What is not published.** The raw API-response cache (`runs/cache/`) is not included. It is not needed to reproduce
+the paper: every number, table and figure is regenerated from the published logs above, without API keys or model
+calls. The cache only lets an interrupted experiment stage resume without repeating paid calls; running the experiment
+stages without it makes new model calls.
+
+**Patient data.** All patient records come from MedAgentBench. Its authors derived the 100 patient profiles from real
+Stanford Hospital cases in the STARR research data warehouse, which were de-identified and jittered before public
+release. This repository adds no private or identifiable patient data.
 
 ## Experimental setup at a glance
 
-- **Environment:** MedAgentBench (HAPI FHIR R4, 100 synthetic patients), fixed clinical time 2023-11-13T10:15:00+00:00.
+- **Environment:** MedAgentBench (HAPI FHIR R4, 100 de-identified, jittered patient profiles), fixed clinical time 2023-11-13T10:15:00+00:00.
 - **Tasks:** 300 base tasks in ten categories and 105 stress tasks: tool aliasing (S1), schema and unit drift (S2), a
   novel lab-trend tool (S3), allergy conflicts (S4), renal contraindications (S5), duplicate orders (S6) and
   look-alike patients (S7), about a third of the hazard tasks being controls.
@@ -187,7 +203,7 @@ The raw response cache (`runs/cache/`) is not included. All patient data is synt
 
 ## Limitations
 
-The patients are synthetic and the tasks come from one benchmark with few question types, which favours read-back
+The patient profiles are de-identified, jittered cases from a single academic medical center, and the tasks come from one benchmark with few question types, which favours read-back
 checks. The strengthened checks were designed after inspecting the first two runs and validated on four later runs of
 the same tasks. Model identities are public API aliases as served in September 2026. The executable rules are
 illustrative and clinician review is modeled, not measured.
